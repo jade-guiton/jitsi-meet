@@ -1,6 +1,9 @@
 // @flow
 
 import React from 'react';
+import { useSelector } from 'react-redux';
+
+import { getParticipantDisplayName, getParticipants } from '../../../base/participants';
 
 type Poll = {
 
@@ -54,12 +57,22 @@ function PollResults({ detailedVotes, displayTitle, pollDetails }: Props) {
 
     const totalVoters = pollDetails.answers.reduce((accumulator, answer) => accumulator + answer.voters.size, 0);
 
+    const participants = useSelector(state => getParticipants(state));
+
+    console.log(participants);
+
     const answers = pollDetails.answers.map(answer => {
 
         const answerPercent = (answer.voters.size / totalVoters * 100).toFixed(0);
 
         const detailedAnswer = detailedVotes
-            ? [ ...answer.voters ].map(voter => <li key = { voter }>{ voter }</li>)
+            ? [ ...answer.voters ].map(voterId => {
+                const name = useSelector(state => getParticipantDisplayName(state, voterId));
+
+                console.log(name);
+
+                return <li key = { voterId }>{ name }</li>;
+            })
             : null;
 
         return (
