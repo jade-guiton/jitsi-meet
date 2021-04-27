@@ -28,6 +28,11 @@ type Poll = {
 type Props = {
 
     /**
+     * Display or not detailed votes
+     */
+    detailedVotes: boolean,
+
+    /**
      * Display or not the poll title
      */
     displayTitle: boolean,
@@ -43,30 +48,40 @@ type Props = {
  *
  * @returns {React$Element<any>}
  */
-function PollResults({ displayTitle, pollDetails }: Props) {
+function PollResults({ detailedVotes, displayTitle, pollDetails }: Props) {
 
-    const renderTitle = () => {
-        if (displayTitle) {
-            return <strong>{ pollDetails.title }</strong>;
-        }
+    const title = displayTitle ? <strong>{ pollDetails.title }</strong> : null;
 
-        return null;
-    };
+    const totalVoters = pollDetails.answers.reduce((accumulator, answer) => accumulator + answer.voters.size, 0);
 
-    const renderAnswers = () => {
-        const totalVoters = pollDetails.answers.reduce((accumulator, answer) => accumulator + answer.voters.size, 0);
+    const answers = pollDetails.answers.map(answer => {
 
-        return pollDetails.answers.map(answer => (
+        const answerPercent = (answer.voters.size / totalVoters * 100).toFixed(0);
+
+        const detailedAnswer = detailedVotes
+            ? [ ...answer.voters ].map(voter => <li key = { voter }>{ voter }</li>)
+            : null;
+
+        return (
             <li key = { answer.name }>
-                { answer.name } ({ (answer.voters.size / totalVoters * 100).toFixed(0)} %)
+                { answer.name } ({ answerPercent } %)
+                <div>
+                    <ul>
+                        { detailedAnswer }
+                    </ul>
+                </div>
             </li>
-        ));
-    };
+        );
+    });
 
     return (
         <div>
-            { renderTitle() }
-            { renderAnswers() }
+            <div>
+                { title }
+            </div>
+            <div>
+                { answers }
+            </div>
         </div>
     );
 }
