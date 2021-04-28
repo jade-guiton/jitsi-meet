@@ -33,7 +33,7 @@ ReducerRegistry.register('features/polls', (state = INITIAL_STATE, action) => {
 
         // if the poll doesn't exist
         if (!(pollId in state.polls)) {
-            console.error('requested poll does not exist: pollId ', pollId);
+            console.warn('requested poll does not exist: pollId ', pollId);
 
             return state;
         }

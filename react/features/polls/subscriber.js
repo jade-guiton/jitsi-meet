@@ -30,7 +30,7 @@ StateListenerRegistry.register(
                 const { dispatch } = store;
                 const { senderId, pollId } = attributes;
 
-                const receveidAnswer: Answer = {
+                const receivedAnswer: Answer = {
                     senderId,
                     pollId,
                     answers: children.map(
@@ -38,7 +38,7 @@ StateListenerRegistry.register(
                     )
                 };
 
-                dispatch(receiveAnswer(pollId, receveidAnswer));
+                dispatch(receiveAnswer(pollId, receivedAnswer));
             });
         }
     }

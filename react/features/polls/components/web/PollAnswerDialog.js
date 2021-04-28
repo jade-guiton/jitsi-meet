@@ -6,7 +6,6 @@ import * as React from 'react';
 import { useState } from 'react';
 
 import { Dialog } from '../../../base/dialog';
-import { translate } from '../../../base/i18n';
 import { getLocalParticipant } from '../../../base/participants';
 import { connect } from '../../../base/redux';
 import { COMMAND_ANSWER_POLL } from '../../constants';
@@ -37,10 +36,6 @@ type Props = {
      */
     localId: String,
 
-    /**
-     * The i18n translate function.
-     */
-    t: Function
 }
 
 /**
@@ -55,7 +50,6 @@ function AnswerPoll(props: Props): React.Node {
 
     const [ checkBoxStates, setCheckBoxState ] = useState(poll ? new Array(poll.answers.length).fill(false) : []);
 
-    // if the poll is null, show a spinner, else, show the poll
     return (
 
         <Dialog
@@ -69,11 +63,12 @@ function AnswerPoll(props: Props): React.Node {
                         senderId: localId
                     },
                     children: checkBoxStates.map(
-                checkBoxState => {
-                    return {
-                        attributes: { checked: checkBoxState
-                        },
-                        tagName: 'answer'
+                        checkBoxState => {
+                        return {
+                            attributes: {
+                                checked: checkBoxState
+                            },
+                            tagName: 'answer'
                     };
                 })
                 };
@@ -87,8 +82,7 @@ function AnswerPoll(props: Props): React.Node {
                 return true;
             } }
 
-            submitDisabled = { false }
-            titleKey = { t('polls.answer.title') }
+            titleKey = 'polls.answer.title'
             width = 'small'>
 
 
@@ -139,4 +133,4 @@ function _mapStateToProps(state: Object, previousProp: Props) {
     };
 }
 
-export default translate(connect(_mapStateToProps)(AnswerPoll));
+export default connect(_mapStateToProps)(AnswerPoll);
