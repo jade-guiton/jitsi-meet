@@ -545,6 +545,9 @@
         "create": {
             "title": "Create a poll",
             "Send": "Send"
+        },
+        "answer": {
+            "title": "Poll"
         }
     },
     "poweredby": "powered by",

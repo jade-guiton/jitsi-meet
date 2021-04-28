@@ -517,6 +517,9 @@
         "create": {
             "title": "Créer un sondage",
             "Send": "Envoyer"
+        },
+        "answer": {
+            "title": "Sondage"
         }
     },
     "poweredby": "produit par",
