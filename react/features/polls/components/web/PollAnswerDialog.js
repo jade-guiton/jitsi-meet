@@ -4,10 +4,10 @@
 import { Checkbox } from '@atlaskit/checkbox';
 import * as React from 'react';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import { Dialog } from '../../../base/dialog';
 import { getLocalParticipant } from '../../../base/participants';
-import { connect } from '../../../base/redux';
 import { COMMAND_ANSWER_POLL } from '../../constants';
 import type { Poll } from '../../types';
 
@@ -17,25 +17,9 @@ import type { Poll } from '../../types';
 type Props = {
 
     /**
-     * A conference object used to send a command to other participants
-     */
-    conference: any,
-
-    /**
      * The id of the poll to be displayed
      */
     pollId: number,
-
-    /**
-     * The poll, a {@code Poll} object, to be displayed
-     */
-    poll: Poll,
-
-    /**
-     * The id of the participant
-     */
-    localId: String,
-
 }
 
 /**
@@ -46,9 +30,25 @@ type Props = {
  */
 function AnswerPoll(props: Props): React.Node {
 
-    const { conference, localId, poll, pollId, t } = props;
+    const { pollId } = props;
 
-    const [ checkBoxStates, setCheckBoxState ] = useState(poll ? new Array(poll.answers.length).fill(false) : []);
+    /**
+     * A conference object used to send a command to other participants
+     */
+    const conference: Object = useSelector(state => state['features/base/conference'].conference);
+
+    /**
+     * The poll to be displayed
+     */
+    const poll: Poll = useSelector(state => state['features/polls'].polls[pollId]);
+
+    /**
+    * The id of the participant
+    */
+    const localId: string = useSelector(state => getLocalParticipant(state).id);
+
+
+    const [ checkBoxStates, setCheckBoxState ] = useState(new Array(poll.answers.length).fill(false));
 
     return (
 
@@ -64,13 +64,13 @@ function AnswerPoll(props: Props): React.Node {
                     },
                     children: checkBoxStates.map(
                         checkBoxState => {
-                        return {
-                            attributes: {
-                                checked: checkBoxState
-                            },
-                            tagName: 'answer'
-                    };
-                })
+                            return {
+                                attributes: {
+                                    checked: checkBoxState
+                                },
+                                tagName: 'answer'
+                            };
+                        })
                 };
 
 
@@ -113,24 +113,5 @@ function AnswerPoll(props: Props): React.Node {
     );
 }
 
-/**
- * A function to bind props to state and fetch received poll thanks to pollID.
- *
- * @param {Object} state - The redux state.
- * @param {Props} previousProp - The previous Prps.
- * @returns {Props}
- */
-function _mapStateToProps(state: Object, previousProp: Props) {
-    const { conference } = state['features/base/conference'];
-    const { polls } = state['features/polls'];
-    const { pollId } = previousProp;
 
-    return {
-        // if the pollId is not null, we fetch the corresponding poll in the state
-        poll: polls[pollId],
-        conference,
-        localId: getLocalParticipant(state).id
-    };
-}
-
-export default connect(_mapStateToProps)(AnswerPoll);
+export default AnswerPoll;
