@@ -3,7 +3,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { getParticipantDisplayName, getParticipants } from '../../../base/participants';
+import { getParticipantDisplayName } from '../../../base/participants';
 
 type Poll = {
 
