@@ -59,8 +59,6 @@ function PollResults({ detailedVotes, displayTitle, pollDetails }: Props) {
 
     const participants = useSelector(state => getParticipants(state));
 
-    console.log(participants);
-
     const answers = pollDetails.answers.map(answer => {
 
         const answerPercent = (answer.voters.size / totalVoters * 100).toFixed(0);
@@ -68,8 +66,6 @@ function PollResults({ detailedVotes, displayTitle, pollDetails }: Props) {
         const detailedAnswer = detailedVotes
             ? [ ...answer.voters ].map(voterId => {
                 const name = useSelector(state => getParticipantDisplayName(state, voterId));
-
-                console.log(name);
 
                 return <li key = { voterId }>{ name }</li>;
             })
