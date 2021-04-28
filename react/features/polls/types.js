@@ -7,7 +7,7 @@ export type Answer = {
 };
 
 export type Poll = {
-    sender: string,
+    senderId: string,
     question: string,
     answers: Array<{ name: string, voters: Set<string> }>,
     messageIdx: number
