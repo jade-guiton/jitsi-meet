@@ -23,6 +23,10 @@ const PollCreateDialog = (props: Props) => {
         t
     } = props;
 
+    /*
+     * This ref stores the Array of answer input fields, allowing us to focus on them.
+     * This array is maintained by registerfieldRef and the useEffect below.
+     */
     const answerInputs = useRef([]);
     const registerFieldRef = useCallback((i, r) => {
         if (r === null) {
@@ -35,6 +39,10 @@ const PollCreateDialog = (props: Props) => {
         answerInputs.current = answerInputs.current.slice(0, answers.length);
     }, [ answers ]);
 
+    /*
+     * This state allows us to requestFocus asynchronously, without having to worry
+     * about whether a newly created input field has been rendered yet or not.
+     */
     const [ lastFocus, requestFocus ] = useState(null);
 
     useEffect(() => {
@@ -49,6 +57,7 @@ const PollCreateDialog = (props: Props) => {
         input.focus();
     }, [ lastFocus ]);
 
+    // Called on keypress in answer fields
     const onAnswerKeyDown = useCallback((i, ev) => {
         if (ev.key === 'Enter') {
             addAnswer(i + 1);
@@ -83,23 +92,29 @@ const PollCreateDialog = (props: Props) => {
                 value = { question } />
         </div>
         <ol className = 'poll-answer-fields'>
-            {answers.map((answer, i) => (<li key = { i }>
-                /* eslint-disable react/jsx-no-bind */
-                <FieldTextStateless
-                    compact = { true }
-                    isLabelHidden = { true }
-                    onChange = { ev => setAnswer(i, ev.target.value) }
-                    onKeyDown = { ev => onAnswerKeyDown(i, ev) }
-                    placeholder = { t('polls.create.answerPlaceholder', { index: i + 1 }) }
-                    ref = { r => registerFieldRef(i, r) }
-                    shouldFitContainer = { true }
-                    type = 'text'
-                    value = { answer } />
-                /* eslint-enable react/jsx-no-bind */
-            </li>))}
+            {
+            /* eslint-disable react/jsx-no-bind */
+                answers.map((answer, i) => (<li key = { i }>
+                    <FieldTextStateless
+                        compact = { true }
+                        isLabelHidden = { true }
+                        onChange = { ev => setAnswer(i, ev.target.value) }
+                        onKeyDown = { ev => onAnswerKeyDown(i, ev) }
+                        placeholder = { t('polls.create.answerPlaceholder', { index: i + 1 }) }
+                        ref = { r => registerFieldRef(i, r) }
+                        shouldFitContainer = { true }
+                        type = 'text'
+                        value = { answer } />
+                </li>))
+            /* eslint-enable react/jsx-no-bind */
+            }
         </ol>
     </Dialog>);
 };
 
+/*
+ * We apply AbstractPollCreateDialog to fill in the AbstractProps common
+ * to both the web and native implementations.
+ */
 // eslint-disable-next-line new-cap
 export default translate(AbstractPollCreateDialog(PollCreateDialog));
