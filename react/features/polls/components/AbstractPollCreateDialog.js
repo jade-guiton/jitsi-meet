@@ -14,6 +14,7 @@ export type AbstractProps = {
     answers: Array<string>,
     setAnswer: (number, string) => void,
     addAnswer: ?number => void,
+    moveAnswer: (number, number) => void,
     removeAnswer: number => void,
     onSubmit: Function,
 };
@@ -36,6 +37,14 @@ export const AbstractPollCreateDialog = Component => props => {
         const newAnswers = [ ...answers ];
 
         newAnswers.splice(i === undefined ? answers.length : i, 0, '');
+        setAnswers(newAnswers);
+    });
+    const moveAnswer = useCallback((i, j) => {
+        const newAnswers = [ ...answers ];
+
+        const answer = answers[i];
+        newAnswers.splice(i, 1);
+        newAnswers.splice(j, 0, answer);
         setAnswers(newAnswers);
     });
     const removeAnswer = useCallback(i => {
@@ -73,6 +82,7 @@ export const AbstractPollCreateDialog = Component => props => {
         answers = { answers }
         onSubmit = { onSubmit }
         question = { question }
+        moveAnswer = { moveAnswer }
         removeAnswer = { removeAnswer }
         setAnswer = { setAnswer }
         setQuestion = { setQuestion } />);
