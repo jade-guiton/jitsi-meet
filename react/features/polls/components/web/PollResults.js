@@ -3,7 +3,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { getParticipantDisplayName } from '../../../base/participants';
+import { getParticipants } from '../../../base/participants';
 import type { Poll } from '../../types';
 
 
@@ -34,22 +34,26 @@ function PollResults({ detailedVotes, displayQuestion, pollDetails }: Props) {
 
     const question = displayQuestion ? <strong>{ pollDetails.question }</strong> : null;
 
+    const participants = useSelector(state => getParticipants(state));
+
     const totalVoters = pollDetails.answers.reduce((accumulator, answer) => accumulator + answer.voters.size, 0);
 
-    const answers = pollDetails.answers.map(answer => {
+    const answers = pollDetails.answers.map((answer, index) => {
 
-        const answerPercent = (answer.voters.size / totalVoters * 100).toFixed(0);
+        const answerPercent = Math.round(answer.voters.size / totalVoters * 100);
 
         const detailedAnswer = detailedVotes
             ? [ ...answer.voters ].map(voterId => {
-                const name = useSelector(state => getParticipantDisplayName(state, voterId));
+                const participant = participants.filter(part => part.id === voterId);
+
+                const name = participant.length > 0 ? participant[0].name : 'Fellow Jitser';
 
                 return <li key = { voterId }>{ name }</li>;
             })
             : null;
 
         return (
-            <li key = { answer.name }>
+            <li key = { index }>
                 { answer.name } ({ answerPercent } %)
                 <div>
                     <ul>
@@ -62,11 +66,13 @@ function PollResults({ detailedVotes, displayQuestion, pollDetails }: Props) {
 
     return (
         <div>
-            <div>
+            <div className = 'poll-question-field'>
                 { question }
             </div>
             <div>
-                { answers }
+                <ol className = 'poll-answer-fields'>
+                    { answers }
+                </ol>
             </div>
         </div>
     );
