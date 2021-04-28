@@ -12,7 +12,7 @@ const INITIAL_STATE = {
 ReducerRegistry.register('features/polls', (state = INITIAL_STATE, action) => {
     switch (action.type) {
     case RECEIVE_POLL:
-        console.log('Received poll', action.pollId,' :',  action.poll);
+        console.log('Received poll', action.pollId, ' :', action.poll);
 
         return {
             ...state,
@@ -22,17 +22,42 @@ ReducerRegistry.register('features/polls', (state = INITIAL_STATE, action) => {
             }
         };
 
-    case RECEIVE_ANSWER:
-        console.log('Reducer Received answer for poll', action.pollId, ': ', action.answer);
+    // Here is the logic to add answer to an existing poll
+    case RECEIVE_ANSWER: {
+
+        const { pollId, answer }: { pollId: string; answer: Answer } = action;
+
+        console.log('currently saved polls: ', state.polls);
+        console.log('Reducer Received answer for poll :', pollId, answer);
 
 
-        // TODO add here logic to add answer to existing poll
+        // if the poll doesn't exist
+        if (!(pollId in state.polls)) {
+            console.error('requested poll does not exist: pollId ', pollId);
+
+            return state;
+        }
+
+        // if the poll exists, we will update it with the incoming answer
+        const updatedPoll: Poll = state.polls[pollId];
+
+        for (let i = 0; i < updatedPoll.answers.length; i++) {
+            if (answer.answers[i] === true) {
+                updatedPoll.answers[i].voters.add(answer.senderId);
+            }
+        }
+        console.log('updated poll', updatedPoll);
+
+        // finally we update the state by returning the updated poll
         return {
             ...state,
             polls: {
-                ...state.polls
+                ...state.polls,
+                [pollId]: updatedPoll
             }
         };
+    }
+
 
     default:
         return state;

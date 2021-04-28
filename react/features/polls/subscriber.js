@@ -34,7 +34,7 @@ StateListenerRegistry.register(
                     senderId,
                     pollId,
                     answers: children.map(
-                            element => element.attributes.checked
+                            element => element.attributes.checked === 'true'
                     )
                 };
 

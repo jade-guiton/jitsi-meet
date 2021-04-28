@@ -10,17 +10,41 @@ import { connect } from '../../../base/redux';
 import { COMMAND_ANSWER_POLL } from '../../constants';
 import type { Poll } from '../../types';
 
-
+/**
+ * The type of the React {@code Component} props of {@code AnswerPoll}.
+ */
 type Props = {
+
+    /**
+     * A conference object used to send a command to other participants
+     */
     conference: any,
+
+    /**
+     * The id of the poll to be displayed
+     */
     pollId: number,
+
+    /**
+     * The poll, a {@code Poll} object, to be displayed
+     */
     poll: Poll,
+
+    /**
+     * The id of the participant
+     */
     localId: String,
 }
 
+/**
+ * A modal component to answer polls.
+ *
+ * @param {Props} props - The passed props.
+ * @returns {React.Node}
+ */
 function AnswerPoll(props: Props): React.Node {
 
-    const { poll, pollId, localId, conference } = props;
+    const { conference, localId, poll, pollId } = props;
 
     const [ checkBoxStates, setCheckBoxState ] = useState(poll ? new Array(poll.answers.length).fill(false) : []);
 
@@ -28,35 +52,37 @@ function AnswerPoll(props: Props): React.Node {
     return (
 
         <Dialog
-            width = 'small'
-            className = 'poll-answers default-scrollbar'
             cancelKey = { 'dialog.close' }
-            submitDisabled = { false }
-            titleKey = 'Poll'
+            className = 'poll-answers default-scrollbar'
             onSubmit = { () => {
 
-                const answer_data = {
+                const answerData = {
                     attributes: {
-                        pollId: pollId,
+                        pollId,
                         senderId: localId
                     },
                     children: checkBoxStates.map(
                 checkBoxState => {
                     return {
-                        tagName: 'answer',
                         attributes: { checked: checkBoxState
-                        } };
+                        },
+                        tagName: 'answer'
+                    };
                 })
                 };
 
 
                 conference.sendCommandOnce(
                     COMMAND_ANSWER_POLL,
-                    answer_data
+                    answerData
                 );
 
                 return true;
-            } }>
+            } }
+
+            submitDisabled = { false }
+            titleKey = 'Poll'
+            width = 'small'>
 
 
             <div>
@@ -68,7 +94,7 @@ function AnswerPoll(props: Props): React.Node {
                             label = {
                                 <label className = 'poll-answers'> {answer.name}</label>
                             }
-                            size = 'xlarge'
+
                             name = 'checkbox-poll-answer'
                             onChange = { () => {
                                 // we toggle the matching checkBox State
@@ -77,7 +103,8 @@ function AnswerPoll(props: Props): React.Node {
                                 newCheckBoxStates[index] = !newCheckBoxStates[index];
                                 setCheckBoxState(newCheckBoxStates);
                             }
-                            } />
+                            }
+                            size = 'xlarge' />
                     ))
                 }
             </div>
@@ -85,6 +112,13 @@ function AnswerPoll(props: Props): React.Node {
     );
 }
 
+/**
+ * A function to bind props to state and fetch received poll thanks to pollID.
+ *
+ * @param {Object} state - The redux state.
+ * @param {Props} previousProp - The previous Prps.
+ * @returns {Props}
+ */
 function _mapStateToProps(state: Object, previousProp: Props) {
     const { conference } = state['features/base/conference'];
     const { polls } = state['features/polls'];
