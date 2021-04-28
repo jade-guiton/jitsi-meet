@@ -13,7 +13,7 @@ export const AbstractPollCreateDialog = Component => props => {
             attributes: {
                 pollId: Math.floor(Math.random() * Number.MAX_SAFE_INTEGER),
                 sender: conference.myUserId(),
-                title: 'Example poll'
+                question: 'Example poll'
             },
             children: [
                 { tagName: 'answer',

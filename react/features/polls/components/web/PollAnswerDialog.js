@@ -3,14 +3,12 @@
 import { Checkbox } from '@atlaskit/checkbox';
 import * as React from 'react';
 import { useState } from 'react';
-import Spinner from '@atlaskit/spinner';
 
 import { Dialog } from '../../../base/dialog';
 import { getLocalParticipant } from '../../../base/participants';
 import { connect } from '../../../base/redux';
-
 import { COMMAND_ANSWER_POLL } from '../../constants';
-import type { Poll, Answer } from '../../types';
+import type { Poll } from '../../types';
 
 
 type Props = {
@@ -18,50 +16,17 @@ type Props = {
     pollId: number,
     poll: Poll,
     localId: String,
-    dispatch: any
 }
-
-export const example_poll: Poll = {
-    id: 42,
-    sender: '314159',
-    title: 'Question??',
-
-    // options: { multiple: false},
-    answers: [
-        { name: 'A',
-            voters: new Set([ 'alpha', 'beta', 'gamma' ]) },
-        { name: 'B',
-            voters: new Set([ 'mu', 'nu', 'xi' ]) },
-        { name: 'Maybe C',
-            voters: new Set([ 'alpha', 'beta', 'mu' ]) },
-        { name: 'D',
-            voters: new Set([ 'alpha', 'beta', 'gamma' ]) },
-        { name: 'E',
-            voters: new Set([ 'mu', 'nu', 'xi' ]) },
-        { name: 'F',
-            voters: new Set([ 'alpha', 'beta', 'gamma' ]) },
-        { name: 'G',
-            voters: new Set([ 'mu', 'nu', 'xi' ]) },
-        { name: 'H',
-            voters: new Set([ 'alpha', 'beta', 'gamma' ]) },
-        { name: 'I',
-            voters: new Set([ 'mu', 'nu', 'xi' ]) }
-    ],
-    messageIdx: 12345
-};
-
 
 function AnswerPoll(props: Props): React.Node {
 
-    const { poll, localId, conference, dispatch } = props;
+    const { poll, pollId, localId, conference } = props;
 
-    const [checkBoxStates, setCheckBoxState] = useState(Boolean(poll)? new Array(poll.answers.length).fill(false) : []);
+    const [ checkBoxStates, setCheckBoxState ] = useState(poll ? new Array(poll.answers.length).fill(false) : []);
 
-    // if the poll is null, show a spinner, else, show the poll 
+    // if the poll is null, show a spinner, else, show the poll
     return (
-        <>
-        { Boolean(poll)
-        ?
+
         <Dialog
             width = 'small'
             className = 'poll-answers default-scrollbar'
@@ -72,16 +37,16 @@ function AnswerPoll(props: Props): React.Node {
 
                 const answer_data = {
                     attributes: {
-                        pollId: poll.id,
+                        pollId: pollId,
                         senderId: localId
                     },
                     children: checkBoxStates.map(
-                        checkBoxState => {
-                            return {
-                                tagName: 'answer',
-                                attributes: { checked: checkBoxState
-                                } };
-                        })
+                checkBoxState => {
+                    return {
+                        tagName: 'answer',
+                        attributes: { checked: checkBoxState
+                        } };
+                })
                 };
 
 
@@ -95,7 +60,7 @@ function AnswerPoll(props: Props): React.Node {
 
 
             <div>
-                <h1 className = 'poll-answers'>{poll.title}</h1>
+                <h1 className = 'poll-answers'>{poll.question}</h1>
                 {
                     poll.answers.map((answer, index) => (
                         <Checkbox
@@ -117,34 +82,18 @@ function AnswerPoll(props: Props): React.Node {
                 }
             </div>
         </Dialog>
-        
-        :
-
-        <Dialog
-        width = 'small'
-        className = 'poll-answers default-scrollbar'
-        cancelKey = { 'dialog.close' }
-        submitDisabled = { true }
-        titleKey = "No active Poll"
-        >
-            <Spinner
-                isCompleting = { false }
-                size = 'medium'
-            />
-        </Dialog>
-        }
-        </>
     );
 }
 
-function _mapStateToProps(state: Object, previousProp: Object) {
-    const {conference} = state['features/base/conference'];
-    const {current_poll_id, polls} = state['features/polls'];
+function _mapStateToProps(state: Object, previousProp: Props) {
+    const { conference } = state['features/base/conference'];
+    const { polls } = state['features/polls'];
+    const { pollId } = previousProp;
 
     return {
         // if the pollId is not null, we fetch the corresponding poll in the state
-        poll: Boolean(current_poll_id)? polls[current_poll_id] : null,
-        conference: conference,
+        poll: polls[pollId],
+        conference,
         localId: getLocalParticipant(state).id
     };
 }
