@@ -3,7 +3,7 @@
 
 import { Checkbox } from '@atlaskit/checkbox';
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 
 import { Dialog } from '../../../base/dialog';
@@ -50,37 +50,41 @@ function AnswerPoll(props: Props): React.Node {
 
     const [ checkBoxStates, setCheckBoxState ] = useState(new Array(poll.answers.length).fill(false));
 
+
+    const submitAnswer = useCallback(() => {
+        const answerData = {
+            attributes: {
+                pollId,
+                senderId: localId
+            },
+            children: checkBoxStates.map(
+                checkBoxState => {
+                    return {
+                        attributes: {
+                            checked: checkBoxState
+                        },
+                        tagName: 'answer'
+                    };
+                })
+        };
+
+        conference.sendCommandOnce(
+            COMMAND_ANSWER_POLL,
+            answerData
+        );
+
+        return true;
+    },
+    [ pollId, localId, checkBoxStates, conference ]
+    );
+
+
     return (
 
         <Dialog
             cancelKey = { 'dialog.close' }
             className = 'poll-answers default-scrollbar'
-            onSubmit = { () => {
-
-                const answerData = {
-                    attributes: {
-                        pollId,
-                        senderId: localId
-                    },
-                    children: checkBoxStates.map(
-                        checkBoxState => {
-                            return {
-                                attributes: {
-                                    checked: checkBoxState
-                                },
-                                tagName: 'answer'
-                            };
-                        })
-                };
-
-
-                conference.sendCommandOnce(
-                    COMMAND_ANSWER_POLL,
-                    answerData
-                );
-
-                return true;
-            } }
+            onSubmit = { submitAnswer }
 
             titleKey = 'polls.answer.title'
             width = 'small'>
@@ -103,8 +107,7 @@ function AnswerPoll(props: Props): React.Node {
 
                                 newCheckBoxStates[index] = !newCheckBoxStates[index];
                                 setCheckBoxState(newCheckBoxStates);
-                            }
-                            }
+                            } }
                             size = 'xlarge' />
                     ))
                 }
