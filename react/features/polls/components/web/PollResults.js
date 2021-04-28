@@ -4,29 +4,8 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { getParticipantDisplayName } from '../../../base/participants';
+import type { Poll } from '../../types';
 
-type Poll = {
-
-    /**
-     * Answers of the poll (including name and id of voters for each answer)
-     */
-    answers: Array<{name: string, voters: Set<string>}>,
-
-    /**
-     * Index of the message in the chat
-     */
-    messageIdx?: number,
-
-    /**
-     * Id of the poll creator
-     */
-    sender: string,
-
-    /**
-     * Question of the poll
-     */
-    question: string,
-};
 
 type Props = {
 
