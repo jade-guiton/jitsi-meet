@@ -1,11 +1,16 @@
 // @flow
 
+import { openDialog } from '../../../base/dialog';
 import { translate } from '../../../base/i18n';
-import { connect } from '../../../base/redux';
 import { IconPoll } from '../../../base/icons';
+import { connect } from '../../../base/redux';
 import { AbstractButton, type AbstractButtonProps } from '../../../base/toolbox/components';
 
-export type Props = AbstractButtonProps & {
+// import PollAnswerDialog, { example_poll } from './PollAnswerDialog';
+import PollCreateDialog from './PollCreateDialog';
+
+type Props = AbstractButtonProps & {
+
     /**
      * The redux {@code dispatch} function.
      */
@@ -20,7 +25,7 @@ export type Props = AbstractButtonProps & {
 /**
  * A button for creating polls
  */
-class PollButton<P: Props> extends AbstractButton<P, *> {
+class PollCreateButton<P: Props> extends AbstractButton<P, *> {
     accessibilityLabel = 'toolbar.accessibilityLabel.poll';
     icon = IconPoll;
     label = 'toolbar.poll';
@@ -34,10 +39,9 @@ class PollButton<P: Props> extends AbstractButton<P, *> {
      * @returns {void}
      */
     _handleClick() {
-        const { dispatch } = this.props;
-        
-        console.log('Click!');
+        // this.props.dispatch(openDialog(PollAnswerDialog, {poll: example_poll}));
+        this.props.dispatch(openDialog(PollCreateDialog));
     }
 }
 
-export default translate(connect()(PollButton));
+export default translate(connect()(PollCreateButton));
