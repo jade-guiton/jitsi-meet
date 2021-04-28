@@ -32,7 +32,7 @@ type Props = {
  */
 function PollResults({ detailedVotes, displayQuestion, pollDetails }: Props) {
 
-    const title = displayQuestion ? <strong>{ pollDetails.question }</strong> : null;
+    const question = displayQuestion ? <strong>{ pollDetails.question }</strong> : null;
 
     const totalVoters = pollDetails.answers.reduce((accumulator, answer) => accumulator + answer.voters.size, 0);
 
@@ -63,7 +63,7 @@ function PollResults({ detailedVotes, displayQuestion, pollDetails }: Props) {
     return (
         <div>
             <div>
-                { title }
+                { question }
             </div>
             <div>
                 { answers }
