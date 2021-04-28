@@ -23,9 +23,9 @@ type Poll = {
     sender: string,
 
     /**
-     * Title (question) of the poll
+     * Question of the poll
      */
-    title: string,
+    question: string,
 };
 
 type Props = {
@@ -36,9 +36,9 @@ type Props = {
     detailedVotes: boolean,
 
     /**
-     * Display or not the poll title
+     * Display or not the poll question
      */
-    displayTitle: boolean,
+    displayQuestion: boolean,
 
     /**
      * Details of the poll to display
@@ -51,9 +51,9 @@ type Props = {
  *
  * @returns {React$Element<any>}
  */
-function PollResults({ detailedVotes, displayTitle, pollDetails }: Props) {
+function PollResults({ detailedVotes, displayQuestion, pollDetails }: Props) {
 
-    const title = displayTitle ? <strong>{ pollDetails.title }</strong> : null;
+    const title = displayQuestion ? <strong>{ pollDetails.question }</strong> : null;
 
     const totalVoters = pollDetails.answers.reduce((accumulator, answer) => accumulator + answer.voters.size, 0);
 
