@@ -57,8 +57,6 @@ function PollResults({ detailedVotes, displayTitle, pollDetails }: Props) {
 
     const totalVoters = pollDetails.answers.reduce((accumulator, answer) => accumulator + answer.voters.size, 0);
 
-    const participants = useSelector(state => getParticipants(state));
-
     const answers = pollDetails.answers.map(answer => {
 
         const answerPercent = (answer.voters.size / totalVoters * 100).toFixed(0);
