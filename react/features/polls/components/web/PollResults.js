@@ -44,9 +44,9 @@ function PollResults({ detailedVotes, displayQuestion, pollDetails }: Props) {
 
         const detailedAnswer = detailedVotes
             ? [ ...answer.voters ].map(voterId => {
-                const participant = participants.filter(part => part.id === voterId);
+                const participant = participants.find(part => part.id === voterId);
 
-                const name = participant.length > 0 ? participant[0].name : 'Fellow Jitser';
+                const name = participant || 'Fellow Jitser';
 
                 return <li key = { voterId }>{ name }</li>;
             })
