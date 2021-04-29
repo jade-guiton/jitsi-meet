@@ -1,7 +1,6 @@
 // @flow
 
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
 import { getParticipants } from '../../../base/participants';
@@ -21,9 +20,9 @@ type Props = {
     displayQuestion: boolean,
 
     /**
-     * Details of the poll to display
+     * ID of the poll to display
      */
-    pollDetails: Poll,
+    pollId: number,
 };
 
 /**
@@ -31,24 +30,26 @@ type Props = {
  *
  * @returns {React$Element<any>}
  */
-function PollResults({ detailedVotes, displayQuestion, pollDetails }: Props) {
-
-    const question = displayQuestion ? <strong>{ pollDetails.question }</strong> : null;
+function PollResults({ detailedVotes, displayQuestion, pollId }: Props) {
+    const pollDetails = useSelector(state => state['features/polls'].polls[pollId]);
 
     const participants = useSelector(state => getParticipants(state));
 
-    const totalVoters = pollDetails.answers.reduce((accumulator, answer) => accumulator + answer.voters.size, 0);
+    const totalVoters = useMemo(() => {
+        const voterSet = new Set();
 
-    const { t } = useTranslation();
+        for (const answer of pollDetails.answers) {
+            for (const voter of answer.voters) {
+                voterSet.add(voter);
+            }
+        }
 
-    // if no message for the moment, we stop here and display a warning message
-    if (totalVoters === 0) {
-        return <span> {t('poll.answer.empty')} </span>;
-    }
+        return voterSet.size;
+    }, [ pollDetails.answers ]);
 
     const answers = pollDetails.answers.map((answer, index) => {
 
-        const answerPercent = Math.round(answer.voters.size / totalVoters * 100);
+        const answerPercent = totalVoters == 0 ? 0 : Math.round(answer.voters.size / totalVoters * 100);
 
         const detailedAnswer
             = detailedVotes
@@ -76,10 +77,10 @@ function PollResults({ detailedVotes, displayQuestion, pollDetails }: Props) {
 
     return (
         <div>
-            <div className = 'poll-question-field'>
-                { question }
-            </div>
-
+            {displayQuestion
+                && <div className = 'poll-question-field'>
+                    <strong>{ pollDetails.question }</strong>
+                </div>}
             <div>
                 <ol className = 'poll-answer-fields'>
                     { answers }

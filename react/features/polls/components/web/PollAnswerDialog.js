@@ -4,10 +4,11 @@
 import { Checkbox } from '@atlaskit/checkbox';
 import * as React from 'react';
 import { useState, useCallback } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Dialog } from '../../../base/dialog';
 import { getLocalParticipant } from '../../../base/participants';
+import { addMessage, MESSAGE_TYPE_LOCAL, MESSAGE_TYPE_REMOTE } from '../../../chat';
 import { COMMAND_ANSWER_POLL } from '../../constants';
 import type { Poll } from '../../types';
 
@@ -44,14 +45,32 @@ function AnswerPoll(props: Props): React.Node {
      */
     const poll: Poll = useSelector(state => state['features/polls'].polls[pollId]);
 
+    const localParticipant = useSelector(state => getLocalParticipant(state));
+
     /**
     * The id of the participant
     */
-    const localId: string = useSelector(state => getLocalParticipant(state).id);
-
+    const localId: string = localParticipant.id;
 
     const [ checkBoxStates, setCheckBoxState ] = useState(new Array(poll.answers.length).fill(false));
     const [ shouldDisplayResult, setShouldDisplayResult ] = useState(false);
+
+    const dispatch = useDispatch();
+    const localName: string = localParticipant.name;
+
+    const displayInChat = useCallback(() => {
+        dispatch(addMessage({
+            displayName: localName,
+            hasRead: false,
+            id: localId,
+            messageType: poll.senderId === localId ? MESSAGE_TYPE_LOCAL : MESSAGE_TYPE_REMOTE,
+            message: poll.question,
+            pollId,
+            privateMessage: false,
+            recipient: localName,
+            timestamp: Date.now()
+        }));
+    }, [ localName, localId, poll, pollId ]);
 
     const submitAnswer = useCallback(() => {
         const answerData = {
@@ -74,6 +93,9 @@ function AnswerPoll(props: Props): React.Node {
             COMMAND_ANSWER_POLL,
             answerData
         );
+
+        displayInChat();
+
         setShouldDisplayResult(true);
 
         return false;
@@ -82,6 +104,7 @@ function AnswerPoll(props: Props): React.Node {
     );
 
     const cancelAnswer = useCallback(() => {
+        displayInChat();
         setShouldDisplayResult(true);
 
         return false;
@@ -100,7 +123,7 @@ function AnswerPoll(props: Props): React.Node {
                 <PollResults
                     detailedVotes = { true }
                     displayQuestion = { true }
-                    pollDetails = { poll } />
+                    pollId = { pollId } />
 
             </Dialog>
             : <Dialog
