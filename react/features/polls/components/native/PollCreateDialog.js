@@ -1,22 +1,14 @@
 // @flow
 
-//import { FieldTextStateless } from '@atlaskit/field-text';
+// import { FieldTextStateless } from '@atlaskit/field-text';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { View, Text, TextInput, FlatList, Button } from 'react-native';
 
-import {
-    CustomSubmitDialog
-} from '../../../base/dialog';
-
-
-
-
+import CustomSubmitDialog from '../../../base/dialog/components/native/CustomSubmitDialog';
 import { translate } from '../../../base/i18n';
 import { Icon, IconAdd, IconClose } from '../../../base/icons';
-//import { Tooltip } from '../../../base/tooltip';
 import { AbstractPollCreateDialog } from '../AbstractPollCreateDialog';
 import type { AbstractProps } from '../AbstractPollCreateDialog';
-import { View, Text, KeyboardAvoidingView } from 'react-native';
-import BaseSubmitDialog from '../../../base/dialog/components/native/BaseSubmitDialog';
 
 type Props = AbstractProps & {
 
@@ -26,8 +18,8 @@ type Props = AbstractProps & {
     t: Function
 };
 
+
 const PollCreateDialog = (props: Props) => {
-    console.log(">>>> PollCreateDialog");
 
     const {
         question, setQuestion,
@@ -36,144 +28,124 @@ const PollCreateDialog = (props: Props) => {
         t
     } = props;
 
-
-    return(
-        <CustomSubmitDialog
-        >
-
-            <Text>
-                Please change this with comments in the code below
-            </Text>
-
-        </CustomSubmitDialog>
+    /*
+     * This ref stores the Array of answer input fields, allowing us to focus on them.
+     * This array is maintained by registerfieldRef and the useEffect below.
+     */
+    const answerInputs = useRef([]);
+    const registerFieldRef = useCallback((i, input) => {
+        if (input === null) {
+            return;
+        }
+        answerInputs.current[i] = input;
+    },
+    [ answerInputs ]
     );
 
-}
+    useEffect(() => {
+        answerInputs.current = answerInputs.current.slice(0, answers.length);
+    }, [ answers ]);
+
+    /*
+     * This state allows us to requestFocus asynchronously, without having to worry
+     * about whether a newly created input field has been rendered yet or not.
+     */
+    const [ lastFocus, requestFocus ] = useState(null);
+
+    useEffect(() => {
+        if (lastFocus === null) {
+            return;
+        }
+        const input = answerInputs.current[lastFocus];
+
+        if (input === undefined) {
+            return;
+        }
+        input.focus();
+    }, [ lastFocus ]);
 
 
-//     /*
-//      * This ref stores the Array of answer input fields, allowing us to focus on them.
-//      * This array is maintained by registerfieldRef and the useEffect below.
-//      */
-//     const answerInputs = useRef([]);
-//     const registerFieldRef = useCallback((i, r) => {
-//         if (r === null) {
-//             return;
-//         }
-//         answerInputs.current[i] = r.input;
-//     }, [ answerInputs ]);
+    const onQuestionKeyDown = useCallback(() => {
+        answerInputs.current[0].focus();
+    });
 
-//     useEffect(() => {
-//         answerInputs.current = answerInputs.current.slice(0, answers.length);
-//     }, [ answers ]);
+    const onAnswerSubmit = useCallback(index => {
+        addAnswer(index + 1);
+        requestFocus(index + 1);
+    }, [ answers ]);
 
-//     /*
-//      * This state allows us to requestFocus asynchronously, without having to worry
-//      * about whether a newly created input field has been rendered yet or not.
-//      */
-//     const [ lastFocus, requestFocus ] = useState(null);
+    // Called on keypress in answer fields
+    const onAnswerKeyDown = useCallback((index, ev) => {
+        const { key } = ev.nativeEvent;
+        const currentText = answers[index];
 
-//     useEffect(() => {
-//         if (lastFocus === null) {
-//             return;
-//         }
-//         const input = answerInputs.current[lastFocus];
+        if (key === 'Enter') {
+            onAnswerSubmit((index, ev));
+        } else if (key === 'Backspace' && currentText === '' && answers.length > 1) {
+            removeAnswer(index);
+            requestFocus(index > 0 ? index - 1 : 0);
+        }
+    }, [ answers, addAnswer, removeAnswer, requestFocus ]);
 
-//         if (input === undefined) {
-//             return;
-//         }
-//         input.focus();
-//     }, [ lastFocus ]);
 
-//     const onQuestionKeyDown = useCallback(ev => {
-//         if (ev.key === 'Enter') {
-//             requestFocus(0);
-//             ev.preventDefault();
-//         }
-//     });
+    const renderListItem = ({ index }) =>
 
-//     // Called on keypress in answer fields
-//     const onAnswerKeyDown = useCallback((i, ev) => {
-//         if (ev.ctrlKey || ev.metaKey) {
-//             return;
-//         }
-//         if (ev.key === 'Enter') {
-//             addAnswer(i + 1);
-//             requestFocus(i + 1);
-//             ev.preventDefault();
-//         } else if (ev.key === 'Backspace' && ev.target.value === '' && answers.length > 1) {
-//             removeAnswer(i);
-//             requestFocus(i > 0 ? i - 1 : 0);
-//             ev.preventDefault();
-//         } else if (ev.key === 'ArrowDown' || (ev.key === 'Tab' && !ev.shiftKey)) {
-//             if (i === answers.length - 1) {
-//                 addAnswer();
-//             }
-//             requestFocus(i + 1);
-//             ev.preventDefault();
-//         } else if (ev.key === 'ArrowUp' || (ev.key === 'Tab' && ev.shiftKey)) {
-//             if (i === 0) {
-//                 addAnswer(0);
-//                 requestFocus(0);
-//             } else {
-//                 requestFocus(i - 1);
-//             }
-//             ev.preventDefault();
-//         }
-//     }, [ answers, addAnswer, removeAnswer, requestFocus ]);
+    // padding to take into account the two default options
 
-//     /* eslint-disable react/jsx-no-bind */
-//     return (<Dialog
-//         okKey = { 'polls.create.send' }
-//         onSubmit = { onSubmit }
-//         titleKey = 'polls.create.dialogTitle'
-//         width = 'small'>
-//         <div className = 'poll-question-field'>
-//             <FieldTextStateless
-//                 autoFocus = { true }
-//                 compact = { true }
-//                 isLabelHidden = { true }
-//                 onChange = { ev => setQuestion(ev.target.value) }
-//                 onKeyDown = { onQuestionKeyDown }
-//                 placeholder = { t('polls.create.questionPlaceholder') }
-//                 shouldFitContainer = { true }
-//                 type = 'text'
-//                 value = { question } />
-//         </div>
-//         <ol className = 'poll-answer-fields'>
-//             {answers.map((answer, i) => (<li key = { i }>
-//                 <FieldTextStateless
-//                     compact = { true }
-//                     isLabelHidden = { true }
-//                     onChange = { ev => setAnswer(i, ev.target.value) }
-//                     onKeyDown = { ev => onAnswerKeyDown(i, ev) }
-//                     placeholder = { t('polls.create.answerPlaceholder', { index: i + 1 }) }
-//                     ref = { r => registerFieldRef(i, r) }
-//                     shouldFitContainer = { true }
-//                     type = 'text'
-//                     value = { answer } />
-//                 <Tooltip content = { t('polls.create.removeAnswer') }>
-//                     <button
-//                         className = 'poll-icon-button'
-//                         onClick = { () => removeAnswer(i) }
-//                         type = 'button'>
-//                         <Icon src = { IconClose } />
-//                     </button>
-//                 </Tooltip>
-//             </li>))}
-//         </ol>
-//         <div className = 'poll-add-button'>
-//             <Tooltip content = { t('polls.create.addAnswer') }>
-//                 <button
-//                     className = 'poll-icon-button'
-//                     onClick = { () => addAnswer() }
-//                     type = 'button'>
-//                     <Icon src = { IconAdd } />
-//                 </button>
-//             </Tooltip>
-//         </div>
-//     </Dialog>);
-// };
+        (
+            <View
+                style = {{ flexDirection: 'row' }}>
+                <TextInput
+                    blurOnSubmit = { false }
+                    onChangeText = { text => setAnswer(index, text) }
+                    onKeyPress = { ev => onAnswerKeyDown(index, ev) }
+                    onSubmitEditing = { ev => onAnswerSubmit(index) }
+                    placeholder = { t('polls.create.answerPlaceholder', { index: index + 1 }) }
+                    ref = { input => registerFieldRef(index, input) }
+                    value = { answers[index] } />
+
+                {answers.length > 1
+                    ? <Button
+                        onPress = { () => removeAnswer(index) }
+                        title = "X" />
+                    : null
+                }
+            </View>
+        );
+
+
+    return (
+        <CustomSubmitDialog
+            okKey = { 'polls.create.send' }
+            onSubmit = { onSubmit }
+            titleKey = 'polls.create.dialogTitle'
+            width = 'small'>
+
+            <Text> {t('polls.create.dialogTitle')}</Text>
+
+
+            <TextInput
+                autoFocus = { true }
+                blurOnSubmit = { false }
+                onChangeText = { setQuestion }
+                onSubmitEditing = { onQuestionKeyDown }
+                placeholder = { t('polls.create.questionPlaceholder') }
+                value = { question } />
+
+            <FlatList
+                blurOnSubmit = { true }
+                data = { answers }
+                keyExtractor = { (item, index) => index.toString() }
+                renderItem = { renderListItem } />
+
+
+            <Button
+                onPress = { () => addAnswer(answers.length) }
+                title = "+" />
+        </CustomSubmitDialog>
+    );
+};
+
 
 /*
  * We apply AbstractPollCreateDialog to fill in the AbstractProps common

@@ -7,6 +7,7 @@ import { translate } from '../../base/i18n';
 import { IconPoll } from '../../base/icons';
 import { connect } from '../../base/redux';
 import { AbstractButton, type AbstractButtonProps } from '../../base/toolbox/components';
+
 import { PollCreateDialog } from '.';
 
 /**
@@ -43,7 +44,7 @@ class PollCreateButton<P: Props> extends AbstractButton<P, *> {
      * @returns {void}
      */
     _handleClick() {
-        //sendAnalytics(createToolbarEvent('toggle.security', { enable: !this.props._locked }));
+        // sendAnalytics(createToolbarEvent('toggle.security', { enable: !this.props._locked }));
         this.props.dispatch(openDialog(PollCreateDialog));
     }
 }
