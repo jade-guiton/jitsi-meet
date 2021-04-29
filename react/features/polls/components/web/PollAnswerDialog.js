@@ -4,15 +4,15 @@
 import { Checkbox } from '@atlaskit/checkbox';
 import * as React from 'react';
 import { useState, useCallback } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Dialog } from '../../../base/dialog';
 import { getLocalParticipant } from '../../../base/participants';
+import { addMessage, MESSAGE_TYPE_LOCAL, MESSAGE_TYPE_REMOTE } from '../../../chat';
 import { COMMAND_ANSWER_POLL } from '../../constants';
-import PollResults from './PollResults';
 import type { Poll } from '../../types';
 
-
+import PollResults from './PollResults';
 
 /**
  * The type of the React {@code Component} props of {@code AnswerPoll}.
@@ -45,14 +45,33 @@ function AnswerPoll(props: Props): React.Node {
      */
     const poll: Poll = useSelector(state => state['features/polls'].polls[pollId]);
 
+    const localParticipant = useSelector(state => getLocalParticipant(state));
+
     /**
     * The id of the participant
     */
-    const localId: string = useSelector(state => getLocalParticipant(state).id);
-
+    const localId: string = localParticipant.id;
 
     const [ checkBoxStates, setCheckBoxState ] = useState(new Array(poll.answers.length).fill(false));
-    const [ shouldDisplayResult, setShouldDisplayResult] = useState(false);
+    const [ shouldDisplayResult, setShouldDisplayResult ] = useState(false);
+
+    const dispatch = useDispatch();
+    const localName: string = localParticipant.name;
+    const isChatOpen = useSelector(state => state['features/chat'].isOpen);
+
+    const displayInChat = useCallback(() => {
+        dispatch(addMessage({
+            displayName: localName,
+            hasRead: isChatOpen,
+            id: localId,
+            messageType: poll.senderId === localId ? MESSAGE_TYPE_LOCAL : MESSAGE_TYPE_REMOTE,
+            message: poll.question,
+            pollId,
+            privateMessage: false,
+            recipient: localName,
+            timestamp: Date.now()
+        }));
+    }, [ localName, localId, poll, pollId, isChatOpen ]);
 
     const submitAnswer = useCallback(() => {
         const answerData = {
@@ -75,69 +94,75 @@ function AnswerPoll(props: Props): React.Node {
             COMMAND_ANSWER_POLL,
             answerData
         );
+
+        displayInChat();
+
         setShouldDisplayResult(true);
+
         return false;
     },
     [ pollId, localId, checkBoxStates, conference ]
     );
 
     const cancelAnswer = useCallback(() => {
+        displayInChat();
         setShouldDisplayResult(true);
+
         return false;
     },
     []
-    )
+    );
 
     return (
 
         shouldDisplayResult
-        ?
-        <Dialog
-            okKey = { 'polls.answer.close' }
-            cancelDisabled = {true}
-            titleKey = 'polls.answer.results'
-        >
-            <h1 className = 'poll-answers'> ici des résultats</h1>
-            <PollResults detailedVotes={true} displayQuestion={true} pollDetails= {poll}/>
-            
-        </Dialog>
-        :
-        <Dialog
-            cancelKey = { 'polls.answer.skip' }
-            okKey = { 'polls.answer.submit' }
-            className = 'poll-answers default-scrollbar'
-            onSubmit = { submitAnswer }
-            onCancel = { cancelAnswer }
-            titleKey = 'polls.answer.title'
-            width = 'small'>
+            ? <Dialog
+                cancelDisabled = { true }
+                okKey = { 'polls.answer.close' }
+                titleKey = 'polls.answer.results'
+                width = 'small'>
+                <PollResults
+                    detailedVotes = { true }
+                    displayQuestion = { true }
+                    pollId = { pollId } />
+
+            </Dialog>
+            : <Dialog
+                cancelKey = { 'polls.answer.skip' }
+                className = 'poll-answers default-scrollbar'
+                okKey = { 'polls.answer.submit' }
+                onCancel = { cancelAnswer }
+                onSubmit = { submitAnswer }
+                titleKey = 'polls.answer.title'
+                width = 'small'>
 
 
-            <div>
-                <h1 className = 'poll-answers'>{poll.question}</h1>
-                {
-                    poll.answers.map((answer, index) => (
-                        <Checkbox
-                            key = { index }
-                            label = {
-                                <label className = 'poll-answers'> {answer.name}</label>
-                            }
+                <div>
+                    <h1 className = 'poll-answers'>{poll.question}</h1>
+                    {
+                        poll.answers.map((answer, index) => (
+                            <Checkbox
+                                key = { index }
+                                label = {
+                                    <label className = 'poll-answers'> {answer.name}</label>
+                                }
 
-                            name = 'checkbox-poll-answer'
-                            onChange = { () => {
+                                name = 'checkbox-poll-answer'
+                                onChange = { () => {
                                 // we toggle the matching checkBox State
-                                const newCheckBoxStates = [ ...checkBoxStates ];
+                                    const newCheckBoxStates = [ ...checkBoxStates ];
 
-                                newCheckBoxStates[index] = !newCheckBoxStates[index];
-                                setCheckBoxState(newCheckBoxStates);
-                            } }
-                            size = 'xlarge' />
-                    ))
-                }
-            </div>
-        </Dialog>
+                                    newCheckBoxStates[index] = !newCheckBoxStates[index];
+                                    setCheckBoxState(newCheckBoxStates);
+                                } }
+                                size = 'xlarge' />
+                        ))
+                    }
+                </div>
+            </Dialog>
     );
 
-    
+
 }
 
 

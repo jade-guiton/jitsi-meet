@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
 import { getParticipants } from '../../../base/participants';
@@ -20,9 +20,9 @@ type Props = {
     displayQuestion: boolean,
 
     /**
-     * Details of the poll to display
+     * ID of the poll to display
      */
-    pollDetails: Poll,
+    pollId: number,
 };
 
 /**
@@ -30,30 +30,38 @@ type Props = {
  *
  * @returns {React$Element<any>}
  */
-function PollResults({ detailedVotes, displayQuestion, pollDetails }: Props) {
-
-    const question = displayQuestion ? <strong>{ pollDetails.question }</strong> : null;
+function PollResults({ detailedVotes, displayQuestion, pollId }: Props) {
+    const pollDetails = useSelector(state => state['features/polls'].polls[pollId]);
 
     const participants = useSelector(state => getParticipants(state));
 
-    const totalVoters = pollDetails.answers.reduce((accumulator, answer) => accumulator + answer.voters.size, 0);
+    const totalVoters = useMemo(() => {
+        const voterSet = new Set();
+
+        for (const answer of pollDetails.answers) {
+            for (const voter of answer.voters) {
+                voterSet.add(voter);
+            }
+        }
+
+        return voterSet.size;
+    }, [ pollDetails.answers ]);
 
     const answers = pollDetails.answers.map((answer, index) => {
 
-        const answerPercent = Math.round(answer.voters.size / totalVoters * 100);
+        const answerPercent = totalVoters == 0 ? 0 : Math.round(answer.voters.size / totalVoters * 100);
 
-        const detailedAnswer =
-            detailedVotes
-            ? [ ...answer.voters ].map(voterId => {
-                const participant = participants.find(part => part.id === voterId);
-                console.log(participant);
+        const detailedAnswer
+            = detailedVotes
+                ? [ ...answer.voters ].map(voterId => {
+                    const participant = participants.find(part => part.id === voterId);
 
-                const name: string = participant ? participant.name : 'Fellow Jitser';
+                    const name: string = participant ? participant.name : 'Fellow Jitster';
 
-                return <li key = { voterId }>{ name }</li>;
-            })
+                    return <li key = { voterId }>{ name }</li>;
+                })
 
-            : null;
+                : null;
 
         return (
             <li key = { index }>
@@ -69,10 +77,10 @@ function PollResults({ detailedVotes, displayQuestion, pollDetails }: Props) {
 
     return (
         <div>
-            <div className = 'poll-question-field'>
-                { question }
-            </div>
-
+            {displayQuestion
+                && <div className = 'poll-question-field'>
+                    <strong>{ pollDetails.question }</strong>
+                </div>}
             <div>
                 <ol className = 'poll-answer-fields'>
                     { answers }
@@ -82,8 +90,6 @@ function PollResults({ detailedVotes, displayQuestion, pollDetails }: Props) {
         </div>
     );
 }
-
-            
 
 
 export default PollResults;

@@ -527,7 +527,8 @@
             "skip": "Passer",
             "submit": "Envoyer",
             "results" : "Résultats",
-            "close": "Fermer"
+            "close": "Fermer",
+            "empty": "Pas de réponse pour le moment"
         }
     },
     "poweredby": "produit par",

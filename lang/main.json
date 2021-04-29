@@ -555,7 +555,11 @@
             "skip": "Skip",
             "submit": "Submit",
             "results" : "Results",
-            "close": "Fermer"
+            "close": "Fermer",
+            "empty": "No answer for the moment"
+        },
+        "chat": {
+            "notice": "Poll"
         }
     },
     "poweredby": "powered by",

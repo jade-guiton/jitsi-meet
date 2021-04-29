@@ -7,7 +7,8 @@ import { Dialog } from '../../../base/dialog';
 import { translate } from '../../../base/i18n';
 import { Icon, IconAdd, IconClose, IconSmallDragHandle } from '../../../base/icons';
 import { Tooltip } from '../../../base/tooltip';
-import { AbstractPollCreateDialog, AbstractProps } from '../AbstractPollCreateDialog';
+import { AbstractPollCreateDialog } from '../AbstractPollCreateDialog';
+import type { AbstractProps } from '../AbstractPollCreateDialog';
 
 type Props = AbstractProps & {
 
