@@ -7,7 +7,8 @@ import { View, Text, TextInput, FlatList, Button } from 'react-native';
 import CustomSubmitDialog from '../../../base/dialog/components/native/CustomSubmitDialog';
 import { translate } from '../../../base/i18n';
 import { Icon, IconAdd, IconClose } from '../../../base/icons';
-import { AbstractPollCreateDialog } from '../AbstractPollCreateDialog';
+
+import AbstractPollCreateDialog from '../AbstractPollCreateDialog';
 import type { AbstractProps } from '../AbstractPollCreateDialog';
 
 type Props = AbstractProps & {

@@ -22,7 +22,7 @@ export type AbstractProps = {
  * Higher Order Component taking in a concrete PollCreateDialog component and
  * augmenting it with state/behavior common to both web and native implementations.
  */
-export const AbstractPollCreateDialog = Component => props => {
+const AbstractPollCreateDialog = Component => props => {
     const [ question, setQuestion ] = useState('');
 
     const [ answers, setAnswers ] = useState([ '' ]);
@@ -67,7 +67,7 @@ export const AbstractPollCreateDialog = Component => props => {
         return true;
     }, [ conference, question, answers ]);
 
-    return (<Component
+    return <Component
         { ...props }
         addAnswer = { addAnswer }
         answers = { answers }
@@ -75,5 +75,7 @@ export const AbstractPollCreateDialog = Component => props => {
         question = { question }
         removeAnswer = { removeAnswer }
         setAnswer = { setAnswer }
-        setQuestion = { setQuestion } />);
+        setQuestion = { setQuestion } />;
 };
+
+export default AbstractPollCreateDialog;
