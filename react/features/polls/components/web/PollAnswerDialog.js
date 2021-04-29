@@ -13,7 +13,6 @@ import type { Poll } from '../../types';
 
 import PollResults from './PollResults';
 
-
 /**
  * The type of the React {@code Component} props of {@code AnswerPoll}.
  */
@@ -96,7 +95,8 @@ function AnswerPoll(props: Props): React.Node {
             ? <Dialog
                 cancelDisabled = { true }
                 okKey = { 'polls.answer.close' }
-                titleKey = 'polls.answer.results'>
+                titleKey = 'polls.answer.results'
+                width = 'small'>
                 <PollResults
                     detailedVotes = { true }
                     displayQuestion = { true }

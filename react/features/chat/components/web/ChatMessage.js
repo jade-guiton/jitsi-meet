@@ -3,9 +3,9 @@
 import React from 'react';
 import { toArray } from 'react-emoji-render';
 
-
 import { translate } from '../../../base/i18n';
 import { Linkify } from '../../../base/react';
+
 import { MESSAGE_TYPE_LOCAL } from '../../constants';
 import AbstractChatMessage, {
     type Props
