@@ -59,7 +59,7 @@ class ConfirmDialog extends BaseSubmitDialog<Props, *> {
 
         return (
             <TouchableOpacity
-                onPress = { this._onCancel }
+                onPress = { this.props.onConfirmNo || this._onCancel }
                 style = { [
                     _dialogStyles.button,
                     brandedDialog.buttonFarLeft,
