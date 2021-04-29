@@ -25,7 +25,7 @@ export type AbstractProps = {
 export const AbstractPollCreateDialog = Component => props => {
     const [ question, setQuestion ] = useState('');
 
-    const [ answers, setAnswers ] = useState([ '' ]);
+    const [ answers, setAnswers ] = useState([ '', '' ]);
     const setAnswer = useCallback((i, answer) => {
         const newAnswers = [ ...answers ];
 
@@ -50,18 +50,24 @@ export const AbstractPollCreateDialog = Component => props => {
 
     const conference = useSelector(state => state['features/base/conference'].conference);
     const onSubmit = useCallback(() => {
+        const filteredAnswers = answers.filter(answer => answer.trim().length > 0);
+
+        if (filteredAnswers.length === 0) {
+            return false;
+        }
+
         conference.sendCommandOnce(COMMAND_NEW_POLL, {
             attributes: {
                 pollId: Math.floor(Math.random() * Number.MAX_SAFE_INTEGER),
                 senderId: conference.myUserId(),
                 question
             },
-            children: answers
-                .filter(answer => answer.trim().length > 0)
-                .map(answer => {
-                    return { tagName: 'answer',
-                        value: answer };
-                })
+            children: filteredAnswers.map(answer => {
+                return {
+                    tagName: 'answer',
+                    value: answer
+                };
+            })
         });
 
         return true;

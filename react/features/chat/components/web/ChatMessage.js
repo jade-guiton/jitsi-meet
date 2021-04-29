@@ -3,7 +3,6 @@
 import React from 'react';
 import { toArray } from 'react-emoji-render';
 
-
 import { translate } from '../../../base/i18n';
 import { Linkify } from '../../../base/react';
 import { PollResults } from '../../../polls/components';
