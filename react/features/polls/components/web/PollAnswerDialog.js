@@ -57,11 +57,12 @@ function AnswerPoll(props: Props): React.Node {
 
     const dispatch = useDispatch();
     const localName: string = localParticipant.name;
+    const isChatOpen = useSelector(state => state['features/chat'].isOpen);
 
     const displayInChat = useCallback(() => {
         dispatch(addMessage({
             displayName: localName,
-            hasRead: false,
+            hasRead: isChatOpen,
             id: localId,
             messageType: poll.senderId === localId ? MESSAGE_TYPE_LOCAL : MESSAGE_TYPE_REMOTE,
             message: poll.question,
@@ -70,7 +71,7 @@ function AnswerPoll(props: Props): React.Node {
             recipient: localName,
             timestamp: Date.now()
         }));
-    }, [ localName, localId, poll, pollId ]);
+    }, [ localName, localId, poll, pollId, isChatOpen ]);
 
     const submitAnswer = useCallback(() => {
         const answerData = {

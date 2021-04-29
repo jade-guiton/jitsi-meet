@@ -39,21 +39,29 @@ ReducerRegistry.register('features/polls', (state = INITIAL_STATE, action) => {
         }
 
         // if the poll exists, we will update it with the incoming answer
-        const updatedPoll: Poll = state.polls[pollId];
+        const newAnswers = state.polls[pollId].answers
+            .map(answer => {
+                return {
+                    name: answer.name,
+                    voters: new Set(answer.voters)
+                };
+            });
 
-        for (let i = 0; i < updatedPoll.answers.length; i++) {
+        for (let i = 0; i < newAnswers.length; i++) {
             if (answer.answers[i] === true) {
-                updatedPoll.answers[i].voters.add(answer.senderId);
+                newAnswers[i].voters.add(answer.senderId);
             }
         }
-        console.log('updated poll', updatedPoll);
 
         // finally we update the state by returning the updated poll
         return {
             ...state,
             polls: {
                 ...state.polls,
-                [pollId]: updatedPoll
+                [pollId]: {
+                    ...state.polls[pollId],
+                    answers: newAnswers
+                }
             }
         };
     }
