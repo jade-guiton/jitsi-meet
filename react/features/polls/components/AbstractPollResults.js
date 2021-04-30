@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useMemo } from 'react';
+import React, { useMemo, Component} from 'react';
 import { useSelector } from 'react-redux';
 
 import { getParticipants } from '../../base/participants';
@@ -38,7 +38,7 @@ export type AbstractProps = InputProps & {
  * @param {Props} props - The passed props.
  * @returns {React.Node}
  */
-const AbstractPollResults = Component => (props: InputProps): React.Node => {
+const AbstractPollResults = (Component: Component<InputProps>) => (props: InputProps) => {
     const { pollId } = props;
 
     const pollDetails = useSelector(state => state['features/polls'].polls[pollId]);

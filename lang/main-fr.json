@@ -528,7 +528,9 @@
             "submit": "Envoyer",
             "results" : "Résultats",
             "close": "Fermer",
-            "empty": "Pas de réponse pour le moment"
+            "empty": "Pas de réponse pour le moment",
+            "vote" : "{{count}} vote",
+            "vote_plural" : "{{count}} votes"
         },
         "chat": {
             "notice": "Sondage"

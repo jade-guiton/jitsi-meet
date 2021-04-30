@@ -48,5 +48,13 @@ export default createStyleSheet({
 
     plusButton: {
         marginTop: 16
+    },
+
+    bar: {
+        flexDirection: "row",
+        borderColor: ColorPalette.blue,
+        backgroundColor: ColorPalette.blue,
+        flexGrow: 0,
+        borderRadius: 5
     }
 });

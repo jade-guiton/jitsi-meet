@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useCallback, useState } from 'react';
+import React, { Component, useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { useTranslation } from 'react-i18next';
@@ -26,7 +26,7 @@ export type AbstractProps = {
  * Higher Order Component taking in a concrete PollCreateDialog component and
  * augmenting it with state/behavior common to both web and native implementations.
  */
-const AbstractPollCreateDialog = Component => props => {
+const AbstractPollCreateDialog = (Component: Component<any>) => (props: any) => {
     const [ question, setQuestion ] = useState('');
 
     const [ answers, setAnswers ] = useState([ '' ]);
