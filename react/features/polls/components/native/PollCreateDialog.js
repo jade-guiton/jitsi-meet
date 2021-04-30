@@ -3,6 +3,9 @@
 // import { FieldTextStateless } from '@atlaskit/field-text';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { View, Text, TextInput, FlatList, Button } from 'react-native';
+import { useSelector } from 'react-redux';
+import _DialogStyles from './styles'
+
 
 import CustomSubmitDialog from '../../../base/dialog/components/native/CustomSubmitDialog';
 import { translate } from '../../../base/i18n';
@@ -69,13 +72,13 @@ const PollCreateDialog = (props: Props) => {
         answerInputs.current[0].focus();
     });
 
-    const onAnswerSubmit = useCallback(index => {
+    const onAnswerSubmit = useCallback((index: number) => {
         addAnswer(index + 1);
         requestFocus(index + 1);
     }, [ answers ]);
 
     // Called on keypress in answer fields
-    const onAnswerKeyDown = useCallback((index, ev) => {
+    const onAnswerKeyDown = useCallback((index: number, ev) => {
         const { key } = ev.nativeEvent;
         const currentText = answers[index];
 
@@ -94,7 +97,7 @@ const PollCreateDialog = (props: Props) => {
 
         (
             <View
-                style = {{ flexDirection: 'row' }}>
+                style = {{ flexDirection: 'row' , alignItems:"baseline"}}>
                 <TextInput
                     blurOnSubmit = { false }
                     onChangeText = { text => setAnswer(index, text) }
@@ -102,6 +105,7 @@ const PollCreateDialog = (props: Props) => {
                     onSubmitEditing = { ev => onAnswerSubmit(index) }
                     placeholder = { t('polls.create.answerPlaceholder', { index: index + 1 }) }
                     ref = { input => registerFieldRef(index, input) }
+                    style = {_DialogStyles.field}
                     value = { answers[index] } />
 
                 {answers.length > 1
@@ -118,10 +122,13 @@ const PollCreateDialog = (props: Props) => {
         <CustomSubmitDialog
             okKey = { 'polls.create.send' }
             onSubmit = { onSubmit }
-            titleKey = 'polls.create.dialogTitle'
-            width = 'small'>
+            >
 
-            <Text> {t('polls.create.dialogTitle')}</Text>
+            <Text
+            style={_DialogStyles.title}
+            >
+                {t('polls.create.dialogTitle')}
+            </Text>
 
 
             <TextInput
@@ -130,6 +137,7 @@ const PollCreateDialog = (props: Props) => {
                 onChangeText = { setQuestion }
                 onSubmitEditing = { onQuestionKeyDown }
                 placeholder = { t('polls.create.questionPlaceholder') }
+                style = {_DialogStyles.question}
                 value = { question } />
 
             <FlatList
