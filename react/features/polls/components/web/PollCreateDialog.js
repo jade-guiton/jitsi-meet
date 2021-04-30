@@ -5,9 +5,10 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { Dialog } from '../../../base/dialog';
 import { translate } from '../../../base/i18n';
-import { Icon, IconAdd, IconClose } from '../../../base/icons';
+import { Icon, IconAdd, IconClose, IconSmallDragHandle } from '../../../base/icons';
 import { Tooltip } from '../../../base/tooltip';
-import { AbstractPollCreateDialog } from '../AbstractPollCreateDialog';
+
+import AbstractPollCreateDialog from '../AbstractPollCreateDialog';
 import type { AbstractProps } from '../AbstractPollCreateDialog';
 
 type Props = AbstractProps & {
@@ -21,7 +22,7 @@ type Props = AbstractProps & {
 const PollCreateDialog = (props: Props) => {
     const {
         question, setQuestion,
-        answers, setAnswer, addAnswer, removeAnswer,
+        answers, setAnswer, addAnswer, moveAnswer, removeAnswer,
         onSubmit,
         t
     } = props;
@@ -96,6 +97,25 @@ const PollCreateDialog = (props: Props) => {
             ev.preventDefault();
         }
     }, [ answers, addAnswer, removeAnswer, requestFocus ]);
+    
+    const [ grabbing, setGrabbing ] = useState(null);
+    
+    const onGrab = useCallback((i, ev) => {
+        if (ev.button !== 0) return;
+        setGrabbing(i);
+        window.addEventListener('mouseup', () => {
+            setGrabbing(grabbing => {
+                requestFocus(grabbing);
+                return null;
+            });
+        }, { once: true });
+    });
+    const onMouseOver = useCallback(i => {
+        if (grabbing !== null && grabbing !== i) {
+            moveAnswer(grabbing, i);
+            setGrabbing(i);
+        } 
+    });
 
     /* eslint-disable react/jsx-no-bind */
     return (<Dialog
@@ -116,26 +136,38 @@ const PollCreateDialog = (props: Props) => {
                 value = { question } />
         </div>
         <ol className = 'poll-answer-fields'>
-            {answers.map((answer, i) => (<li key = { i }>
-                <FieldTextStateless
-                    compact = { true }
-                    isLabelHidden = { true }
-                    onChange = { ev => setAnswer(i, ev.target.value) }
-                    onKeyDown = { ev => onAnswerKeyDown(i, ev) }
-                    placeholder = { t('polls.create.answerPlaceholder', { index: i + 1 }) }
-                    ref = { r => registerFieldRef(i, r) }
-                    shouldFitContainer = { true }
-                    type = 'text'
-                    value = { answer } />
-                <Tooltip content = { t('polls.create.removeAnswer') }>
+            {answers.map((answer, i) =>
+                <li
+                    key = { i }
+                    className = {grabbing === i ? 'poll-dragged' : ''}
+                    onMouseOver = { () => onMouseOver(i) }>
                     <button
-                        className = 'poll-icon-button'
-                        onClick = { () => removeAnswer(i) }
+                        className = 'poll-drag-handle'
+                        onMouseDown = { ev => onGrab(i, ev) }
+                        tabIndex = '-1'
                         type = 'button'>
-                        <Icon src = { IconClose } />
+                        <Icon src = { IconSmallDragHandle } />
                     </button>
-                </Tooltip>
-            </li>))}
+                    <FieldTextStateless
+                        compact = { true }
+                        isLabelHidden = { true }
+                        onChange = { ev => setAnswer(i, ev.target.value) }
+                        onKeyDown = { ev => onAnswerKeyDown(i, ev) }
+                        placeholder = { t('polls.create.answerPlaceholder', { index: i + 1 }) }
+                        ref = { r => registerFieldRef(i, r) }
+                        shouldFitContainer = { true }
+                        type = 'text'
+                        value = { answer } />
+                    <Tooltip content = { t('polls.create.removeAnswer') }>
+                        <button
+                            className = 'poll-icon-button'
+                            onClick = { () => removeAnswer(i) }
+                            type = 'button'>
+                            <Icon src = { IconClose } />
+                        </button>
+                    </Tooltip>
+                </li>
+            )}
         </ol>
         <div className = 'poll-add-button'>
             <Tooltip content = { t('polls.create.addAnswer') }>

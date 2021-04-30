@@ -141,7 +141,6 @@ class OverflowMenu extends PureComponent<Props, State> {
                 <AudioOnlyButton { ...buttonProps } />
                 {!toolbarButtons.has('raisehand') && <RaiseHandButton { ...buttonProps } />}
                 <PollCreateButton {...buttonProps} />
-                
                 <SecurityDialogButton { ...buttonProps } />
                 <ScreenSharingButton { ...buttonProps } />
                 <MoreOptionsButton { ...moreOptionsButtonProps } />
