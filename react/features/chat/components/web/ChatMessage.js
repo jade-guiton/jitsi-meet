@@ -99,9 +99,18 @@ class ChatMessage extends AbstractChatMessage<Props> {
         );
     }
 
+    /**
+     * Renders the poll results.
+     *
+     * @param {number} pollId - Id of the poll.
+     * @returns {React$Element<*>}
+     */
     _renderPollResults(pollId: number) {
         return <>
-            <PollResults pollId = { pollId } />
+            <PollResults
+                detailedVotes = { false }
+                displayQuestion = { false }
+                pollId = { pollId } />
             <div className = 'poll-notice'>
                 { this.props.t('polls.chat.notice') }
             </div>
