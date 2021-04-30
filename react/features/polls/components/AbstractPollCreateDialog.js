@@ -14,6 +14,7 @@ export type AbstractProps = {
     answers: Array<string>,
     setAnswer: (number, string) => void,
     addAnswer: ?number => void,
+    moveAnswer: (number, number) => void,
     removeAnswer: number => void,
     onSubmit: Function,
 };
@@ -25,7 +26,7 @@ export type AbstractProps = {
 const AbstractPollCreateDialog = Component => props => {
     const [ question, setQuestion ] = useState('');
 
-    const [ answers, setAnswers ] = useState([ '' ]);
+    const [ answers, setAnswers ] = useState([ '', '' ]);
     const setAnswer = useCallback((i, answer) => {
         const newAnswers = [ ...answers ];
 
@@ -36,6 +37,14 @@ const AbstractPollCreateDialog = Component => props => {
         const newAnswers = [ ...answers ];
 
         newAnswers.splice(i === undefined ? answers.length : i, 0, '');
+        setAnswers(newAnswers);
+    });
+    const moveAnswer = useCallback((i, j) => {
+        const newAnswers = [ ...answers ];
+
+        const answer = answers[i];
+        newAnswers.splice(i, 1);
+        newAnswers.splice(j, 0, answer);
         setAnswers(newAnswers);
     });
     const removeAnswer = useCallback(i => {
@@ -50,18 +59,24 @@ const AbstractPollCreateDialog = Component => props => {
 
     const conference = useSelector(state => state['features/base/conference'].conference);
     const onSubmit = useCallback(() => {
+        const filteredAnswers = answers.filter(answer => answer.trim().length > 0);
+
+        if (filteredAnswers.length === 0) {
+            return false;
+        }
+
         conference.sendCommandOnce(COMMAND_NEW_POLL, {
             attributes: {
                 pollId: Math.floor(Math.random() * Number.MAX_SAFE_INTEGER),
                 senderId: conference.myUserId(),
                 question
             },
-            children: answers
-                .filter(answer => answer.trim().length > 0)
-                .map(answer => {
-                    return { tagName: 'answer',
-                        value: answer };
-                })
+            children: filteredAnswers.map(answer => {
+                return {
+                    tagName: 'answer',
+                    value: answer
+                };
+            })
         });
 
         return true;
@@ -73,6 +88,7 @@ const AbstractPollCreateDialog = Component => props => {
         answers = { answers }
         onSubmit = { onSubmit }
         question = { question }
+        moveAnswer = { moveAnswer }
         removeAnswer = { removeAnswer }
         setAnswer = { setAnswer }
         setQuestion = { setQuestion } />;

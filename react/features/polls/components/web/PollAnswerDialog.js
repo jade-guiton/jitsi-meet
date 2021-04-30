@@ -23,7 +23,7 @@ const PollAnswerDialog = (props: AbstractProps): React.Node => {
         submitAnswer, skipAnswer,
         checkBoxStates, setCheckbox
     } = props;
-    
+
     return (
         shouldDisplayResult
             ? <Dialog
@@ -34,7 +34,7 @@ const PollAnswerDialog = (props: AbstractProps): React.Node => {
                 <PollResults
                     detailedVotes = { true }
                     displayQuestion = { true }
-                    pollDetails = { poll } />
+                    pollId = { pollId } />
 
             </Dialog>
             : <Dialog
