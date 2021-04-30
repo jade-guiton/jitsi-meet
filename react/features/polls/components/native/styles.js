@@ -49,12 +49,38 @@ export default createStyleSheet({
     plusButton: {
         marginTop: 16
     },
+    
+    barContainer: {
+        backgroundColor: 'gray',
+        borderRadius: 3,
+        width: 200,
+        height: 6
+    },
 
     bar: {
-        flexDirection: "row",
-        borderColor: ColorPalette.blue,
         backgroundColor: ColorPalette.blue,
-        flexGrow: 0,
-        borderRadius: 5
+        borderRadius: 3,
+        height: 6
+    },
+    
+    voters: {
+        borderRadius: 5,
+        borderWidth: 1,
+        borderColor: 'gray',
+        padding: 2,
+        marginHorizontal: 8
+    },
+    
+    answerContainer: {
+        padding: 4
+    },
+    
+    answerHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    
+    answerVoteCount: {
+        paddingLeft: 10
     }
 });

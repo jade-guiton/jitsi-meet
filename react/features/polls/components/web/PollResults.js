@@ -14,53 +14,36 @@ import type { AbstractProps } from '../AbstractPollResults';
  */
 const PollResults = (props: AbstractProps) => {
     const {
+        answers,
         detailedVotes,
         displayQuestion,
-        participants,
-        pollDetails,
-        totalVoters
+        question
     } = props;
-
-    const answers = pollDetails.answers.map((answer, index) => {
-
-        const answerPercent = totalVoters === 0 ? 0 : Math.round(answer.voters.size / totalVoters * 100);
-
-        const detailedAnswer
-            = detailedVotes
-                ? [ ...answer.voters ].map(voterId => {
-                    const participant = participants.find(part => part.id === voterId);
-
-                    const name: string = participant ? participant.name : 'Fellow Jitster';
-
-                    return <li key = { voterId }>{ name }</li>;
-                })
-
-                : null;
-
-        return (
-            <li key = { index }>
-                { answer.name } ({ answerPercent } %)
-                <div>
-                    <ul className = 'poll-answer-details'>
-                        { detailedAnswer }
-                    </ul>
-                </div>
-            </li>
-        );
-    });
 
     return (
         <div>
-            {displayQuestion
-                && <div className = 'poll-question'>
-                    <strong>{ pollDetails.question }</strong>
+            {displayQuestion &&
+                <div className = 'poll-question'>
+                    <strong>{ question }</strong>
                 </div>}
-            <div>
-                <ol className = 'poll-answer-list'>
-                    { answers }
-                </ol>
-            </div>
-
+            <ol className = 'poll-answer-list'>
+                { detailedVotes
+                    ? answers.map(({ name, percentage, voters }, index) => {
+                        return <li key = { index }>
+                            { name } ({ percentage } %)
+                            <ul className = 'poll-answer-details'>
+                                {voters.map(voter =>
+                                    <li key = { voter.id }>{ voter.name }</li>
+                                )}
+                            </ul>
+                        </li>;
+                    }) : answers.map(({ name, percentage }, index) => {
+                        return <li key = { index }>
+                            { name } ({ percentage } %)
+                        </li>;
+                    })
+                }
+            </ol>
         </div>
     );
 

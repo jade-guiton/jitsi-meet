@@ -51,7 +51,7 @@ const PollAnswerDialog = (props: AbstractProps): React.Node => {
                     <ol className = 'poll-answer-list'>
                     {
                         poll.answers.map((answer, index) => (
-                            <li>
+                            <li key = { index }>
                                 <Checkbox
                                     isChecked = { checkBoxStates[index] }
                                     key = { index }

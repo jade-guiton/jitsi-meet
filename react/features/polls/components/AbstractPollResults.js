@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useMemo, Component} from 'react';
+import React, { useMemo, Component } from 'react';
 import { useSelector } from 'react-redux';
 
 import { getParticipants } from '../../base/participants';
@@ -25,10 +25,11 @@ type InputProps = {
     pollId: number,
 };
 
-export type AbstractProps = InputProps & {
-    participants: Array<Object>,
-    pollDetails: Poll,
-    totalVoters: number
+export type AbstractProps = {
+    answers: Array<{ name: string, percentage: number, voters?: Array<string>, voterCount: number }>,
+    detailedVotes: boolean,
+    displayQuestion: boolean,
+    question: string
 }
 
 /**
@@ -39,13 +40,13 @@ export type AbstractProps = InputProps & {
  * @returns {React.Node}
  */
 const AbstractPollResults = (Component: Component<InputProps>) => (props: InputProps) => {
-    const { pollId } = props;
+    const { pollId, detailedVotes, displayQuestion } = props;
 
     const pollDetails = useSelector(state => state['features/polls'].polls[pollId]);
 
     const participants = useSelector(state => getParticipants(state));
 
-    const totalVoters = useMemo(() => {
+    const answers = useMemo(() => {
         const voterSet = new Set();
 
         for (const answer of pollDetails.answers) {
@@ -54,14 +55,38 @@ const AbstractPollResults = (Component: Component<InputProps>) => (props: InputP
             }
         }
 
-        return voterSet.size;
+        const totalVoters = voterSet.size;
+        
+        return pollDetails.answers.map((answer, index) => {
+            const percentage = totalVoters === 0 ? 0 : Math.round(answer.voters.size / totalVoters * 100);
+
+            let voters = null;
+            if(detailedVotes) {
+                voters = [ ...answer.voters ].map(voterId => {
+                    const participant = participants.find(part => part.id === voterId);
+                    return {
+                        id: voterId,
+                        name: participant
+                            ? participant.name
+                            : 'Absent Jitster'
+                    };
+                });
+            }
+            
+            return {
+                name: answer.name,
+                percentage,
+                voters,
+                voterCount: answer.voters.size,
+            }
+        });
     }, [ pollDetails.answers ]);
 
     return (<Component
-        { ...props }
-        participants = { participants }
-        pollDetails = { pollDetails }
-        totalVoters = { totalVoters } />);
+        answers = { answers }
+        detailedVotes = { detailedVotes }
+        displayQuestion = { displayQuestion }
+        question = { pollDetails.question } />);
 };
 
 export default AbstractPollResults;
