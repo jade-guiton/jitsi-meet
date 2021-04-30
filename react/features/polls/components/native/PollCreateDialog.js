@@ -88,6 +88,7 @@ const PollCreateDialog = (props: AbstractProps) => {
             onPress = { onPress }
             style = { [ _DialogStyles.buttonContainer, style ] }>
             <Icon
+                size = { 24 }
                 src = { icon }
                 style = { _DialogStyles.icon } />
         </TouchableOpacity>

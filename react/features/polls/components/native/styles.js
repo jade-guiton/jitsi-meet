@@ -27,8 +27,10 @@ export default createStyleSheet({
 
     field: {
         borderBottomWidth: 1,
+        borderColor: ColorPalette.blue,
         fontSize: 14,
-        flexGrow: 1
+        flexGrow: 1,
+        paddingBottom: 0
     },
 
     buttonContainer: {
@@ -41,8 +43,7 @@ export default createStyleSheet({
         color: ColorPalette.white,
         backgroundColor: ColorPalette.blue,
         borderRadius: 5,
-        margin: 0,
-        flexGrow: 0
+        margin: 0
     },
 
     plusButton: {
