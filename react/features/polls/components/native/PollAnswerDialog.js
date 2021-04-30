@@ -29,7 +29,9 @@ const PollAnswerDialog = (props: AbstractProps): React.Node => {
     const { t } = useTranslation();
 
     return shouldDisplayResult
-        ? <CustomSubmitDialog>
+        ? <CustomSubmitDialog
+            okKey = 'polls.answer.close'
+            titleKey = 'polls.answer.results'>
             <PollResults
                 detailedVotes = { true }
                 displayQuestion = { true }

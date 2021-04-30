@@ -26,7 +26,7 @@ export type AbstractProps = {
 const AbstractPollCreateDialog = Component => props => {
     const [ question, setQuestion ] = useState('');
 
-    const [ answers, setAnswers ] = useState([ '', '' ]);
+    const [ answers, setAnswers ] = useState([ '' ]);
     const setAnswer = useCallback((i, answer) => {
         const newAnswers = [ ...answers ];
 
