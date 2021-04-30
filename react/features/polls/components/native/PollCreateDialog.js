@@ -130,15 +130,11 @@ const PollCreateDialog = (props: Props) => {
 
     return (
         <CustomSubmitDialog
+            titleKey = 'polls.create.dialogTitle'
             okKey = { 'polls.create.send' }
             onSubmit = { onSubmit }>
             <View
                 style = { _DialogStyles.mainContainer }>
-                <Text
-                    style = { _DialogStyles.title }>
-                    {t('polls.create.dialogTitle')}
-                </Text>
-
 
                 <TextInput
                     autoFocus = { true }
