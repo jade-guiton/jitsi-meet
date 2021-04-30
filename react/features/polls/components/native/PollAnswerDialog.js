@@ -12,7 +12,6 @@ import type { AbstractProps } from '../AbstractPollAnswerDialog';
 
 import PollResults from './PollResults';
 import _DialogStyles from './styles';
-import { useTranslation } from 'react-i18next';
 
 
 
