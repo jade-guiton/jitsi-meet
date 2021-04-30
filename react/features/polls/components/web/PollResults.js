@@ -1,55 +1,29 @@
 // @flow
 
-import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react';
 
-import { getParticipants } from '../../../base/participants';
-import type { Poll } from '../../types';
+import AbstractPollResults from '../AbstractPollResults';
+import type { AbstractProps } from '../AbstractPollResults';
 
-
-type Props = {
-
-    /**
-     * Display or not detailed votes
-     */
-    detailedVotes: boolean,
-
-    /**
-     * Display or not the poll question
-     */
-    displayQuestion: boolean,
-
-    /**
-     * ID of the poll to display
-     */
-    pollId: number,
-};
 
 /**
  * Component that renders the poll results.
  *
- * @returns {React$Element<any>}
+ * @param {Props} props - The passed props.
+ * @returns {React.Node}
  */
-function PollResults({ detailedVotes, displayQuestion, pollId }: Props) {
-    const pollDetails = useSelector(state => state['features/polls'].polls[pollId]);
-
-    const participants = useSelector(state => getParticipants(state));
-
-    const totalVoters = useMemo(() => {
-        const voterSet = new Set();
-
-        for (const answer of pollDetails.answers) {
-            for (const voter of answer.voters) {
-                voterSet.add(voter);
-            }
-        }
-
-        return voterSet.size;
-    }, [ pollDetails.answers ]);
+const PollResults = (props: AbstractProps) => {
+    const {
+        detailedVotes,
+        displayQuestion,
+        participants,
+        pollDetails,
+        totalVoters
+    } = props;
 
     const answers = pollDetails.answers.map((answer, index) => {
 
-        const answerPercent = totalVoters == 0 ? 0 : Math.round(answer.voters.size / totalVoters * 100);
+        const answerPercent = totalVoters === 0 ? 0 : Math.round(answer.voters.size / totalVoters * 100);
 
         const detailedAnswer
             = detailedVotes
@@ -89,7 +63,7 @@ function PollResults({ detailedVotes, displayQuestion, pollId }: Props) {
 
         </div>
     );
-}
 
+};
 
-export default PollResults;
+export default AbstractPollResults(PollResults);
