@@ -36,7 +36,7 @@ const PollResults = (props: AbstractProps) => {
                 { detailedVotes
                     ? answers.map(({ name, percentage, voters, voterCount }, index) => (<li key = { index }>
                         { renderRow(name, percentage, voterCount) }
-                        { voters
+                        { voters && voterCount > 0
                             && <ul className = 'poll-answer-voters'>
                                 {voters.map(voter =>
                                     <li key = { voter.id }>{ voter.name }</li>

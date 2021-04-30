@@ -54,7 +54,7 @@ const PollResults = (props: AbstractProps) => {
             return (
                 <View style = { resultsStyles.answerContainer }>
                     { renderHeader(name, percentage, voterCount) }
-                    { voters
+                    { voters && voterCount > 0
                     && <View style = { resultsStyles.voters }>
                         {voters.map(({ id, name: voterName }) =>
                             <Text key = { id }>{ voterName }</Text>
