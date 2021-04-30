@@ -6,23 +6,14 @@ import { View, Text, TextInput, FlatList, TouchableOpacity } from 'react-native'
 
 
 import CustomSubmitDialog from '../../../base/dialog/components/native/CustomSubmitDialog';
-import { translate } from '../../../base/i18n';
 import { Icon, IconAdd, IconClose } from '../../../base/icons';
 import AbstractPollCreateDialog from '../AbstractPollCreateDialog';
 import type { AbstractProps } from '../AbstractPollCreateDialog';
 
 import _DialogStyles from './styles';
 
-type Props = AbstractProps & {
 
-    /**
-     * The i18n translate function.
-     */
-    t: Function
-};
-
-
-const PollCreateDialog = (props: Props) => {
+const PollCreateDialog = (props: AbstractProps) => {
 
     const {
         question, setQuestion,
@@ -170,4 +161,4 @@ const PollCreateDialog = (props: Props) => {
  * to both the web and native implementations.
  */
 // eslint-disable-next-line new-cap
-export default translate(AbstractPollCreateDialog(PollCreateDialog));
+export default AbstractPollCreateDialog(PollCreateDialog);

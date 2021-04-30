@@ -3,6 +3,8 @@
 import React, { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
 
+import { useTranslation } from 'react-i18next';
+
 import { COMMAND_NEW_POLL } from '../constants';
 
 /*
@@ -17,6 +19,7 @@ export type AbstractProps = {
     moveAnswer: (number, number) => void,
     removeAnswer: number => void,
     onSubmit: Function,
+    t: Function,
 };
 
 /*
@@ -82,6 +85,8 @@ const AbstractPollCreateDialog = Component => props => {
 
         return true;
     }, [ conference, question, answers ]);
+    
+    const { t } = useTranslation();
 
     return (<Component
         { ...props }
@@ -92,7 +97,8 @@ const AbstractPollCreateDialog = Component => props => {
         question = { question }
         removeAnswer = { removeAnswer }
         setAnswer = { setAnswer }
-        setQuestion = { setQuestion } />);
+        setQuestion = { setQuestion }
+        t = { t } />);
 };
 
 export default AbstractPollCreateDialog;

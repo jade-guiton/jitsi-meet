@@ -529,6 +529,9 @@
             "results" : "Résultats",
             "close": "Fermer",
             "empty": "Pas de réponse pour le moment"
+        },
+        "chat": {
+            "notice": "Sondage"
         }
     },
     "poweredby": "produit par",
