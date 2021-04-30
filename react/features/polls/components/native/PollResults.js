@@ -28,8 +28,6 @@ const PollResults = (props: AbstractProps) => {
 
         const votersName = [ ...answer.voters ].map(voterId => {
 
-            console.log(participants[0].id === voterId);
-
             const participant = participants.find(part => part.id === voterId);
 
             const name: string = participant ? participant.name : 'Fellow Jitster';
@@ -38,10 +36,6 @@ const PollResults = (props: AbstractProps) => {
         });
 
         if (detailedVotes) {
-            console.log({
-                data: votersName,
-                title: `${answer.name} (${answerPercent} %)`
-            });
 
             return (
                 {
