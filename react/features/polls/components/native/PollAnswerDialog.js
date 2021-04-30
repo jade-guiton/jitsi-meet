@@ -7,7 +7,7 @@ import { ConfirmDialog, CustomSubmitDialog } from '../../../base/dialog';
 import AbstractPollAnswerDialog from '../AbstractPollAnswerDialog';
 import type { AbstractProps } from '../AbstractPollAnswerDialog';
 
-// import PollResults from './PollResults';
+import PollResults from './PollResults';
 
 
 /**
@@ -19,6 +19,7 @@ import type { AbstractProps } from '../AbstractPollAnswerDialog';
 const PollAnswerDialog = (props: AbstractProps): React.Node => {
     const {
         poll,
+        pollId,
         shouldDisplayResult,
         submitAnswer, skipAnswer,
         checkBoxStates, setCheckbox
@@ -26,10 +27,10 @@ const PollAnswerDialog = (props: AbstractProps): React.Node => {
 
     return shouldDisplayResult
         ? <CustomSubmitDialog>
-            {/* <PollResults
+            <PollResults
                 detailedVotes = { true }
                 displayQuestion = { true }
-                pollId = { pollId } />*/}
+                pollId = { pollId } />
         </CustomSubmitDialog>
         : <ConfirmDialog
             cancelKey = 'polls.answer.skip'

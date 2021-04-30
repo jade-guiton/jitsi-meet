@@ -45,7 +45,7 @@ class ChatMessage extends AbstractChatMessage<Props> {
                     <div className = 'replywrapper'>
                         <div className = 'messagecontent'>
                             { this.props.showDisplayName && this._renderDisplayName() }
-                            <div className = {'usermessage' + (isPoll ? ' poll-question' : '')}>
+                            <div className = { `usermessage${isPoll ? ' poll-question' : ''}` }>
                                 { processedMessage }
                             </div>
                             { message.privateMessage && this._renderPrivateNotice() }
@@ -101,7 +101,7 @@ class ChatMessage extends AbstractChatMessage<Props> {
 
     _renderPollResults(pollId: number) {
         return <>
-            <PollResults pollId = { pollId }/>
+            <PollResults pollId = { pollId } />
             <div className = 'poll-notice'>
                 { this.props.t('polls.chat.notice') }
             </div>
