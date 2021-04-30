@@ -1,6 +1,7 @@
 // @flow
 
 import React, { useMemo, Component } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
 import { getParticipants } from '../../base/participants';
@@ -29,8 +30,9 @@ export type AbstractProps = {
     answers: Array<{ name: string, percentage: number, voters?: Array<string>, voterCount: number }>,
     detailedVotes: boolean,
     displayQuestion: boolean,
-    question: string
-}
+    question: string,
+    t: Function
+};
 
 /**
  * Higher Order Component taking in a concrete PollResult component and
@@ -81,12 +83,15 @@ const AbstractPollResults = (Component: Component<InputProps>) => (props: InputP
             }
         });
     }, [ pollDetails.answers ]);
+    
+    const { t } = useTranslation();
 
     return (<Component
         answers = { answers }
         detailedVotes = { detailedVotes }
         displayQuestion = { displayQuestion }
-        question = { pollDetails.question } />);
+        question = { pollDetails.question }
+        t = { t } />);
 };
 
 export default AbstractPollResults;

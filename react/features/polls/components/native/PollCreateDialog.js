@@ -125,8 +125,7 @@ const PollCreateDialog = (props: AbstractProps) => {
             titleKey = 'polls.create.dialogTitle'
             okKey = { 'polls.create.send' }
             onSubmit = { onSubmit }>
-            <View
-                style = { _DialogStyles.mainContainer }>
+            <View>
 
                 <TextInput
                     autoFocus = { true }

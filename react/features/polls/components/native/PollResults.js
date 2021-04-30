@@ -6,7 +6,6 @@ import { View, SectionList, Text, FlatList } from 'react-native';
 import AbstractPollResults from '../AbstractPollResults';
 import type { AbstractProps } from '../AbstractPollResults';
 import _DialogStyles from './styles';
-import { useTranslation } from 'react-i18next';
 import { ColorPalette } from '../../../base/styles';
 
 
@@ -21,10 +20,9 @@ const PollResults = (props: AbstractProps) => {
         answers,
         detailedVotes,
         displayQuestion,
-        question
+        question,
+        t
     } = props;
-
-    const { t } = useTranslation();
     
     /**
      * Render a header summing up answer information

@@ -7,9 +7,6 @@ import { ColorPalette, createStyleSheet } from '../../../base/styles';
  */
 export default createStyleSheet({
 
-    mainContainer: {
-    },
-
     title: {
         fontSize: 24,
         fontWeight: 'bold'
@@ -17,8 +14,8 @@ export default createStyleSheet({
 
     question: {
         fontSize: 16,
-        fontStyle: 'italic',
-        paddingBottom: 16
+        fontWeight: 'bold',
+        paddingBottom: 8
     },
 
     optionContainer: {
@@ -34,7 +31,6 @@ export default createStyleSheet({
     },
 
     buttonContainer: {
-        // borderWidth: 2,
         justifyContent: 'flex-end',
         alignItems: 'center'
     },
@@ -47,11 +43,11 @@ export default createStyleSheet({
     },
 
     plusButton: {
-        marginTop: 16
+        marginTop: 8
     },
     
     barContainer: {
-        backgroundColor: 'gray',
+        backgroundColor: '#ccc',
         borderRadius: 3,
         width: 200,
         height: 6
@@ -64,15 +60,16 @@ export default createStyleSheet({
     },
     
     voters: {
-        borderRadius: 5,
+        borderRadius: 3,
         borderWidth: 1,
         borderColor: 'gray',
         padding: 2,
-        marginHorizontal: 8
+        marginHorizontal: 8,
+        marginVertical: 4
     },
     
     answerContainer: {
-        padding: 4
+        marginVertical: 2
     },
     
     answerHeader: {
@@ -82,5 +79,9 @@ export default createStyleSheet({
     
     answerVoteCount: {
         paddingLeft: 10
+    },
+    
+    chatQuestion: {
+        fontWeight: 'bold'
     }
 });
