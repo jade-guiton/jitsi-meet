@@ -129,10 +129,10 @@ const PollCreateDialog = (props: AbstractProps) => {
                 type = 'text'
                 value = { question } />
         </div>
-        <ol className = 'poll-answer-fields'>
+        <ol className = 'poll-answer-list'>
             {answers.map((answer, i) =>
                 (<li
-                    className = { grabbing === i ? 'poll-dragged' : '' }
+                    className = { 'poll-answer-field' + (grabbing === i ? ' poll-dragged' : '') }
                     key = { i }
                     onMouseOver = { () => onMouseOver(i) }>
                     <button

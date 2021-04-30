@@ -41,7 +41,7 @@ const PollResults = (props: AbstractProps) => {
             <li key = { index }>
                 { answer.name } ({ answerPercent } %)
                 <div>
-                    <ul>
+                    <ul className = 'poll-answer-details'>
                         { detailedAnswer }
                     </ul>
                 </div>
@@ -52,11 +52,11 @@ const PollResults = (props: AbstractProps) => {
     return (
         <div>
             {displayQuestion
-                && <div className = 'poll-question-field'>
+                && <div className = 'poll-question'>
                     <strong>{ pollDetails.question }</strong>
                 </div>}
             <div>
-                <ol className = 'poll-answer-fields'>
+                <ol className = 'poll-answer-list'>
                     { answers }
                 </ol>
             </div>
