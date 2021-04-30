@@ -7,7 +7,6 @@ import { Dialog } from '../../../base/dialog';
 import { translate } from '../../../base/i18n';
 import { Icon, IconAdd, IconClose, IconSmallDragHandle } from '../../../base/icons';
 import { Tooltip } from '../../../base/tooltip';
-
 import AbstractPollCreateDialog from '../AbstractPollCreateDialog';
 import type { AbstractProps } from '../AbstractPollCreateDialog';
 
@@ -97,15 +96,18 @@ const PollCreateDialog = (props: Props) => {
             ev.preventDefault();
         }
     }, [ answers, addAnswer, removeAnswer, requestFocus ]);
-    
+
     const [ grabbing, setGrabbing ] = useState(null);
-    
+
     const onGrab = useCallback((i, ev) => {
-        if (ev.button !== 0) return;
+        if (ev.button !== 0) {
+            return;
+        }
         setGrabbing(i);
         window.addEventListener('mouseup', () => {
-            setGrabbing(grabbing => {
-                requestFocus(grabbing);
+            setGrabbing(_grabbing => {
+                requestFocus(_grabbing);
+
                 return null;
             });
         }, { once: true });
@@ -114,7 +116,7 @@ const PollCreateDialog = (props: Props) => {
         if (grabbing !== null && grabbing !== i) {
             moveAnswer(grabbing, i);
             setGrabbing(i);
-        } 
+        }
     });
 
     /* eslint-disable react/jsx-no-bind */
@@ -137,9 +139,9 @@ const PollCreateDialog = (props: Props) => {
         </div>
         <ol className = 'poll-answer-fields'>
             {answers.map((answer, i) =>
-                <li
+                (<li
+                    className = { grabbing === i ? 'poll-dragged' : '' }
                     key = { i }
-                    className = {grabbing === i ? 'poll-dragged' : ''}
                     onMouseOver = { () => onMouseOver(i) }>
                     <button
                         className = 'poll-drag-handle'
@@ -166,7 +168,7 @@ const PollCreateDialog = (props: Props) => {
                             <Icon src = { IconClose } />
                         </button>
                     </Tooltip>
-                </li>
+                </li>)
             )}
         </ol>
         <div className = 'poll-add-button'>

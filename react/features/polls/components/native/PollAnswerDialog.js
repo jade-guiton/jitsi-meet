@@ -1,12 +1,12 @@
 // @flow
 
 import * as React from 'react';
-import { View, Text, Switch, TouchableOpacity } from 'react-native';
+import { View, Text, Switch } from 'react-native';
 
-import { ConfirmDialog, CustomSubmitDialog, brandedDialog } from '../../../base/dialog';
-
+import { ConfirmDialog, CustomSubmitDialog } from '../../../base/dialog';
 import AbstractPollAnswerDialog from '../AbstractPollAnswerDialog';
 import type { AbstractProps } from '../AbstractPollAnswerDialog';
+
 // import PollResults from './PollResults';
 
 
@@ -18,7 +18,7 @@ import type { AbstractProps } from '../AbstractPollAnswerDialog';
  */
 const PollAnswerDialog = (props: AbstractProps): React.Node => {
     const {
-        pollId, poll,
+        poll,
         shouldDisplayResult,
         submitAnswer, skipAnswer,
         checkBoxStates, setCheckbox
@@ -26,7 +26,7 @@ const PollAnswerDialog = (props: AbstractProps): React.Node => {
 
     return shouldDisplayResult
         ? <CustomSubmitDialog>
-            {/*<PollResults
+            {/* <PollResults
                 detailedVotes = { true }
                 displayQuestion = { true }
                 pollId = { pollId } />*/}
@@ -39,18 +39,20 @@ const PollAnswerDialog = (props: AbstractProps): React.Node => {
             <View>
                 <Text>{poll.question}</Text>
                 <View>
-                {poll.answers.map((answer, index) => (
-                    <View key = { index } style = {{ flexDirection: 'row' }}>
-                        <Switch
-                            value = { checkBoxStates[index] }
-                            onValueChange = { state => setCheckbox(index, state) }/>
-                        <Text>{answer.name}</Text>
-                    </View>
-                ))}
+                    {poll.answers.map((answer, index) => (
+                        <View
+                            key = { index }
+                            style = {{ flexDirection: 'row' }}>
+                            <Switch
+                                onValueChange = { state => setCheckbox(index, state) }
+                                value = { checkBoxStates[index] } />
+                            <Text>{answer.name}</Text>
+                        </View>
+                    ))}
                 </View>
             </View>
         </ConfirmDialog>;
-}
+};
 
 /*
  * We apply AbstractPollAnswerDialog to fill in the AbstractProps common

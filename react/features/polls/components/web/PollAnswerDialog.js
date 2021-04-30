@@ -4,9 +4,9 @@ import { Checkbox } from '@atlaskit/checkbox';
 import * as React from 'react';
 
 import { Dialog } from '../../../base/dialog';
-
 import AbstractPollAnswerDialog from '../AbstractPollAnswerDialog';
 import type { AbstractProps } from '../AbstractPollAnswerDialog';
+
 import PollResults from './PollResults';
 
 
@@ -51,11 +51,11 @@ const PollAnswerDialog = (props: AbstractProps): React.Node => {
                     {
                         poll.answers.map((answer, index) => (
                             <Checkbox
+                                isChecked = { checkBoxStates[index] }
                                 key = { index }
                                 label = {
                                     <label className = 'poll-answers'> {answer.name}</label>
                                 }
-                                isChecked = { checkBoxStates[index] }
                                 onChange = { ev => setCheckbox(index, ev.target.checked) }
                                 size = 'xlarge' />
                         ))
@@ -63,7 +63,7 @@ const PollAnswerDialog = (props: AbstractProps): React.Node => {
                 </div>
             </Dialog>
     );
-}
+};
 
 /*
  * We apply AbstractPollAnswerDialog to fill in the AbstractProps common

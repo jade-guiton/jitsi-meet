@@ -43,6 +43,7 @@ const AbstractPollCreateDialog = Component => props => {
         const newAnswers = [ ...answers ];
 
         const answer = answers[i];
+
         newAnswers.splice(i, 1);
         newAnswers.splice(j, 0, answer);
         setAnswers(newAnswers);
@@ -82,16 +83,16 @@ const AbstractPollCreateDialog = Component => props => {
         return true;
     }, [ conference, question, answers ]);
 
-    return <Component
+    return (<Component
         { ...props }
         addAnswer = { addAnswer }
         answers = { answers }
+        moveAnswer = { moveAnswer }
         onSubmit = { onSubmit }
         question = { question }
-        moveAnswer = { moveAnswer }
         removeAnswer = { removeAnswer }
         setAnswer = { setAnswer }
-        setQuestion = { setQuestion } />;
+        setQuestion = { setQuestion } />);
 };
 
 export default AbstractPollCreateDialog;

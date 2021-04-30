@@ -38,7 +38,7 @@ export type AbstractProps = InputProps & {
  * @param {Props} props - The passed props.
  * @returns {React.Node}
  */
-const AbstractPollResults = Component => ( props: InputProps ): React.Node => {
+const AbstractPollResults = Component => (props: InputProps): React.Node => {
     const { pollId } = props;
 
     const pollDetails = useSelector(state => state['features/polls'].polls[pollId]);
@@ -57,11 +57,11 @@ const AbstractPollResults = Component => ( props: InputProps ): React.Node => {
         return voterSet.size;
     }, [ pollDetails.answers ]);
 
-    return <Component
-        {...props}
+    return (<Component
+        { ...props }
         participants = { participants }
         pollDetails = { pollDetails }
-        totalVoters = { totalVoters } />;
+        totalVoters = { totalVoters } />);
 };
 
 export default AbstractPollResults;

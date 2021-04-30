@@ -98,28 +98,31 @@ const AbstractPollAnswerDialog = Component => (props: InputProps): React.Node =>
 
         displayInChat();
         setShouldDisplayResult(true);
+
         return false;
     }, [ pollId, localId, checkBoxStates, conference ]);
 
     const skipAnswer = useCallback(() => {
         displayInChat();
         setShouldDisplayResult(true);
+
         return false;
     }, []);
     const cancelAnswer = useCallback(() => {
         displayInChat();
+
         return true;
     }, []);
 
-    return <Component
-        {...props}
+    return (<Component
+        { ...props }
         cancelAnswer = { cancelAnswer }
         checkBoxStates = { checkBoxStates }
+        poll = { poll }
         setCheckbox = { setCheckbox }
         shouldDisplayResult = { shouldDisplayResult }
         skipAnswer = { skipAnswer }
-        submitAnswer = { submitAnswer }
-        poll = {poll} />;
+        submitAnswer = { submitAnswer } />);
 };
 
 export default AbstractPollAnswerDialog;
