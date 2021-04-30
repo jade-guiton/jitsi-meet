@@ -1,9 +1,10 @@
 // @flow
 
 import * as React from 'react';
-import { View, Text, Switch } from 'react-native';
+import { useTranslation } from 'react-i18next';
+import { StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native';
 
-import { ConfirmDialog, CustomSubmitDialog } from '../../../base/dialog';
+import { ConfirmDialog, CustomSubmitDialog, brandedDialog } from '../../../base/dialog';
 import AbstractPollAnswerDialog from '../AbstractPollAnswerDialog';
 import type { AbstractProps } from '../AbstractPollAnswerDialog';
 
@@ -21,9 +22,11 @@ const PollAnswerDialog = (props: AbstractProps): React.Node => {
         poll,
         pollId,
         shouldDisplayResult,
-        submitAnswer, skipAnswer,
+        submitAnswer, skipAnswer, cancelAnswer,
         checkBoxStates, setCheckbox
     } = props;
+
+    const { t } = useTranslation();
 
     return shouldDisplayResult
         ? <CustomSubmitDialog>
@@ -33,27 +36,40 @@ const PollAnswerDialog = (props: AbstractProps): React.Node => {
                 pollId = { pollId } />
         </CustomSubmitDialog>
         : <ConfirmDialog
+            titleKey = 'polls.answer.title'
             cancelKey = 'polls.answer.skip'
             okKey = 'polls.answer.submit'
-            onCancel = { skipAnswer }
+            onCancel = { cancelAnswer }
+            onDecline = { skipAnswer }
             onSubmit = { submitAnswer }>
+            <Text style = { styles.question }>{ poll.question }</Text>
             <View>
-                <Text>{poll.question}</Text>
-                <View>
-                    {poll.answers.map((answer, index) => (
-                        <View
-                            key = { index }
-                            style = {{ flexDirection: 'row' }}>
-                            <Switch
-                                onValueChange = { state => setCheckbox(index, state) }
-                                value = { checkBoxStates[index] } />
-                            <Text>{answer.name}</Text>
-                        </View>
-                    ))}
-                </View>
+                {poll.answers.map((answer, index) => (
+                    <View
+                        key = { index }
+                        style = { styles.answer }>
+                        <Switch
+                            onValueChange = { state => setCheckbox(index, state) }
+                            value = { checkBoxStates[index] } />
+                        <Text>{answer.name}</Text>
+                    </View>
+                ))}
             </View>
         </ConfirmDialog>;
 };
+
+const styles = StyleSheet.create({
+    question: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 6
+    },
+    answer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 3,
+    }
+});
 
 /*
  * We apply AbstractPollAnswerDialog to fill in the AbstractProps common
