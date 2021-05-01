@@ -552,7 +552,8 @@
             "vote_plural" : "{{count}} votes"
         },
         "chat": {
-            "notice": "Sondage"
+            "notice": "Sondage",
+            "details": "Détails"
         }
     },
     "poweredby": "produit par",
