@@ -1,6 +1,7 @@
 // @flow
 
 import React, { useMemo } from 'react';
+import type { AbstractComponent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
@@ -38,10 +39,10 @@ export type AbstractProps = {
  * Higher Order Component taking in a concrete PollResult component and
  * augmenting it with state/behavior common to both web and native implementations.
  *
- * @param {React.Component} Component - The concrete component.
- * @returns {React.Node}
+ * @param {React.AbstractComponent} Component - The concrete component.
+ * @returns {React.AbstractComponent}
  */
-const AbstractPollResults = (Component: React.Component<InputProps>) => (props: InputProps) => {
+const AbstractPollResults = (Component: AbstractComponent<AbstractProps>) => (props: InputProps) => {
     const { pollId, showDetails } = props;
 
     const pollDetails = useSelector(state => state['features/polls'].polls[pollId]);

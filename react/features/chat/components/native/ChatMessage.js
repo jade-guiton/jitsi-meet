@@ -83,7 +83,7 @@ class ChatMessage extends AbstractChatMessage<Props> {
                                 <Linkify linkStyle = { styles.chatLink }>
                                     { replaceNonUnicodeEmojis(this._getMessageText()) }
                                 </Linkify>
-                            ): <PollResultsMessage pollId = { message.pollId } />}
+                            ) : <PollResultsMessage pollId = { message.pollId } />}
                             { this._renderPrivateNotice() }
                         </View>
                         { this._renderPrivateReplyButton() }

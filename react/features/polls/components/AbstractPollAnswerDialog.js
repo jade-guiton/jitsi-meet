@@ -1,7 +1,7 @@
 // @flow
 
-import * as React from 'react';
-import { useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
+import type { AbstractComponent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { getLocalParticipant } from '../../base/participants';
@@ -21,9 +21,9 @@ type InputProps = {
 export type AbstractProps = InputProps & {
     poll: Poll,
     shouldDisplayResult: boolean,
-    submitAnswer: void => void,
-    skipAnswer: void => void,
-    cancelAnswer: void => void,
+    submitAnswer: void => boolean,
+    skipAnswer: void => boolean,
+    cancelAnswer: void => boolean,
     checkBoxStates: Array<boolean>,
     setCheckbox: (number, boolean) => void,
 };
@@ -32,10 +32,10 @@ export type AbstractProps = InputProps & {
  * Higher Order Component taking in a concrete PollAnswerDialog component and
  * augmenting it with state/behavior common to both web and native implementations.
  *
- * @param {React.Component} Component - The concrete component.
- * @returns {React.Component}
+ * @param {React.AbstractComponent} Component - The concrete component.
+ * @returns {React.AbstractComponent}
  */
-const AbstractPollAnswerDialog = (Component: React.Component<InputProps>) => (props: AbstractProps): React.Node => {
+const AbstractPollAnswerDialog = (Component: AbstractComponent<AbstractProps>) => (props: InputProps) => {
 
     const { pollId } = props;
 
