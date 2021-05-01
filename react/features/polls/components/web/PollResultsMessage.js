@@ -1,39 +1,26 @@
 // @flow
 
-import React, { useCallback } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
+import React from 'react';
 
-import { openDialog } from '../../../base/dialog';
+import AbstractPollResultsMessage from '../AbstractPollResultsMessage';
+import type { AbstractProps } from '../AbstractPollResultsMessage';
 
-import PollResults from './PollResults';
-import PollResultsDialog from './PollResultsDialog';
-
-const PollResultsMessage = ({ pollId }) => {
-    const { t } = useTranslation();
-    const dispatch = useDispatch();
-
-    const showDetails = useCallback(() => {
-        dispatch(openDialog(PollResultsDialog, { pollId }));
-    }, [ pollId ]);
-
-    return <>
-        <PollResults
-            detailedVotes = { false }
-            displayQuestion = { true }
-            pollId = { pollId } />
-        <div className = 'poll-message-footer'>
-            <div className = 'poll-notice'>
-                { t('polls.chat.notice') }
-            </div>
-            <button
-                className = 'poll-show-details'
-                onClick = { showDetails }
-                type = 'button'>
-                { t('polls.chat.details') }
-            </button>
-        </div>
+const PollResultsMessage = ({ children, detailsText, noticeText, showDetails }: AbstractProps) => <>
+    { children }
+    <div className = 'poll-message-footer'>
+        <div className = 'poll-notice'>{ noticeText }</div>
+        <button
+            className = 'poll-show-details'
+            onClick = { showDetails }
+            type = 'button'>
+            { detailsText }
+        </button>
+    </div>
     </>;
-};
 
-export default PollResultsMessage;
+/*
+ * We apply AbstractPollResultsMessage to fill in the AbstractProps common
+ * to both the web and native implementations.
+ */
+// eslint-disable-next-line new-cap
+export default AbstractPollResultsMessage(PollResultsMessage);

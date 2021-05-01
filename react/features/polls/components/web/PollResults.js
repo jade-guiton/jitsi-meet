@@ -15,8 +15,7 @@ import type { AbstractProps } from '../AbstractPollResults';
 const PollResults = (props: AbstractProps) => {
     const {
         answers,
-        detailedVotes,
-        displayQuestion,
+        showDetails,
         question,
         t
     } = props;
@@ -29,13 +28,12 @@ const PollResults = (props: AbstractProps) => {
     return (
         <div>
             <div className = 'poll-header'>
-                {displayQuestion
-                    && <div className = 'poll-question'>
-                        <strong>{ question }</strong>
-                    </div>}
+                <div className = 'poll-question'>
+                    <strong>{ question }</strong>
+                </div>
             </div>
             <ol className = 'poll-answer-list'>
-                { detailedVotes
+                { showDetails
                     ? answers.map(({ name, percentage, voters, voterCount }, index) => (<li key = { index }>
                         { renderRow(name, percentage, voterCount) }
                         { voters && voterCount > 0

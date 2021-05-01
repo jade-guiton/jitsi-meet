@@ -21,9 +21,8 @@ const PollResultsDialog = (props: Props) => {
             width = { 'small' } >
             <div className = 'poll-dialog'>
                 <PollResults
-                    detailedVotes = { true }
-                    displayQuestion = { true }
-                    pollId = { pollId } />
+                    pollId = { pollId }
+                    showDetails = { true } />
             </div>
         </Dialog>
     );

@@ -10,14 +10,9 @@ import { getParticipants } from '../../base/participants';
 type InputProps = {
 
     /**
-     * Display or not detailed votes
+     * Whether to display vote details
      */
-    detailedVotes: boolean,
-
-    /**
-     * Display or not the poll question
-     */
-    displayQuestion: boolean,
+    showDetails: boolean,
 
     /**
      * ID of the poll to display
@@ -34,9 +29,7 @@ export type AnswerInfo = {
 
 export type AbstractProps = {
     answers: Array<AnswerInfo>,
-    detailedVotes: boolean,
-    displayQuestion: boolean,
-    pollId: number,
+    showDetails: boolean,
     question: string,
     t: Function
 };
@@ -49,7 +42,7 @@ export type AbstractProps = {
  * @returns {React.Node}
  */
 const AbstractPollResults = (Component: React.Component<InputProps>) => (props: InputProps) => {
-    const { pollId, detailedVotes, displayQuestion } = props;
+    const { pollId, showDetails } = props;
 
     const pollDetails = useSelector(state => state['features/polls'].polls[pollId]);
 
@@ -71,7 +64,7 @@ const AbstractPollResults = (Component: React.Component<InputProps>) => (props: 
 
             let voters = null;
 
-            if (detailedVotes) {
+            if (showDetails) {
                 voters = [ ...answer.voters ].map(voterId => {
                     const participant = participants.find(part => part.id === voterId);
 
@@ -97,10 +90,8 @@ const AbstractPollResults = (Component: React.Component<InputProps>) => (props: 
 
     return (<Component
         answers = { answers }
-        detailedVotes = { detailedVotes }
-        displayQuestion = { displayQuestion }
-        pollId = { pollId }
         question = { pollDetails.question }
+        showDetails = { showDetails }
         t = { t } />);
 };
 
