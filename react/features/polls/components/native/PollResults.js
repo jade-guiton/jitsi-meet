@@ -89,13 +89,7 @@ const PollResults = (props: AbstractProps) => {
         <View>
             {displayQuestion
                 && <View>
-                    <Text style = { dialogStyles.question } > { question } </Text>
-                </View>}
-            {!detailedVotes
-                && <View>
-                    <Button
-                        onPress = { () => dispatch(openDialog(PollResultsDialog, { pollId })) }
-                        title = 'More' />
+                    <Text style = { dialogStyles.question } >{ question }</Text>
                 </View>}
             <FlatList
                 data = { answers }
