@@ -10,7 +10,7 @@ type Props = {
     pollId: number,
 };
 
-const PollResultDialog = (props: Props) => {
+const PollResultsDialog = (props: Props) => {
     const { pollId } = props;
 
     return (
@@ -26,4 +26,4 @@ const PollResultDialog = (props: Props) => {
     );
 };
 
-export default PollResultDialog;
+export default PollResultsDialog;

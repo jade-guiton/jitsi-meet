@@ -1,13 +1,9 @@
 // @flow
 
 import React, { useCallback } from 'react';
-import { useDispatch } from 'react-redux';
 
-import { openDialog } from '../../../base/dialog';
 import AbstractPollResults from '../AbstractPollResults';
 import type { AbstractProps } from '../AbstractPollResults';
-
-import PollResultsDialog from './PollResultsDialog';
 
 
 /**
@@ -21,12 +17,9 @@ const PollResults = (props: AbstractProps) => {
         answers,
         detailedVotes,
         displayQuestion,
-        pollId,
         question,
         t
     } = props;
-
-    const dispatch = useDispatch();
 
     const renderRow = useCallback((name, percentage, voterCount) => (<div className = 'poll-answer-header'>
         <span>{ name } - { percentage }%</span>
@@ -39,10 +32,6 @@ const PollResults = (props: AbstractProps) => {
                 {displayQuestion
                     && <div className = 'poll-question'>
                         <strong>{ question }</strong>
-                    </div>}
-                {!detailedVotes
-                    && <div className = 'poll-showmore'>
-                        <button onClick = { () => dispatch(openDialog(PollResultsDialog, { pollId })) }>More</button>
                     </div>}
             </div>
             <ol className = 'poll-answer-list'>
