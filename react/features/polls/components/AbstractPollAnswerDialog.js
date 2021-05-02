@@ -4,7 +4,7 @@ import React, { useState, useCallback } from 'react';
 import type { AbstractComponent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getLocalParticipant } from '../../base/participants';
+import { getLocalParticipant, getParticipantDisplayName, getParticipantById } from '../../base/participants';
 import { addMessage, MESSAGE_TYPE_LOCAL, MESSAGE_TYPE_REMOTE } from '../../chat';
 import { COMMAND_ANSWER_POLL } from '../constants';
 import type { Poll } from '../types';
@@ -43,9 +43,7 @@ const AbstractPollAnswerDialog = (Component: AbstractComponent<AbstractProps>) =
 
     const poll: Poll = useSelector(state => state['features/polls'].polls[pollId]);
 
-    const localParticipant = useSelector(state => getLocalParticipant(state));
-
-    const localId: string = localParticipant.id;
+    const localId: string = useSelector(state => getLocalParticipant(state).id);
 
     const [ checkBoxStates, setCheckBoxState ] = useState(new Array(poll.answers.length).fill(false));
 
@@ -59,22 +57,24 @@ const AbstractPollAnswerDialog = (Component: AbstractComponent<AbstractProps>) =
     const [ shouldDisplayResult, setShouldDisplayResult ] = useState(false);
 
     const dispatch = useDispatch();
-    const localName: string = localParticipant.name;
+    const localName: string = useSelector(state => getParticipantDisplayName(state, localId));
+    const senderName: string = useSelector(state => getParticipantDisplayName(state, poll.senderId));
+    const isLocal: boolean = useSelector(state => (getParticipantById(state, poll.senderId) || { local: false }).local);
     const isChatOpen = useSelector(state => state['features/chat'].isOpen);
 
     const displayInChat = useCallback(() => {
         dispatch(addMessage({
-            displayName: localName,
+            displayName: senderName,
             hasRead: isChatOpen,
-            id: localId,
-            messageType: poll.senderId === localId ? MESSAGE_TYPE_LOCAL : MESSAGE_TYPE_REMOTE,
-            message: poll.question,
+            id: poll.senderId,
+            messageType: isLocal ? MESSAGE_TYPE_LOCAL : MESSAGE_TYPE_REMOTE,
+            message: '[Poll]',
             pollId,
             privateMessage: false,
             recipient: localName,
             timestamp: Date.now()
         }));
-    }, [ localName, localId, poll, pollId, isChatOpen ]);
+    }, [ localName, localId, poll, pollId, senderName, isChatOpen ]);
 
     const submitAnswer = useCallback(() => {
         const answerData = {
