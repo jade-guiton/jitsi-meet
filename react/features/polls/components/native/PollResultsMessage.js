@@ -8,7 +8,8 @@ import type { AbstractProps } from '../AbstractPollResultsMessage';
 
 import { chatStyles } from './styles';
 
-const PollResultsMessage = ({ children, detailsText, noticeText, showDetails }: AbstractProps) => (<View>
+const PollResultsMessage = ({ children, detailsText, noticeText, showDetails }: AbstractProps) => (
+<View>
     { children }
     <View style = { chatStyles.messageFooter }>
         <Text>{ noticeText }</Text>
@@ -18,7 +19,8 @@ const PollResultsMessage = ({ children, detailsText, noticeText, showDetails }: 
             { detailsText }
         </Text>
     </View>
-</View>);
+</View>
+);
 
 /*
  * We apply AbstractPollResultsMessage to fill in the AbstractProps common

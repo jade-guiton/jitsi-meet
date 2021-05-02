@@ -8,6 +8,9 @@ import { useSelector } from 'react-redux';
 import { getParticipants } from '../../base/participants';
 
 
+/**
+ * The type of the React {@code Component} props of inheriting component.
+ */
 type InputProps = {
 
     /**
@@ -28,6 +31,9 @@ export type AnswerInfo = {
     voterCount: number
 };
 
+/**
+ * The type of the React {@code Component} props of {@link AbstractPollResults}.
+ */
 export type AbstractProps = {
     answers: Array<AnswerInfo>,
     showDetails: boolean,
@@ -49,11 +55,12 @@ const AbstractPollResults = (Component: AbstractComponent<AbstractProps>) => (pr
 
     const participants = useSelector(state => getParticipants(state));
 
-    const answers = useMemo(() => {
+    const answers: Array<AnswerInfo> = useMemo(() => {
         const voterSet = new Set();
 
-        for (const answer of pollDetails.answers) { // eslint-disable-line no-unused-vars
-            for (const voter of answer.voters) { // eslint-disable-line no-unused-vars
+        // Getting every voters ID that participates to the poll
+        for (const answer of pollDetails.answers) {
+            for (const voter of answer.voters) {
                 voterSet.add(voter);
             }
         }
@@ -67,6 +74,7 @@ const AbstractPollResults = (Component: AbstractComponent<AbstractProps>) => (pr
 
             if (showDetails) {
                 voters = [ ...answer.voters ].map(voterId => {
+                    // Getting the name of participant from its ID
                     const participant = participants.find(part => part.id === voterId);
 
                     return {

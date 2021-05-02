@@ -10,6 +10,12 @@ type Props = {
     pollId: number,
 };
 
+/**
+ * Component that renders the poll results dialog.
+ *
+ * @param {Props} props - The passed props.
+ * @returns {React.Node}
+ */
 const PollResultsDialog = (props: Props) => {
     const { pollId } = props;
 

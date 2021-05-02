@@ -31,18 +31,21 @@ const AbstractPollCreateDialog = (Component: AbstractComponent<AbstractProps>) =
     const [ question, setQuestion ] = useState('');
 
     const [ answers, setAnswers ] = useState([ '' ]);
+
     const setAnswer = useCallback((i, answer) => {
         const newAnswers = [ ...answers ];
 
         newAnswers[i] = answer;
         setAnswers(newAnswers);
     });
+
     const addAnswer = useCallback(i => {
         const newAnswers = [ ...answers ];
 
         newAnswers.splice(i === undefined ? answers.length : i, 0, '');
         setAnswers(newAnswers);
     });
+
     const moveAnswer = useCallback((i, j) => {
         const newAnswers = [ ...answers ];
 
@@ -52,6 +55,7 @@ const AbstractPollCreateDialog = (Component: AbstractComponent<AbstractProps>) =
         newAnswers.splice(j, 0, answer);
         setAnswers(newAnswers);
     });
+
     const removeAnswer = useCallback(i => {
         if (answers.length === 1) {
             return;
@@ -63,6 +67,7 @@ const AbstractPollCreateDialog = (Component: AbstractComponent<AbstractProps>) =
     });
 
     const conference = useSelector(state => state['features/base/conference'].conference);
+
     const onSubmit = useCallback(() => {
         const filteredAnswers = answers.filter(answer => answer.trim().length > 0);
 

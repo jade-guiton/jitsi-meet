@@ -20,10 +20,12 @@ const PollResults = (props: AbstractProps) => {
         t
     } = props;
 
-    const renderRow = useCallback((name, percentage, voterCount) => (<div className = 'poll-answer-header'>
-        <span>{ name } - { percentage }%</span>
-        <span>{ t('polls.answer.vote', { count: voterCount }) }</span>
-    </div>));
+    const renderRow = useCallback((name, percentage, voterCount) =>
+        (<div className = 'poll-answer-header'>
+            <span>{ name } - { percentage }%</span>
+            <span>{ t('polls.answer.vote', { count: voterCount }) }</span>
+        </div>)
+    );
 
     return (
         <div>
@@ -34,22 +36,27 @@ const PollResults = (props: AbstractProps) => {
             </div>
             <ol className = 'poll-answer-list'>
                 { showDetails
-                    ? answers.map(({ name, percentage, voters, voterCount }, index) => (<li key = { index }>
-                        { renderRow(name, percentage, voterCount) }
-                        { voters && voterCount > 0
+                    ? answers.map(({ name, percentage, voters, voterCount }, index) =>
+                        (<li key = { index }>
+                            { renderRow(name, percentage, voterCount) }
+                            { voters && voterCount > 0
                             && <ul className = 'poll-answer-voters'>
                                 {voters.map(voter =>
                                     <li key = { voter.id }>{ voter.name }</li>
                                 )}
                             </ul>}
-                    </li>)) : answers.map(({ name, percentage, voterCount }, index) => (<li key = { index }>
-                        { renderRow(name, percentage, voterCount) }
-                        <div className = 'poll-bar-container'>
-                            <div
-                                className = 'poll-bar'
-                                style = {{ width: `${percentage}%` }} />
-                        </div>
-                    </li>))
+                        </li>)
+                    )
+                    : answers.map(({ name, percentage, voterCount }, index) =>
+                        (<li key = { index }>
+                            { renderRow(name, percentage, voterCount) }
+                            <div className = 'poll-bar-container'>
+                                <div
+                                    className = 'poll-bar'
+                                    style = {{ width: `${percentage}%` }} />
+                            </div>
+                        </li>)
+                    )
                 }
             </ol>
         </div>

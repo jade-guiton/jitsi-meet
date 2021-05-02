@@ -5,6 +5,11 @@ import React from 'react';
 import AbstractPollResultsMessage from '../AbstractPollResultsMessage';
 import type { AbstractProps } from '../AbstractPollResultsMessage';
 
+/**
+ * Component that renders a poll result message for chat.
+ *
+ * @returns {React.Node}
+ */
 const PollResultsMessage = ({ children, detailsText, noticeText, showDetails }: AbstractProps) => <>
     { children }
     <div className = 'poll-message-footer'>
