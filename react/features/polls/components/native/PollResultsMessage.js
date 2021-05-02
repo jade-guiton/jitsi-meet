@@ -9,17 +9,17 @@ import type { AbstractProps } from '../AbstractPollResultsMessage';
 import { chatStyles } from './styles';
 
 const PollResultsMessage = ({ children, detailsText, noticeText, showDetails }: AbstractProps) => (
-<View>
-    { children }
-    <View style = { chatStyles.messageFooter }>
-        <Text>{ noticeText }</Text>
-        <Text
-            onPress = { showDetails }
-            style = { chatStyles.showDetails }>
-            { detailsText }
-        </Text>
+    <View>
+        { children }
+        <View style = { chatStyles.messageFooter }>
+            <Text>{ noticeText }</Text>
+            <Text
+                onPress = { showDetails }
+                style = { chatStyles.showDetails }>
+                { detailsText }
+            </Text>
+        </View>
     </View>
-</View>
 );
 
 /*
