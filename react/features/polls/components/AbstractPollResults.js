@@ -5,7 +5,7 @@ import type { AbstractComponent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
-import { getParticipants } from '../../base/participants';
+import { getParticipantDisplayName, getParticipants } from '../../base/participants';
 
 
 /**
@@ -53,7 +53,16 @@ const AbstractPollResults = (Component: AbstractComponent<AbstractProps>) => (pr
 
     const pollDetails = useSelector(state => state['features/polls'].polls[pollId]);
 
-    const participants = useSelector(state => getParticipants(state));
+    let participants = useSelector(state => getParticipants(state));
+
+    participants = useSelector(state => participants.map(part => {
+        const displayName = getParticipantDisplayName(state, part.id);
+
+        return {
+            id: part.id,
+            name: displayName
+        };
+    }));
 
     const answers: Array<AnswerInfo> = useMemo(() => {
         const voterSet = new Set();
@@ -77,12 +86,7 @@ const AbstractPollResults = (Component: AbstractComponent<AbstractProps>) => (pr
                     // Getting the name of participant from its ID
                     const participant = participants.find(part => part.id === voterId);
 
-                    return {
-                        id: voterId,
-                        name: participant
-                            ? participant.name
-                            : 'Absent Jitster'
-                    };
+                    return participant;
                 });
             }
 
