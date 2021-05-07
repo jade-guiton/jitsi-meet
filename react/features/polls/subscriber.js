@@ -11,40 +11,36 @@ StateListenerRegistry.register(
     state => getCurrentConference(state),
     (conference, store, previousConference) => {
         if (conference && conference !== previousConference) {
+            conference.room.addListener('xmmp.json_message_received', (senderJid, data) => {
+                console.log('JSON_MESSAGE_RECEIVED', data);
+                
+                if(data.type === COMMAND_NEW_POLL) {
+                    const { question, answers, pollId, senderId } = data;
+                    
+                    const poll = {
+                        senderId,
+                        question: question,
+                        answers: answers.map(answer => {
+                            return {
+                                name: answer,
+                                voters: new Set()
+                            };
+                        })
+                    };
 
-            // Command triggered when a new poll is received
-            conference.addCommandListener(COMMAND_NEW_POLL, ({ attributes, children }) => {
-                const poll = {
-                    senderId: attributes.senderId,
-                    question: attributes.question,
-                    answers: children.map(answerData => {
-                        return {
-                            name: answerData.value,
-                            voters: new Set()
-                        };
-                    })
-                };
+                    store.dispatch(receivePoll(pollId, poll));
+                    
+                } else if(data.type === COMMAND_ANSWER_POLL) {
+                    const { pollId, answers, senderId } = data;
 
-                store.dispatch(receivePoll(attributes.pollId, poll));
-            });
+                    const receivedAnswer: Answer = {
+                        senderId,
+                        pollId,
+                        answers,
+                    };
 
-            // Command triggered when new answer is received
-            conference.addCommandListener(COMMAND_ANSWER_POLL, ({ attributes, children }) => {
-                const { dispatch } = store;
-                const { senderId, pollId } = attributes;
-
-                const receivedAnswer: Answer = {
-                    senderId,
-                    pollId,
-                    answers: children.map(
-
-                            // Boolean are converted to text through XMPP
-                            // We convert here the strings back to boolean
-                            element => element.attributes.checked === 'true'
-                    )
-                };
-
-                dispatch(receiveAnswer(pollId, receivedAnswer));
+                    store.dispatch(receiveAnswer(pollId, receivedAnswer));
+                }
             });
         }
     }

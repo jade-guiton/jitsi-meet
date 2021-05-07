@@ -77,25 +77,12 @@ const AbstractPollAnswerDialog = (Component: AbstractComponent<AbstractProps>) =
     }, [ localName, localId, poll, pollId, senderName, isChatOpen ]);
 
     const submitAnswer = useCallback(() => {
-        const answerData = {
-            attributes: {
-                pollId,
-                senderId: localId
-            },
-            children: checkBoxStates.map(checkBoxState => {
-                return {
-                    attributes: {
-                        checked: checkBoxState
-                    },
-                    tagName: 'answer'
-                };
-            })
-        };
-
-        conference.sendCommandOnce(
-            COMMAND_ANSWER_POLL,
-            answerData
-        );
+        conference.sendMessage({
+            type: COMMAND_ANSWER_POLL,
+            pollId,
+            senderId: localId,
+            answers: checkBoxStates,
+        });
 
         displayInChat();
         setShouldDisplayResult(true);
