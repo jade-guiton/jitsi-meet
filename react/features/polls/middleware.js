@@ -63,4 +63,3 @@ MiddlewareRegistry.register(({ dispatch, getState }) => next => action => {
 
     return result;
 });
-

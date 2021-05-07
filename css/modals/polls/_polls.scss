@@ -1,6 +1,6 @@
 .poll-dialog {
     font-size: 1rem;
-    
+
     h1, span, li, strong {
         color: #bce;
     }
@@ -11,7 +11,7 @@
 
 .poll-question-field {
     margin-bottom: 1.5em;
-    
+
     input {
         font-size: 1.25em;
     }
@@ -29,7 +29,7 @@
 .poll-answer-field {
     display: flex;
     align-items: center;
-    
+
     & > *:not(:last-child) {
         margin-right: 2px;
     }
@@ -124,7 +124,7 @@
 .poll-show-details {
     background-color: transparent;
     border: none;
-    
+
     &:hover {
         text-decoration: underline;
     }
