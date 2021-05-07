@@ -48,6 +48,9 @@ import {
 } from '../../../participants-pane/actions';
 import { getParticipantsPaneOpen } from '../../../participants-pane/functions';
 import {
+    PollCreateButton
+} from '../../../polls/components';
+import {
     LiveStreamButton,
     RecordButton
 } from '../../../recording';
@@ -1053,6 +1056,10 @@ class Toolbox extends Component<Props> {
             this._shouldShowButton('etherpad')
                 && <SharedDocumentButton
                     key = 'etherpad'
+                    showLabel = { true } />,
+            this._shouldShowButton('poll')
+                && <PollCreateButton
+                    key = 'poll'
                     showLabel = { true } />,
             (this._shouldShowButton('select-background') || this._shouldShowButton('videobackgroundblur'))
                 && <VideoBackgroundButton
