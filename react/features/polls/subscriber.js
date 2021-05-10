@@ -15,12 +15,12 @@ StateListenerRegistry.register(
             // Command triggered when a new poll is received
             conference.addCommandListener(COMMAND_NEW_POLL, ({ attributes, children }) => {
                 const poll = {
-                    senderId: attributes.sender.id,
+                    senderId: attributes.senderId,
                     question: attributes.question,
                     answers: children.map(answerData => {
                         return {
                             name: answerData.value,
-                            voters: new Set()
+                            voters: new Map()
                         };
                     })
                 };

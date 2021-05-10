@@ -81,10 +81,8 @@ const AbstractPollCreateDialog = (Component: AbstractComponent<AbstractProps>) =
         conference.sendCommandOnce(COMMAND_NEW_POLL, {
             attributes: {
                 pollId: Math.floor(Math.random() * Number.MAX_SAFE_INTEGER),
-                sender: {
-                    id: conference.myUserId(),
-                    name: senderName
-                },
+                senderId: conference.myUserId(),
+                senderName,
                 question
             },
             children: filteredAnswers.map(answer => {

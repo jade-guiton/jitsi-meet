@@ -81,7 +81,10 @@ const AbstractPollAnswerDialog = (Component: AbstractComponent<AbstractProps>) =
             attributes: {
                 pollId,
                 senderId: localId,
-                senderName
+
+                // getParticipantDisplayName returns 'me' if the participant id is the local participant.
+                // We don't want to send me as name to everyone.
+                senderName: localName === 'me' ? 'Fellow Jitster' : localName
             },
             children: checkBoxStates.map(checkBoxState => {
                 return {
