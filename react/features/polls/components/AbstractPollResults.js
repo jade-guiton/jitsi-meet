@@ -82,11 +82,18 @@ const AbstractPollResults = (Component: AbstractComponent<AbstractProps>) => (pr
             let voters = null;
 
             if (showDetails) {
-                voters = [ ...answer.voters ].map(voterId => {
-                    // Getting the name of participant from its ID
-                    const participant = participants.find(part => part.id === voterId);
+                voters = [ ...answer.voters ].map(voter => {
 
-                    return participant;
+                    // Getting the name of participant from its ID
+                    const participant = participants.find(part => part.id === voter.id);
+
+                    // If the participant is still in the meeting and updates its name.
+                    if (participant && participant.name !== 'Fellow Jitster' && participant.name !== voter.name) {
+                        return participant;
+                    }
+
+                    // Keep the data already stored in the poll otherwise.
+                    return voter;
                 });
             }
 

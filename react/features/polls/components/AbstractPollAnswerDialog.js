@@ -80,7 +80,8 @@ const AbstractPollAnswerDialog = (Component: AbstractComponent<AbstractProps>) =
         const answerData = {
             attributes: {
                 pollId,
-                senderId: localId
+                senderId: localId,
+                senderName
             },
             children: checkBoxStates.map(checkBoxState => {
                 return {
@@ -101,7 +102,7 @@ const AbstractPollAnswerDialog = (Component: AbstractComponent<AbstractProps>) =
         setShouldDisplayResult(true);
 
         return false;
-    }, [ pollId, localId, checkBoxStates, conference ]);
+    }, [ pollId, localId, senderName, checkBoxStates, conference ]);
 
     const skipAnswer = useCallback(() => {
         displayInChat();
