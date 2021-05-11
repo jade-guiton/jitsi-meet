@@ -65,7 +65,7 @@ type Props = {
      * leave the dialog open. No cancel button.
      */
     isModal: boolean,
-    
+
     /**
      * The handler for the event when clicking the 'confirmNo' button.
      * Defaults to onCancel if absent.
