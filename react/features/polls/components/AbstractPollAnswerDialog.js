@@ -57,7 +57,8 @@ const AbstractPollAnswerDialog = (Component: AbstractComponent<AbstractProps>) =
     const [ shouldDisplayResult, setShouldDisplayResult ] = useState(false);
 
     const dispatch = useDispatch();
-    const localName: string = useSelector(state => getParticipantDisplayName(state, localId));
+    const localParticipant = useSelector(state => getParticipantById(state, localId));
+    const localName: string = localParticipant.name === '' ? 'Fellow Jitster' : localParticipant.name;
     const senderName: string = useSelector(state => getParticipantDisplayName(state, poll.senderId));
     const isLocal: boolean = useSelector(state => (getParticipantById(state, poll.senderId) || { local: false }).local);
     const isChatOpen = useSelector(state => state['features/chat'].isOpen);
@@ -82,9 +83,7 @@ const AbstractPollAnswerDialog = (Component: AbstractComponent<AbstractProps>) =
                 pollId,
                 senderId: localId,
 
-                // getParticipantDisplayName returns 'me' if the participant id is the local participant.
-                // We don't want to send me as name to everyone.
-                senderName: localName === 'me' ? 'Fellow Jitster' : localName
+                senderName: localName === '' ? 'Fellow Jitster' : localName
             },
             children: checkBoxStates.map(checkBoxState => {
                 return {
