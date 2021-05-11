@@ -69,7 +69,7 @@ const AbstractPollResults = (Component: AbstractComponent<AbstractProps>) => (pr
             let voters = null;
 
             if (showDetails) {
-                voters = Array.from(answer.voters, ([ id, name ]) => {
+                voters = [ ...answer.voters ].map(([ id, name ]) => {
                     return {
                         id,
                         name
