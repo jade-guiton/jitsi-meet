@@ -8,9 +8,9 @@ export type Answer = {
     senderId: string,
 
     /**
-     * Name of the sender
+     * Name of the voter
      */
-    senderName: string,
+    voterName: string,
 
     /**
      * ID of the parent Poll of this answer

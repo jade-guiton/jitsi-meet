@@ -31,11 +31,11 @@ StateListenerRegistry.register(
             // Command triggered when new answer is received
             conference.addCommandListener(COMMAND_ANSWER_POLL, ({ attributes, children }) => {
                 const { dispatch } = store;
-                const { senderId, senderName, pollId } = attributes;
+                const { senderId, voterName, pollId } = attributes;
 
                 const receivedAnswer: Answer = {
                     senderId,
-                    senderName,
+                    voterName,
                     pollId,
                     answers: children.map(
 
