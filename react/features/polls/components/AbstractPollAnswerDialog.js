@@ -82,7 +82,7 @@ const AbstractPollAnswerDialog = (Component: AbstractComponent<AbstractProps>) =
             attributes: {
                 pollId,
                 senderId: localId,
-                voterName: localName === '' ? 'Fellow Jitster' : localName
+                voterName: localName
             },
             children: checkBoxStates.map(checkBoxState => {
                 return {
