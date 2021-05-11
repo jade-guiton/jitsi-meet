@@ -58,7 +58,7 @@ const AbstractPollAnswerDialog = (Component: AbstractComponent<AbstractProps>) =
 
     const dispatch = useDispatch();
     const localParticipant = useSelector(state => getParticipantById(state, localId));
-    const localName: string = localParticipant.name === '' ? 'Fellow Jitster' : localParticipant.name;
+    const localName: string = localParticipant.name ? localParticipant.name : 'Fellow Jitster';
     const senderName: string = useSelector(state => getParticipantDisplayName(state, poll.senderId));
     const isLocal: boolean = useSelector(state => (getParticipantById(state, poll.senderId) || { local: false }).local);
     const isChatOpen = useSelector(state => state['features/chat'].isOpen);
