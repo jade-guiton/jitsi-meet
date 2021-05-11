@@ -103,7 +103,7 @@ const AbstractPollAnswerDialog = (Component: AbstractComponent<AbstractProps>) =
         setShouldDisplayResult(true);
 
         return false;
-    }, [ pollId, localId, senderName, checkBoxStates, conference ]);
+    }, [ pollId, localId, localName, checkBoxStates, conference ]);
 
     const skipAnswer = useCallback(() => {
         displayInChat();
