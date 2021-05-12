@@ -2,9 +2,10 @@
 
 import React, { useState, useCallback } from 'react';
 import type { AbstractComponent } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { getLocalParticipant, getParticipantById } from '../../base/participants';
+import { setAnsweredStatus } from '../actions';
 import { COMMAND_ANSWER_POLL } from '../constants';
 import type { Poll } from '../types';
 
@@ -35,6 +36,8 @@ export type AbstractProps = InputProps & {
  * @returns {React.AbstractComponent}
  */
 const AbstractPollAnswerDialog = (Component: AbstractComponent<AbstractProps>) => (props: InputProps) => {
+
+    const dispatch = useDispatch();
 
     const { pollId } = props;
 
@@ -80,17 +83,23 @@ const AbstractPollAnswerDialog = (Component: AbstractComponent<AbstractProps>) =
             answerData
         );
 
+        dispatch(setAnsweredStatus(pollId, true));
         setShouldDisplayResult(true);
 
         return false;
     }, [ pollId, localId, localName, checkBoxStates, conference ]);
 
     const skipAnswer = useCallback(() => {
+        dispatch(setAnsweredStatus(pollId, true));
         setShouldDisplayResult(true);
 
         return false;
     }, []);
-    const cancelAnswer = useCallback(() => true, []);
+    const cancelAnswer = useCallback(() => {
+        dispatch(setAnsweredStatus(pollId, true));
+
+        return true;
+    }, []);
 
     return (<Component
         { ...props }
