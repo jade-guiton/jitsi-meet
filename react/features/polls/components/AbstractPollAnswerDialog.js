@@ -93,19 +93,19 @@ const AbstractPollAnswerDialog = (Component: AbstractComponent<AbstractProps>) =
         setShouldDisplayResult(true);
 
         return false;
-    }, [ pollId, localId, localName, checkBoxStates, conference, displayInChat ]);
+    }, [ pollId, localId, localName, checkBoxStates, conference ]);
 
     const skipAnswer = useCallback(() => {
         dispatch(setAnsweredStatus(pollId, true));
         setShouldDisplayResult(true);
 
         return false;
-    }, [ displayInChat ]);
+    }, [ pollId ]);
     const cancelAnswer = useCallback(() => {
         dispatch(setAnsweredStatus(pollId, true));
 
         return true;
-    }, [ displayInChat ]);
+    }, [ pollId ]);
 
     return (<Component
         { ...props }
