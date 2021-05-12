@@ -2,10 +2,9 @@
 
 import React, { useState, useCallback } from 'react';
 import type { AbstractComponent } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import { getLocalParticipant, getParticipantDisplayName, getParticipantById } from '../../base/participants';
-import { addMessage, MESSAGE_TYPE_LOCAL, MESSAGE_TYPE_REMOTE } from '../../chat';
+import { getLocalParticipant, getParticipantById } from '../../base/participants';
 import { COMMAND_ANSWER_POLL } from '../constants';
 import type { Poll } from '../types';
 
@@ -56,26 +55,8 @@ const AbstractPollAnswerDialog = (Component: AbstractComponent<AbstractProps>) =
 
     const [ shouldDisplayResult, setShouldDisplayResult ] = useState(false);
 
-    const dispatch = useDispatch();
     const localParticipant = useSelector(state => getParticipantById(state, localId));
     const localName: string = localParticipant.name ? localParticipant.name : 'Fellow Jitster';
-    const senderName: string = useSelector(state => getParticipantDisplayName(state, poll.senderId));
-    const isLocal: boolean = useSelector(state => (getParticipantById(state, poll.senderId) || { local: false }).local);
-    const isChatOpen = useSelector(state => state['features/chat'].isOpen);
-
-    const displayInChat = useCallback(() => {
-        dispatch(addMessage({
-            displayName: senderName,
-            hasRead: isChatOpen,
-            id: poll.senderId,
-            messageType: isLocal ? MESSAGE_TYPE_LOCAL : MESSAGE_TYPE_REMOTE,
-            message: '[Poll]',
-            pollId,
-            privateMessage: false,
-            recipient: localName,
-            timestamp: Date.now()
-        }));
-    }, [ localName, localId, poll, pollId, senderName, isChatOpen ]);
 
     const submitAnswer = useCallback(() => {
         const answerData = {
@@ -99,23 +80,17 @@ const AbstractPollAnswerDialog = (Component: AbstractComponent<AbstractProps>) =
             answerData
         );
 
-        displayInChat();
         setShouldDisplayResult(true);
 
         return false;
     }, [ pollId, localId, localName, checkBoxStates, conference ]);
 
     const skipAnswer = useCallback(() => {
-        displayInChat();
         setShouldDisplayResult(true);
 
         return false;
     }, []);
-    const cancelAnswer = useCallback(() => {
-        displayInChat();
-
-        return true;
-    }, []);
+    const cancelAnswer = useCallback(() => true, []);
 
     return (<Component
         { ...props }
