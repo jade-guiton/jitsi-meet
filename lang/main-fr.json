@@ -1044,7 +1044,8 @@
             "close": "Fermer",
             "empty": "Pas de réponse pour le moment",
             "vote" : "{{count}} vote",
-            "vote_plural" : "{{count}} votes"
+            "vote_plural" : "{{count}} votes",
+            "notanswered": "Vous n'avez pas encore répondu au sondage"
         },
         "chat": {
             "notice": "Sondage",
