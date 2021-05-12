@@ -1,6 +1,7 @@
 // @flow
 
 import { openDialog } from '../base/dialog';
+import { getLocalParticipant, getParticipantDisplayName } from '../base/participants/functions';
 import { MiddlewareRegistry } from '../base/redux';
 import { addMessage, MESSAGE_TYPE_LOCAL, MESSAGE_TYPE_REMOTE } from '../chat';
 
@@ -17,12 +18,10 @@ MiddlewareRegistry.register(store => next => action => {
     case RECEIVE_POLL: {
         const { poll, pollId } = action;
 
-        const participants = store.getState()['features/base/participants'];
-        const senderParticipant = participants.find(p => p.id === poll.senderId);
-        const senderName = senderParticipant.name ? senderParticipant.name : 'Fellow Jitster';
-        const localParticipant = participants.find(p => p.local);
-        const localName = localParticipant.name ? localParticipant.name : 'Fellow Jitster';
-        const isLocal = senderParticipant.id === localParticipant.id;
+        const senderName = getParticipantDisplayName(store.getState(), poll.senderId);
+        const localParticipant = getLocalParticipant(store.getState());
+        const localName = getParticipantDisplayName(store.getState(), localParticipant.id);
+        const isLocal = poll.senderId === localParticipant.id;
         const isChatOpen: boolean = store.getState()['features/chat'].isOpen;
 
         store.dispatch(openDialog(PollAnswerDialog, { pollId }));
