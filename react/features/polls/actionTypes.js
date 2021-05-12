@@ -5,8 +5,9 @@
  *
  * {
  *     type: RECEIVE_POLL,
- *     poll: Poll
+ *     poll: Poll,
  *     pollId: string,
+ *     queue: boolean
  * }
  *
  */
