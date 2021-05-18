@@ -1,0 +1,10 @@
+{
+  "contextFontSize": 14,
+  "contextFontWeight": 400,
+  "headerSize": 60,
+  "panePadding": 16,
+  "pollsActionButtonHeight": 32,
+  "pollItemHeight": 48,
+  "pollsPaneWidth": 315,
+  "rangeInputThumbSize": 14
+}

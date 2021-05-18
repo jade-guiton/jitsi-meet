@@ -2,7 +2,14 @@
 
 import { ReducerRegistry } from '../base/redux';
 
-import { RECEIVE_POLL, RECEIVE_ANSWER, SET_ANSWERED_STATUS, SHOW_POLL } from './actionTypes';
+import {
+    POLLS_PANE_CLOSE,
+    POLLS_PANE_OPEN,
+    RECEIVE_POLL,
+    RECEIVE_ANSWER,
+    SET_ANSWERED_STATUS,
+    SHOW_POLL
+} from './actionTypes';
 import type { Answer } from './types';
 
 const INITIAL_STATE = {
@@ -109,6 +116,20 @@ ReducerRegistry.register('features/polls', (state = INITIAL_STATE, action) => {
             }
         };
     }
+
+    // Reducer triggered to close the polls pane
+    case POLLS_PANE_CLOSE:
+        return {
+            ...state,
+            isOpen: false
+        };
+
+    // Reducer triggered to open the polls pane
+    case POLLS_PANE_OPEN:
+        return {
+            ...state,
+            isOpen: true
+        };
 
 
     default:

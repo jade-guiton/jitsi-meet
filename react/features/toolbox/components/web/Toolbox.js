@@ -21,6 +21,7 @@ import {
     IconFeedback,
     IconFullScreen,
     IconParticipants,
+    IconPoll,
     IconPresentation,
     IconRaisedHand,
     IconRec,
@@ -48,7 +49,12 @@ import {
     open as openParticipantsPane
 } from '../../../participants-pane/actions';
 import { getParticipantsPaneOpen } from '../../../participants-pane/functions';
+import {
+    closePollsPane,
+    openPollsPane
+} from '../../../polls/actions';
 import { PollCreateButton } from '../../../polls/components/';
+import { getPollsPaneOpen } from '../../../polls/functions';
 import {
     LiveStreamButton,
     RecordButton
@@ -190,6 +196,11 @@ type Props = {
     _participantsPaneOpen: boolean,
 
     /**
+     * Whether or not the polls pane is open.
+     */
+     _pollsPaneOpen: boolean,
+
+    /**
      * Whether or not the local participant's hand is raised.
      */
     _raisedHand: boolean,
@@ -261,6 +272,7 @@ class Toolbox extends Component<Props> {
         this._onShortcutToggleVideoQuality = this._onShortcutToggleVideoQuality.bind(this);
         this._onToolbarOpenFeedback = this._onToolbarOpenFeedback.bind(this);
         this._onToolbarToggleParticipantsPane = this._onToolbarToggleParticipantsPane.bind(this);
+        this._onToolbarTogglePollsPane = this._onToolbarTogglePollsPane.bind(this);
         this._onToolbarOpenKeyboardShortcuts = this._onToolbarOpenKeyboardShortcuts.bind(this);
         this._onToolbarOpenSpeakerStats = this._onToolbarOpenSpeakerStats.bind(this);
         this._onToolbarOpenEmbedMeeting = this._onToolbarOpenEmbedMeeting.bind(this);
@@ -748,7 +760,27 @@ class Toolbox extends Component<Props> {
         if (_participantsPaneOpen) {
             dispatch(closeParticipantsPane());
         } else {
+            dispatch(closePollsPane());
             dispatch(openParticipantsPane());
+        }
+    }
+
+    _onToolbarTogglePollsPane: () => void;
+
+    /**
+     * Dispatches an action for toggling the polls pane.
+     *
+     * @private
+     * @returns {void}
+     */
+    _onToolbarTogglePollsPane() {
+        const { dispatch, _pollsPaneOpen } = this.props;
+
+        if (_pollsPaneOpen) {
+            dispatch(closePollsPane());
+        } else {
+            dispatch(closeParticipantsPane());
+            dispatch(openPollsPane());
         }
     }
 
@@ -1224,6 +1256,7 @@ class Toolbox extends Component<Props> {
                     <ToolbarButton
                         accessibilityLabel = { t('toolbar.accessibilityLabel.participants') }
                         icon = { IconParticipants }
+                        key = 'participants-pane'
                         onClick = { this._onToolbarToggleParticipantsPane }
                         toggled = { this.props._participantsPaneOpen }
                         tooltip = { t('toolbar.participants') } />)
@@ -1234,6 +1267,26 @@ class Toolbox extends Component<Props> {
                         key = 'participants-pane'
                         onClick = { this._onToolbarToggleParticipantsPane }
                         text = { t('toolbar.participants') } />
+                );
+        }
+
+        if (this.props._shouldShowButton('polls-pane')) {
+            buttons.has('polls-pane')
+                ? mainMenuAdditionalButtons.push(
+                    <ToolbarButton
+                        accessibilityLabel = { t('toolbar.accessibilityLabel.polls') }
+                        icon = { IconPoll }
+                        key = 'polls-pane'
+                        onClick = { this._onToolbarTogglePollsPane }
+                        toggled = { this.props._pollsPaneOpen }
+                        tooltip = { t('toolbar.polls') } />)
+                : overflowMenuAdditionalButtons.push(
+                    <OverflowMenuItem
+                        accessibilityLabel = { t('toolbar.accessibilityLabel.polls') }
+                        icon = { IconPoll }
+                        key = 'polls-pane'
+                        onClick = { this._onToolbarTogglePollsPane }
+                        text = { t('toolbar.polls') } />
                 );
         }
 
@@ -1389,6 +1442,7 @@ function _mapStateToProps(state) {
         _locked: locked,
         _overflowMenuVisible: overflowMenuVisible,
         _participantsPaneOpen: getParticipantsPaneOpen(state),
+        _pollsPaneOpen: getPollsPaneOpen(state),
         _raisedHand: localParticipant.raisedHand,
         _screensharing: (localVideo && localVideo.videoType === 'desktop') || isScreenAudioShared(state),
         _shouldShowButton: buttonName => isToolbarButtonEnabled(buttonName)(state),
