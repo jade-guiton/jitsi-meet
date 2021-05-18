@@ -3,9 +3,9 @@
 export type Answer = {
 
     /**
-     * ID of the sender of this poll
+     * ID of the voter for this answer
      */
-    senderId: string,
+    voterId: string,
 
     /**
      * Name of the voter
