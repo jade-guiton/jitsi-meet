@@ -560,6 +560,7 @@
             "notanswered": "You didn't answer the poll yet"
         },
         "chat": {
+            "answer": "Answer",
             "notice": "Poll",
             "details": "Details"
         }

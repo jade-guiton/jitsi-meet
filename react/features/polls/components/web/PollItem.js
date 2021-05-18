@@ -1,10 +1,12 @@
 // @flow
 
 import React, { useCallback } from 'react';
-import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { openDialog } from '../../../base/dialog';
-import { PollResults, PollResultsDialog } from '../index';
+import { isPollAnswered } from '../../functions';
+import { PollAnswerDialog, PollResults, PollResultsDialog } from '../index';
 
 
 type Props = {
@@ -20,10 +22,16 @@ export const PollItem = ({
     pollId
 }: Props) => {
 
+    const { t } = useTranslation();
     const dispatch = useDispatch();
     const showDetails = useCallback(() => {
         dispatch(openDialog(PollResultsDialog, { pollId }));
     }, [ pollId ]);
+    const answerPoll = useCallback(() => {
+        dispatch(openDialog(PollAnswerDialog, { pollId }));
+    }, [ pollId ]);
+
+    const answered = useSelector(state => isPollAnswered(state, pollId));
 
     return (
         <>
@@ -31,12 +39,22 @@ export const PollItem = ({
                 key = { pollId }
                 pollId = { pollId }
                 showDetails = { false } />
-            <button
-                className = 'poll-show-details'
-                onClick = { showDetails }
-                type = 'button'>
-                See detailed results
-            </button>
+
+            { answered
+                ? <button
+                    className = 'poll-show-details'
+                    onClick = { showDetails }
+                    type = 'button'>
+                    { t('polls.chat.details') }
+                </button>
+                : <button
+                    className = 'poll-show-details'
+                    onClick = { answerPoll }
+                    type = 'button'>
+                    { t('polls.chat.answer') }
+                </button>
+            }
+
         </>
     );
 };

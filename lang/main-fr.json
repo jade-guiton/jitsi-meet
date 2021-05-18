@@ -553,6 +553,7 @@
             "notanswered": "Vous n'avez pas encore répondu au sondage"
         },
         "chat": {
+            "answer": "Répondre",
             "notice": "Sondage",
             "details": "Détails"
         }

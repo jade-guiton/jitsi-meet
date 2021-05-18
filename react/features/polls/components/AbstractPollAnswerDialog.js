@@ -88,11 +88,7 @@ const AbstractPollAnswerDialog = (Component: AbstractComponent<AbstractProps>) =
 
         return false;
     }, [ pollId ]);
-    const cancelAnswer = useCallback(() => {
-        dispatch(setAnsweredStatus(pollId, true));
-
-        return true;
-    }, [ pollId ]);
+    const cancelAnswer = useCallback(() => true, [ pollId ]);
 
     return (<Component
         { ...props }
