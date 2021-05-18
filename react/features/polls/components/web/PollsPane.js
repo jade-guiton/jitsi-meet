@@ -8,16 +8,15 @@ import { closePollsPane } from '../../actions';
 import { classList, getPollsPaneOpen } from '../../functions';
 import theme from '../../theme.json';
 
-import { CreatePollButton } from './CreatePollButton';
-import { PollsList } from './PollsList';
-
-
 import {
     AntiCollapse,
     Close,
     Container,
     Header
 } from './styled';
+
+import { CreatePollButton, PollsList } from '.';
+
 
 const PollsPane = () => {
     const dispatch = useDispatch();

@@ -7,12 +7,12 @@ import { useDispatch } from 'react-redux';
 import { openDialog } from '../../../base/dialog';
 import { Icon, IconEdit } from '../../../base/icons';
 
-import { ParticipantInviteButton } from './styled';
+import { PollCreateButton } from './styled';
 
 import { PollCreateDialog } from '.';
 
 
-export const CreatePollButton = () => {
+const CreatePollButton = () => {
     const dispatch = useDispatch();
     const { t } = useTranslation();
 
@@ -21,13 +21,15 @@ export const CreatePollButton = () => {
     }, [ dispatch ]);
 
     return (
-        <ParticipantInviteButton
+        <PollCreateButton
             aria-label = { t('toolbar.accessibilityLabel.poll') }
             onClick = { onCreate }>
             <Icon
                 size = { 20 }
                 src = { IconEdit } />
             <span>{ t('toolbar.poll') }</span>
-        </ParticipantInviteButton>
+        </PollCreateButton>
     );
 };
+
+export default CreatePollButton;

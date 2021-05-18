@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 
 import { PollItem } from './PollItem';
 
-export const PollsList = () => {
+const PollsList = () => {
 
     const polls = useSelector(state => state['features/polls'].polls);
 
@@ -21,3 +21,5 @@ export const PollsList = () => {
     </>
     );
 };
+
+export default PollsList;
