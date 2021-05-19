@@ -33,7 +33,7 @@ export type Poll = {
 
     /**
      * Name of the sender of this poll
-     * Allows to know send Name even if he quits the call
+     * Store poll sender name in case they exit the call
      */
     senderName: string,
 
