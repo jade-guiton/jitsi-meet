@@ -12,9 +12,9 @@ const parsePollData = pollData => {
     if (typeof pollData !== 'object' || pollData === null) {
         return null;
     }
-    const { id, senderId, question, answers } = pollData;
+    const { id, senderId, senderName, question, answers } = pollData;
 
-    if (typeof id !== 'string' || typeof senderId !== 'string'
+    if (typeof id !== 'string' || typeof senderId !== 'string' || typeof senderName !== 'string'
         || typeof question !== 'string' || !(answers instanceof Array)) {
         return null;
     }
@@ -39,6 +39,7 @@ const parsePollData = pollData => {
 
     return {
         senderId,
+        senderName,
         question,
         answered: true,
         answers: answers2
