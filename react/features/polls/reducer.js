@@ -103,7 +103,7 @@ ReducerRegistry.register('features/polls', (state = INITIAL_STATE, action) => {
 
     // Reducer triggered to update the answered status of a poll
     case SET_ANSWERED_STATUS: {
-        const { answered, pollId }: { answered: boolean; pollId: number } = action;
+        const { answered, pollId }: { answered: boolean; pollId: string } = action;
 
         return {
             ...state,

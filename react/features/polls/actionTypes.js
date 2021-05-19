@@ -41,7 +41,7 @@ export const RECEIVE_ANSWER = 'RECEIVE_ANSWER';
  * {
  *     type: SET_ANSWERED_STATUS,
  *     answered: boolean
- *     pollId: number,
+ *     pollId: string,
  * }
  */
 export const SET_ANSWERED_STATUS = 'SET_ANSWERED_STATUS';

@@ -14,7 +14,7 @@ type Props = {
     /**
      * Id of the poll
      */
-    pollId: number,
+    pollId: string,
 
 }
 
