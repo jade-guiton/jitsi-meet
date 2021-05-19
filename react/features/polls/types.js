@@ -30,6 +30,13 @@ export type Poll = {
      */
     senderId: string,
 
+
+    /**
+     * Name of the sender of this poll
+     * Allows to know send Name even if he quits the call
+     */
+    senderName: string,
+
     /**
      * If the participant has answered the poll
      */

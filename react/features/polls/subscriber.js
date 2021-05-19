@@ -16,6 +16,7 @@ StateListenerRegistry.register(
             conference.addCommandListener(COMMAND_NEW_POLL, ({ attributes, children }) => {
                 const poll = {
                     senderId: attributes.senderId,
+                    senderName: attributes.senderName,
                     answered: false,
                     question: attributes.question,
                     answers: children.map(answerData => {
