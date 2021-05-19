@@ -73,7 +73,7 @@ const AbstractPollAnswerDialog = (Component: AbstractComponent<AbstractProps>) =
             pollId,
             senderId: localId,
             voterName: localName,
-            answers: checkBoxStates,
+            answers: checkBoxStates
         });
 
         dispatch(setAnsweredStatus(pollId, true));

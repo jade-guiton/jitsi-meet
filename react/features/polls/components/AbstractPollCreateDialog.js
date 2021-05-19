@@ -80,7 +80,7 @@ const AbstractPollCreateDialog = (Component: AbstractComponent<AbstractProps>) =
             pollId: Math.floor(Math.random() * Number.MAX_SAFE_INTEGER).toString(36),
             senderId: conference.myUserId(),
             question,
-            answers: filteredAnswers,
+            answers: filteredAnswers
         });
 
         return true;
