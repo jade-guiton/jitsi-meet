@@ -33,7 +33,10 @@ module:hook("muc-room-created", function(event)
 	local room = event.room;
 	if is_healthcheck_room(room.jid) then return end
 	module:log("debug", "setting up polls in room "..tostring(room));
-	room.polls = {};
+	room.polls = {
+		by_id = {};
+		order = {};
+	};
 end);
 
 module:hook("message/bare", function(event)
@@ -50,16 +53,19 @@ module:hook("message/bare", function(event)
 			table.insert(answers, { name = name, voters = {} });
 		end
 
-		room.polls[data.pollId] = {
+		local poll = {
+			id = data.pollId,
 			sender_id = data.senderId,
 			question = data.question,
 			answers = answers
 		};
+		room.polls.by_id[data.pollId] = poll
+		table.insert(room.polls.order, poll)
 
 	elseif data.type == "answer-poll" then
 		if check_polls(room) then return end
 
-		local poll = room.polls[data.pollId];
+		local poll = room.polls.by_id[data.pollId];
 		if poll == nil then
 			module:log("warn", "answering inexistent poll");
 			return;
@@ -80,10 +86,11 @@ module:hook("muc-occupant-joined", function(event)
 
 	local data = {
 		type = "old-polls",
-		polls = {}
+		polls = {},
 	};
-	for poll_id, poll in pairs(room.polls) do
-		data.polls[tostring(poll_id)] = {
+	for i, poll in ipairs(room.polls.order) do
+		data.polls[i] = {
+			id = poll.id,
 			senderId = poll.sender_id,
 			question = poll.question,
 			answers = poll.answers

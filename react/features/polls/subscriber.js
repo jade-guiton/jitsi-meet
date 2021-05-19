@@ -12,9 +12,10 @@ const parsePollData = pollData => {
     if (typeof pollData !== 'object' || pollData === null) {
         return null;
     }
-    const { senderId, question, answers } = pollData;
+    const { id, senderId, question, answers } = pollData;
 
-    if (typeof senderId !== 'string' || typeof question !== 'string' || !(answers instanceof Array)) {
+    if (typeof id !== 'string' || typeof senderId !== 'string'
+        || typeof question !== 'string' || !(answers instanceof Array)) {
         return null;
     }
 
@@ -84,13 +85,13 @@ StateListenerRegistry.register(
                 } else if (data.type === COMMAND_OLD_POLLS) {
                     const { polls } = data;
 
-                    for (const [ pollId, pollData ] of Object.entries(polls)) {
+                    for (const pollData of polls) {
                         const poll = parsePollData(pollData);
 
                         if (poll === null) {
                             console.warn('[features/polls] Invalid old poll data');
                         } else {
-                            store.dispatch(receivePoll(pollId, poll, false));
+                            store.dispatch(receivePoll(pollData.id, poll, false));
                         }
                     }
                 }
