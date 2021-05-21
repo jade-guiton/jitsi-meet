@@ -69,6 +69,17 @@ export const Close = styled.div`
   }
 `;
 
+export const Footer = styled.div`
+  background-color: #141414;
+  display: flex;
+  justify-content: flex-end;
+  padding: 24px ${props => props.theme.panePadding}px;
+
+  & > *:not(:last-child) {
+    margin-right: 16px;
+  }
+`;
+
 export const Header = styled.div`
   align-items: center;
   box-sizing: border-box;
@@ -78,6 +89,18 @@ export const Header = styled.div`
 `;
 
 export const PollCreateButton = styled(Button).attrs({
+    primary: true
+})`
+  font-size: 15px;
+  height: 40px;
+  width: 100%;
+
+  & > *:not(:last-child) {
+    margin-right: 8px;
+  }
+`;
+
+export const PollSubmitAnswerButton = styled(Button).attrs({
     primary: true
 })`
   font-size: 15px;

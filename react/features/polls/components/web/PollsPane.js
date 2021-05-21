@@ -12,6 +12,7 @@ import {
     AntiCollapse,
     Close,
     Container,
+    Footer,
     Header
 } from './styled';
 
@@ -36,10 +37,12 @@ const PollsPane = () => {
                         <Close onClick = { closePane } />
                     </Header>
                     <Container>
-                        <CreatePollButton />
                         <AntiCollapse />
                         <PollsList />
                     </Container>
+                    <Footer>
+                        <CreatePollButton />
+                    </Footer>
                 </div>
             </div>
         </ThemeProvider>
