@@ -5,7 +5,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
-import { Icon, IconAdd, IconClose, IconSmallDragHandle } from '../../../base/icons';
+import { Icon, IconClose, IconSmallDragHandle } from '../../../base/icons';
 import { getParticipantDisplayName } from '../../../base/participants';
 import { Tooltip } from '../../../base/tooltip';
 import { COMMAND_NEW_POLL } from '../../constants';
@@ -13,7 +13,9 @@ import { COMMAND_NEW_POLL } from '../../constants';
 import {
     Container,
     Footer,
-    PollCreateButton
+    PollCancelCreateButton,
+    PollSubmitCreateButton,
+    PollCreateAddOptionButton
 } from './styled';
 
 type Props = {
@@ -70,7 +72,7 @@ const PollCreate = (props: Props) => {
         const filteredAnswers = answers.filter(answer => answer.trim().length > 0);
 
         if (filteredAnswers.length === 0) {
-            return false;
+            return;
         }
 
         conference.sendMessage({
@@ -185,6 +187,9 @@ const PollCreate = (props: Props) => {
     return (<>
         <Container>
             <div className = 'poll-question-field'>
+                <div className = 'poll-create-label'>
+                    { 'Poll question' }
+                </div>
                 <FieldTextStateless
                     autoFocus = { true }
                     compact = { true }
@@ -197,6 +202,9 @@ const PollCreate = (props: Props) => {
                     value = { question } />
             </div>
             <ol className = 'poll-answer-field-list'>
+                <div className = 'poll-create-label'>
+                    {'Poll options'}
+                </div>
                 {answers.map((answer, i) =>
                     (<li
                         className = { `poll-answer-field${grabbing === i ? ' poll-dragged' : ''}` }
@@ -231,22 +239,32 @@ const PollCreate = (props: Props) => {
                 )}
             </ol>
             <div className = 'poll-add-button'>
-                <Tooltip content = { t('polls.create.addAnswer') }>
+                <PollCreateAddOptionButton
+                    aria-label = { 'Add option' }
+                    onClick = { () => addAnswer() } >
+                    <span>{'Add option'}</span>
+                </PollCreateAddOptionButton>
+                {/* <Tooltip content = { t('polls.create.addAnswer') }>
                     <button
-                        className = 'poll-icon-button'
+                        className = 'poll-create-add-option'
                         onClick = { () => addAnswer() }
                         type = 'button'>
-                        <Icon src = { IconAdd } />
+                        { 'Add option' }
                     </button>
-                </Tooltip>
+                </Tooltip> */}
             </div>
         </Container>
         <Footer>
-            <PollCreateButton
+            <PollCancelCreateButton
+                aria-label = { 'Cancel' }
+                onClick = { () => setCreateMode(false) } >
+                <span>{'Cancel'}</span>
+            </PollCancelCreateButton>
+            <PollSubmitCreateButton
                 aria-label = { 'Create a Poll' }
                 onClick = { onSubmit } >
                 <span>{'Create a poll'}</span>
-            </PollCreateButton>
+            </PollSubmitCreateButton>
         </Footer>
     </>);
 

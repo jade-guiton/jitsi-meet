@@ -113,6 +113,30 @@ export const PollSubmitCreateButton = styled(Button).attrs({
 })`
   font-size: 15px;
   height: 40px;
+  width: 50%;
+
+  & > *:not(:last-child) {
+    margin-right: 8px;
+  }
+`;
+
+export const PollCancelCreateButton = styled(Button).attrs({
+    primary: false
+})`
+  font-size: 15px;
+  height: 40px;
+  width: 50%;
+
+  & > *:not(:last-child) {
+    margin-right: 8px;
+  }
+`;
+
+export const PollCreateAddOptionButton = styled(Button).attrs({
+    primary: false
+})`
+  font-size: 15px;
+  height: 40px;
   width: 100%;
 
   & > *:not(:last-child) {

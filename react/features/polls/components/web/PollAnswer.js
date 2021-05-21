@@ -59,8 +59,12 @@ const PollAnswer = (props: Props) => {
     }, [ pollId, localId, localName, checkBoxStates, conference ]);
 
     return (
-        <div className = 'poll-dialog'>
-            <h1 className = 'poll-question'>{poll.question}</h1>
+        <div className = 'poll-answer'>
+            <div className = 'poll-header'>
+                <div className = 'poll-question'>
+                    <strong>{ poll.question }</strong>
+                </div>
+            </div>
             <ol className = 'poll-answer-list'>
                 {
                     poll.answers.map((answer, index) => (
