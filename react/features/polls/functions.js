@@ -61,7 +61,7 @@ const getState = state => state['features/polls'];
  * @param {Object} state - Global state.
  * @returns {boolean} Is the polls pane open.
  */
-export const getPollsPaneOpen = state => Boolean(getState(state)?.isOpen);
+export const getPollsPaneOpen = state => Boolean(getState(state)?.isPaneOpen);
 
 /**
  * Is the poll answered.

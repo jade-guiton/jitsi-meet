@@ -4,6 +4,7 @@ import { openDialog } from '../base/dialog';
 import { getLocalParticipant, getParticipantDisplayName } from '../base/participants/functions';
 import { MiddlewareRegistry } from '../base/redux';
 import { addMessage, MESSAGE_TYPE_LOCAL, MESSAGE_TYPE_REMOTE } from '../chat';
+import { showNotification } from '../notifications';
 
 import { RECEIVE_POLL, SHOW_POLL } from './actionTypes';
 import { showPoll } from './actions';
@@ -24,7 +25,8 @@ MiddlewareRegistry.register(({ dispatch, getState }) => next => action => {
         const localParticipant = getLocalParticipant(state);
         const localName = getParticipantDisplayName(state, localParticipant.id);
         const isLocal = poll.senderId === localParticipant.id;
-        const isChatOpen: boolean = state['features/chat'].isOpen;
+        const isChatOpen: boolean = state['features/chat'].isOpen; // TODO: only send polls to chat
+        const isPaneOpen = state['features/polls'].isPaneOpen;
 
         dispatch(addMessage({
             displayName: senderName,
@@ -40,6 +42,13 @@ MiddlewareRegistry.register(({ dispatch, getState }) => next => action => {
 
         if (!queue && !poll.answered) {
             dispatch(showPoll(pollId));
+        }
+
+        // Finally, we notify user they received a new poll if their pane is not opened
+        if (!isPaneOpen) {
+            dispatch(showNotification({
+                titleKey: 'polls.notification.title'
+            }));
         }
         break;
     }

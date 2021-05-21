@@ -14,7 +14,8 @@ import type { Answer } from './types';
 
 const INITIAL_STATE = {
     polls: {},
-    pollQueue: []
+    pollQueue: [],
+    isPaneOpen: false
 };
 
 ReducerRegistry.register('features/polls', (state = INITIAL_STATE, action) => {
@@ -121,16 +122,15 @@ ReducerRegistry.register('features/polls', (state = INITIAL_STATE, action) => {
     case POLLS_PANE_CLOSE:
         return {
             ...state,
-            isOpen: false
+            isPaneOpen: false
         };
 
     // Reducer triggered to open the polls pane
     case POLLS_PANE_OPEN:
         return {
             ...state,
-            isOpen: true
+            isPaneOpen: true
         };
-
 
     default:
         return state;

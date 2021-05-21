@@ -21,7 +21,7 @@ import { PollCreate, PollsList } from '.';
 
 const PollsPane = () => {
     const dispatch = useDispatch();
-    const paneOpen = useSelector(getPollsPaneOpen);
+    const isPaneOpen = useSelector(getPollsPaneOpen);
 
     const closePane = useCallback(() => dispatch(closePollsPane(), [ dispatch ]));
 
@@ -36,7 +36,7 @@ const PollsPane = () => {
             <div
                 className = { classList(
           'polls_pane',
-          !paneOpen && 'polls_pane--closed'
+          !isPaneOpen && 'polls_pane--closed'
                 ) }>
                 <div className = 'polls_pane-content'>
                     <Header>
@@ -57,7 +57,6 @@ const PollsPane = () => {
                                 </PollCreateButton>
                             </Footer>
                         </>}
-
                 </div>
             </div>
         </ThemeProvider>

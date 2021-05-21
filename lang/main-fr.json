@@ -533,6 +533,9 @@
     "passwordSetRemotely": "défini par un autre participant",
     "passwordDigitsOnly": "Jusqu'à {{number}} chiffres",
     "polls": {
+        "notification": {
+            "title": "Nouveau sondage"
+        },
         "create": {
             "dialogTitle": "Créer un sondage",
             "questionPlaceholder": "Poser une question",
