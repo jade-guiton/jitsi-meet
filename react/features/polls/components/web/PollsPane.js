@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 
@@ -9,14 +9,14 @@ import { classList, getPollsPaneOpen } from '../../functions';
 import theme from '../../theme.json';
 
 import {
-    AntiCollapse,
     Close,
     Container,
     Footer,
-    Header
+    Header,
+    PollCreateButton
 } from './styled';
 
-import { CreatePollButton, PollsList } from '.';
+import { PollCreate, PollsList } from '.';
 
 
 const PollsPane = () => {
@@ -24,6 +24,12 @@ const PollsPane = () => {
     const paneOpen = useSelector(getPollsPaneOpen);
 
     const closePane = useCallback(() => dispatch(closePollsPane(), [ dispatch ]));
+
+    const [ createMode, setCreateMode ] = useState(false);
+
+    const onCreate = () => {
+        setCreateMode(true);
+    };
 
     return (
         <ThemeProvider theme = { theme }>
@@ -36,13 +42,22 @@ const PollsPane = () => {
                     <Header>
                         <Close onClick = { closePane } />
                     </Header>
-                    <Container>
-                        <AntiCollapse />
-                        <PollsList />
-                    </Container>
-                    <Footer>
-                        <CreatePollButton />
-                    </Footer>
+                    { createMode
+                        ? <PollCreate setCreateMode = { setCreateMode } />
+                        : <>
+                            <Container>
+                                <PollsList />
+                            </Container>
+                            <Footer>
+                                <PollCreateButton
+                                    aria-label = { 'Create a Poll' }
+                                    // eslint-disable-next-line react/jsx-no-bind
+                                    onClick = { onCreate } >
+                                    <span>{'Create a poll'}</span>
+                                </PollCreateButton>
+                            </Footer>
+                        </>}
+
                 </div>
             </div>
         </ThemeProvider>

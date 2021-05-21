@@ -2,10 +2,6 @@ import styled from 'styled-components';
 
 export const ignoredChildClassName = 'ignore-child';
 
-export const AntiCollapse = styled.br`
-  font-size: 0;
-`;
-
 export const Button = styled.button`
   align-items: center;
   background-color: ${
@@ -101,6 +97,18 @@ export const PollCreateButton = styled(Button).attrs({
 `;
 
 export const PollSubmitAnswerButton = styled(Button).attrs({
+    primary: true
+})`
+  font-size: 15px;
+  height: 40px;
+  width: 100%;
+
+  & > *:not(:last-child) {
+    margin-right: 8px;
+  }
+`;
+
+export const PollSubmitCreateButton = styled(Button).attrs({
     primary: true
 })`
   font-size: 15px;

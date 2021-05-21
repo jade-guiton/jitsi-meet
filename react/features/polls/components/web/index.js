@@ -1,8 +1,8 @@
 // @flow
 
-export { default as CreatePollButton } from './CreatePollButton';
-export { default as PollAnswerDialog } from './PollAnswerDialog';
 export { default as PollAnswer } from './PollAnswer';
+export { default as PollAnswerDialog } from './PollAnswerDialog';
+export { default as PollCreate } from './PollCreate';
 export { default as PollCreateDialog } from './PollCreateDialog';
 export { default as PollResults } from './PollResults';
 export { default as PollResultsDialog } from './PollResultsDialog';
