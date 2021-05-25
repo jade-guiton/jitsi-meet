@@ -245,7 +245,10 @@ const PollCreate = (props: Props) => {
             <div className = 'poll-add-button'>
                 <PollCreateAddOptionButton
                     aria-label = { 'Add option' }
-                    onClick = { () => addAnswer() } >
+                    onClick = { () => {
+                        addAnswer();
+                        requestFocus(answers.length);
+                    } } >
                     <span>{'Add option'}</span>
                 </PollCreateAddOptionButton>
             </div>
