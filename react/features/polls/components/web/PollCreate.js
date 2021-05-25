@@ -10,13 +10,6 @@ import { getParticipantDisplayName } from '../../../base/participants';
 import { Tooltip } from '../../../base/tooltip';
 import { COMMAND_NEW_POLL } from '../../constants';
 
-import {
-    Container,
-    Footer,
-    PollCancelCreateButton,
-    PollSubmitCreateButton,
-    PollCreateAddOptionButton
-} from './styled';
 
 type Props = {
     setCreateMode: boolean => void
@@ -185,7 +178,7 @@ const PollCreate = (props: Props) => {
 
     /* eslint-disable react/jsx-no-bind */
     return (<>
-        <Container className = 'poll-create-container'>
+        <div className = 'poll-create-container poll-container'>
             <div className = 'poll-question-field'>
                 <span className = 'poll-create-label'>
                     { t('polls.create.pollQuestion') }
@@ -243,25 +236,28 @@ const PollCreate = (props: Props) => {
                 )}
             </ol>
             <div className = 'poll-add-button'>
-                <PollCreateAddOptionButton
+                <button
                     aria-label = { 'Add option' }
+                    className = { 'poll-secondary-button' }
                     onClick = { () => addAnswer() } >
                     <span>{t('polls.create.addOption')}</span>
-                </PollCreateAddOptionButton>
+                </button>
             </div>
-        </Container>
-        <Footer>
-            <PollCancelCreateButton
+        </div>
+        <div className = { 'poll-footer' }>
+            <button
                 aria-label = { t('polls.create.cancel') }
+                className = { 'poll-small-secondary-button' }
                 onClick = { () => setCreateMode(false) } >
                 <span>{t('polls.create.cancel')}</span>
-            </PollCancelCreateButton>
-            <PollSubmitCreateButton
+            </button>
+            <button
                 aria-label = { t('polls.create.sendPoll') }
+                className = { 'poll-small-primary-button' }
                 onClick = { onSubmit } >
                 <span>{t('polls.create.sendPoll')}</span>
-            </PollSubmitCreateButton>
-        </Footer>
+            </button>
+        </div>
     </>);
 
 };

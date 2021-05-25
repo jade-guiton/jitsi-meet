@@ -3,12 +3,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import {
-    Container,
-    Footer,
-    PollCreateButton
-} from './styled';
-
 import { PollCreate, PollsList } from '.';
 
 
@@ -27,17 +21,18 @@ const PollsPane = () => {
             { createMode
                 ? <PollCreate setCreateMode = { setCreateMode } />
                 : <>
-                    <Container>
+                    <div className = { 'poll-container' } >
                         <PollsList />
-                    </Container>
-                    <Footer>
-                        <PollCreateButton
+                    </div>
+                    <div className = { 'poll-footer' }>
+                        <button
                             aria-label = { t('polls.create.button') }
+                            className = { 'poll-primary-button ' }
                             // eslint-disable-next-line react/jsx-no-bind
                             onClick = { onCreate } >
                             <span>{t('polls.create.button')}</span>
-                        </PollCreateButton>
-                    </Footer>
+                        </button>
+                    </div>
                 </>}
         </div>
     );

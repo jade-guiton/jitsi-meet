@@ -10,7 +10,6 @@ import { setAnsweredStatus } from '../../actions';
 import { COMMAND_ANSWER_POLL } from '../../constants';
 import type { Poll } from '../../types';
 
-import { PollSubmitAnswerButton } from './styled';
 
 type Props = {
     pollId: string
@@ -83,11 +82,12 @@ const PollAnswer = (props: Props) => {
                     ))
                 }
             </ol>
-            <PollSubmitAnswerButton
+            <button
                 aria-label = { t('polls.answer.submit') }
+                className = { 'poll-primary-button' }
                 onClick = { submitAnswer }>
                 <span>{t('polls.answer.submit') }</span>
-            </PollSubmitAnswerButton>
+            </button>
         </div>
     );
 };
