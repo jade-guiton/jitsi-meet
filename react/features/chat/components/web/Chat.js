@@ -165,18 +165,6 @@ class Chat extends AbstractChat<Props> {
     }
 
     /**
-     * Returns a React Element for showing the polls-pane.
-     *
-     * @private
-     * @returns {ReactElement}
-     */
-    _renderPollsPane() {
-        return (
-            <PollsPane />
-        );
-    }
-
-    /**
      * Instantiates a React Element to display at the top of {@code Chat} to
      * close {@code Chat}.
      *
@@ -186,38 +174,6 @@ class Chat extends AbstractChat<Props> {
     _renderChatHeader() {
         return (
             <Header className = 'chat-header' />
-        );
-    }
-
-
-    /**
-     * Renders panel tabs and content.
-     *
-     * @private
-     * @returns {ReactElement}
-     */
-    _renderPanelTabsContent() {
-
-        let ComponentToRender = null;
-
-        if (this.props._isPollTabFocused) {
-            ComponentToRender = (
-                <>
-                    {this._renderPollsPane()}
-                </>
-            );
-        } else {
-            ComponentToRender = (
-                <>
-                    {this._renderChat()}
-                </>
-            );
-        }
-
-        return (
-            <div>
-                { ComponentToRender}
-            </div>
         );
     }
 
