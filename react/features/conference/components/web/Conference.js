@@ -16,7 +16,6 @@ import { LargeVideo } from '../../../large-video';
 import { KnockingParticipantList, LobbyScreen } from '../../../lobby';
 import { ParticipantsPane } from '../../../participants-pane/components';
 import { getParticipantsPaneOpen } from '../../../participants-pane/functions';
-import { getPollsPaneOpen } from '../../../polls/functions';
 import { Prejoin, isPrejoinPageVisible } from '../../../prejoin';
 import { fullScreenChanged, showToolbox } from '../../../toolbox/actions.web';
 import { Toolbox } from '../../../toolbox/components/web';
@@ -79,11 +78,6 @@ type Props = AbstractProps & {
      * If participants pane is visible or not.
      */
     _isParticipantsPaneVisible: boolean,
-
-    /**
-     * If polls pane is visible or not.
-     */
-     _isPollsPaneVisible: boolean,
 
     /**
      * The CSS class to apply to the root of {@link Conference} to modify the
@@ -193,7 +187,6 @@ class Conference extends AbstractConference<Props, *> {
         const {
             _isLobbyScreenVisible,
             _isParticipantsPaneVisible,
-            _isPollsPaneVisible,
             _layoutClassName,
             _showPrejoin
         } = this.props;
@@ -210,7 +203,7 @@ class Conference extends AbstractConference<Props, *> {
                     <Notice />
                     <div id = 'videospace'>
                         <LargeVideo />
-                        {!_isParticipantsPaneVisible && !_isPollsPaneVisible && <KnockingParticipantList />}
+                        {!_isParticipantsPaneVisible && <KnockingParticipantList />}
                         <Filmstrip />
                     </div>
 
@@ -317,7 +310,6 @@ function _mapStateToProps(state) {
         _backgroundAlpha: state['features/base/config'].backgroundAlpha,
         _isLobbyScreenVisible: state['features/base/dialog']?.component === LobbyScreen,
         _isParticipantsPaneVisible: getParticipantsPaneOpen(state),
-        _isPollsPaneVisible: getPollsPaneOpen(state),
         _layoutClassName: LAYOUT_CLASSNAMES[getCurrentLayout(state)],
         _roomName: getConferenceNameForTitle(state),
         _showPrejoin: isPrejoinPageVisible(state)

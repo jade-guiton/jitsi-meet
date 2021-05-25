@@ -29,10 +29,10 @@ const PollsPane = () => {
                     </Container>
                     <Footer>
                         <PollCreateButton
-                            aria-label = { 'Create a Poll' }
+                            aria-label = { 'Create a poll' }
                             // eslint-disable-next-line react/jsx-no-bind
                             onClick = { onCreate } >
-                            <span>{'Create a poll'}</span>
+                            <span>{'Create a pol'}</span>
                         </PollCreateButton>
                     </Footer>
                 </>}

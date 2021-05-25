@@ -3,8 +3,6 @@
 import { ReducerRegistry } from '../base/redux';
 
 import {
-    POLLS_PANE_CLOSE,
-    POLLS_PANE_OPEN,
     RECEIVE_POLL,
     RECEIVE_ANSWER,
     SET_ANSWERED_STATUS,
@@ -117,20 +115,6 @@ ReducerRegistry.register('features/polls', (state = INITIAL_STATE, action) => {
             }
         };
     }
-
-    // Reducer triggered to close the polls pane
-    case POLLS_PANE_CLOSE:
-        return {
-            ...state,
-            isPaneOpen: false
-        };
-
-    // Reducer triggered to open the polls pane
-    case POLLS_PANE_OPEN:
-        return {
-            ...state,
-            isPaneOpen: true
-        };
 
     default:
         return state;

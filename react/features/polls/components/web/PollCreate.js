@@ -257,9 +257,9 @@ const PollCreate = (props: Props) => {
                 <span>{'Cancel'}</span>
             </PollCancelCreateButton>
             <PollSubmitCreateButton
-                aria-label = { 'Create a Poll' }
+                aria-label = { 'Send Poll' }
                 onClick = { onSubmit } >
-                <span>{'Create a poll'}</span>
+                <span>{'Send poll'}</span>
             </PollSubmitCreateButton>
         </Footer>
     </>);

@@ -1,8 +1,6 @@
 // @flow
 
 import {
-    POLLS_PANE_CLOSE,
-    POLLS_PANE_OPEN,
     RECEIVE_ANSWER,
     RECEIVE_POLL,
     SET_ANSWERED_STATUS,
@@ -83,27 +81,5 @@ export const setAnsweredStatus = (pollId: string, answered: boolean) => {
         type: SET_ANSWERED_STATUS,
         answered,
         pollId
-    };
-};
-
-/**
- * Action to close the polls pane.
- *
- * @returns {Object}
- */
-export const closePollsPane = () => {
-    return {
-        type: POLLS_PANE_CLOSE
-    };
-};
-
-/**
- * Action to open the polls pane.
- *
- * @returns {Object}
- */
-export const openPollsPane = () => {
-    return {
-        type: POLLS_PANE_OPEN
     };
 };

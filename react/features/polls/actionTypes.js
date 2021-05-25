@@ -45,13 +45,3 @@ export const RECEIVE_ANSWER = 'RECEIVE_ANSWER';
  * }
  */
 export const SET_ANSWERED_STATUS = 'SET_ANSWERED_STATUS';
-
-/**
- * Action type to signal the closing of the polls pane.
- */
-export const POLLS_PANE_CLOSE = 'POLLS_PANE_CLOSE';
-
-/**
-  * Action type to signal the opening of the polls pane.
-  */
-export const POLLS_PANE_OPEN = 'POLLS_PANE_OPEN';
