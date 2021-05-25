@@ -25,8 +25,8 @@ MiddlewareRegistry.register(({ dispatch, getState }) => next => action => {
         const localParticipant = getLocalParticipant(state);
         const localName = getParticipantDisplayName(state, localParticipant.id);
         const isLocal = poll.senderId === localParticipant.id;
-        const isChatOpen: boolean = state['features/chat'].isOpen; // TODO: only send polls to chat
-        const isPaneOpen = state['features/polls'].isPaneOpen;
+        const isChatOpen: boolean = state['features/chat'].isOpen;
+        const isPollTabFocused: boolean = state['features/chat'].isPollTabFocused;
 
         dispatch(addMessage({
             displayName: senderName,
@@ -45,7 +45,7 @@ MiddlewareRegistry.register(({ dispatch, getState }) => next => action => {
         }
 
         // Finally, we notify user they received a new poll if their pane is not opened
-        if (!isPaneOpen) {
+        if (!isChatOpen || !isPollTabFocused) {
             dispatch(showNotification({
                 titleKey: 'polls.notification.title'
             }));

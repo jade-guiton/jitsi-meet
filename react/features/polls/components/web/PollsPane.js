@@ -32,7 +32,7 @@ const PollsPane = () => {
                             aria-label = { 'Create a poll' }
                             // eslint-disable-next-line react/jsx-no-bind
                             onClick = { onCreate } >
-                            <span>{'Create a pol'}</span>
+                            <span>{'Create a poll'}</span>
                         </PollCreateButton>
                     </Footer>
                 </>}
