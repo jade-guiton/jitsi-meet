@@ -11,13 +11,11 @@
 
 .poll-question-field {
     margin-bottom: 2em;
-
 }
 
 .poll-answer-field-list, .poll-answer-list, .poll-result-list {
     list-style-type: none;
     padding: 0;
-
 }
 
 .poll-answer-list {
@@ -32,14 +30,31 @@
     margin-bottom: 8px;
 }
 
-.poll-answer-field {
-    display: flex;
-    align-items: center;
-    margin-bottom: 1em;
+/* Solid border */
+.hr.poll-answer-option-separator {
+    display: block;
+	clear: both;
+	height: 0;
+	padding: 0;
+	border: 0;
+	line-height: 1;
+}
 
-    & > *:not(:last-child) {
-        margin-right: 2px;
-    }
+.poll-answer-field {
+    flex-direction: column;
+    align-items: stretch;
+    margin-bottom: 4;
+}
+
+.poll-create-option-row {
+    display: 'flex'
+}
+
+// Needeed to override atlaskit default blue color
+.poll-create-container .jsYMHu { 
+    background: #292929;
+    border-color: #808090;
+    color: white // #808090
 }
 
 .poll-add-button {
@@ -48,15 +63,16 @@
     margin-top: 5px;
 }
 
-.poll-icon-button {
-    background-color: #345;
+.poll-remove-option-button {
+    background: 0 0;
     border: none;
-    padding: 3px;
+    color: #8b1e34;
+    padding-left: 0;
 }
 
 .poll-create-add-option {
     border: none;
-    background-color: #3D3D3D;
+    background-color: #292929;
     padding: 3px;
     width: 100%;
 }
@@ -71,9 +87,8 @@
     background-color: transparent;
     border: none;
     cursor: grab;
-    padding: 0;
-    align-self: stretch;
-    vertical-align: middle;
+    padding-left: 8;
+    display: flex;
 }
 
 .poll-dragged {
@@ -215,5 +230,6 @@
 
 .poll-create-label {
     color: white;
-    margin-bottom: 8px;
+    margin-bottom: 4;
+    display: flex;
 }

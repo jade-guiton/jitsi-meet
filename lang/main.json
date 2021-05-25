@@ -546,6 +546,8 @@
         "create": {
             "dialogTitle": "Create a poll",
             "questionPlaceholder": "Ask a question",
+            "pollQuestion" : "Poll Question",
+            "pollOption" : "Poll option {{index}}",
             "answerPlaceholder": "Option {{index}}",
             "addAnswer": "Add an answer",
             "removeAnswer": "Remove this answer",

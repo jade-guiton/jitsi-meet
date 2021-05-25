@@ -539,6 +539,8 @@
         "create": {
             "dialogTitle": "Créer un sondage",
             "questionPlaceholder": "Poser une question",
+            "pollQuestion" : "Question du sondage",
+            "pollOption" : "Option du sondage {{index}}",
             "answerPlaceholder": "Option {{index}}",
             "addAnswer": "Ajouter une réponse",
             "removeAnswer": "Enlever cette réponse",

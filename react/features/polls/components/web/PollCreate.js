@@ -5,7 +5,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
-import { Icon, IconClose, IconSmallDragHandle } from '../../../base/icons';
+import { Icon, IconMenu } from '../../../base/icons';
 import { getParticipantDisplayName } from '../../../base/participants';
 import { Tooltip } from '../../../base/tooltip';
 import { COMMAND_NEW_POLL } from '../../constants';
@@ -185,11 +185,11 @@ const PollCreate = (props: Props) => {
 
     /* eslint-disable react/jsx-no-bind */
     return (<>
-        <Container>
+        <Container className = 'poll-create-container'>
             <div className = 'poll-question-field'>
-                <div className = 'poll-create-label'>
-                    { 'Poll question' }
-                </div>
+                <span className = 'poll-create-label'>
+                    { t('polls.create.pollQuestion') }
+                </span>
                 <FieldTextStateless
                     autoFocus = { true }
                     compact = { true }
@@ -201,38 +201,42 @@ const PollCreate = (props: Props) => {
                     type = 'text'
                     value = { question } />
             </div>
+            <hr className = 'poll-answer-option-separator' />
             <ol className = 'poll-answer-field-list'>
-                <div className = 'poll-create-label'>
-                    {'Poll options'}
-                </div>
                 {answers.map((answer, i) =>
                     (<li
                         className = { `poll-answer-field${grabbing === i ? ' poll-dragged' : ''}` }
                         key = { i }
                         onMouseOver = { () => onMouseOver(i) }>
-                        <button
-                            className = 'poll-drag-handle'
-                            onMouseDown = { ev => onGrab(i, ev) }
-                            tabIndex = '-1'
-                            type = 'button'>
-                            <Icon src = { IconSmallDragHandle } />
-                        </button>
-                        <FieldTextStateless
-                            compact = { true }
-                            isLabelHidden = { true }
-                            onChange = { ev => setAnswer(i, ev.target.value) }
-                            onKeyDown = { ev => onAnswerKeyDown(i, ev) }
-                            placeholder = { t('polls.create.answerPlaceholder', { index: i + 1 }) }
-                            ref = { r => registerFieldRef(i, r) }
-                            shouldFitContainer = { true }
-                            type = 'text'
-                            value = { answer } />
+                        <span className = 'poll-create-label'>
+                            { t('polls.create.pollOption', { index: i + 1 })}
+                        </span>
+                        <div className = 'poll-create-option-row'>
+                            <FieldTextStateless
+                                compact = { true }
+                                isLabelHidden = { true }
+                                onChange = { ev => setAnswer(i, ev.target.value) }
+                                onKeyDown = { ev => onAnswerKeyDown(i, ev) }
+                                placeholder = { t('polls.create.answerPlaceholder', { index: i + 1 }) }
+                                ref = { r => registerFieldRef(i, r) }
+                                shouldFitContainer = { true }
+                                type = 'text'
+                                value = { answer } />
+                            <button
+                                className = 'poll-drag-handle'
+                                onMouseDown = { ev => onGrab(i, ev) }
+                                tabIndex = '-1'
+                                type = 'button'>
+                                <Icon src = { IconMenu } />
+                            </button>
+                        </div>
+
                         <Tooltip content = { t('polls.create.removeAnswer') }>
                             <button
-                                className = 'poll-icon-button'
+                                className = 'poll-remove-option-button'
                                 onClick = { () => removeAnswer(i) }
                                 type = 'button'>
-                                <Icon src = { IconClose } />
+                                Remove option
                             </button>
                         </Tooltip>
                     </li>)
@@ -244,14 +248,6 @@ const PollCreate = (props: Props) => {
                     onClick = { () => addAnswer() } >
                     <span>{'Add option'}</span>
                 </PollCreateAddOptionButton>
-                {/* <Tooltip content = { t('polls.create.addAnswer') }>
-                    <button
-                        className = 'poll-create-add-option'
-                        onClick = { () => addAnswer() }
-                        type = 'button'>
-                        { 'Add option' }
-                    </button>
-                </Tooltip> */}
             </div>
         </Container>
         <Footer>
