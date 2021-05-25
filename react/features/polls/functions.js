@@ -4,7 +4,7 @@
  * Is the poll answered.
  *
  * @param {Object} state - Global state.
- * @param {number} id - Id of the poll.
+ * @param {string} id - Id of the poll.
  * @returns {boolean} Is the poll answered.
  */
-export const isPollAnswered = (state, id) => Boolean(state['features/polls']?.polls[id].answered);
+export const isPollAnswered = (state: Object, id: string) => Boolean(state['features/polls']?.polls[id].answered);

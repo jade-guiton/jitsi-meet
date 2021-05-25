@@ -4,7 +4,7 @@ import { Component } from 'react';
 import type { Dispatch } from 'redux';
 
 import { getLocalParticipant } from '../../base/participants';
-import { sendMessage, setIsPollTabFocused } from '../actions';
+import { sendMessage, setisPollsTabFocused } from '../actions';
 import { SMALL_WIDTH_THRESHOLD } from '../constants';
 
 /**
@@ -25,7 +25,7 @@ export type Props = {
     /**
      * Whether the poll tab is focused or not.
      */
-    _isPollTabFocused: boolean,
+    _isPollsTabFocused: boolean,
 
     /**
      * All the chat messages in the conference.
@@ -117,7 +117,7 @@ export default class AbstractChat<P: Props> extends Component<P> {
      * @returns {void}
      */
     _onToggleChatTab() {
-        this.props.dispatch(setIsPollTabFocused(false));
+        this.props.dispatch(setisPollsTabFocused(false));
     }
 
     _onTogglePollsTab: () => void;
@@ -129,7 +129,7 @@ export default class AbstractChat<P: Props> extends Component<P> {
      * @returns {void}
      */
     _onTogglePollsTab() {
-        this.props.dispatch(setIsPollTabFocused(true));
+        this.props.dispatch(setisPollsTabFocused(true));
     }
 }
 
@@ -146,13 +146,13 @@ export default class AbstractChat<P: Props> extends Component<P> {
  * }}
  */
 export function _mapStateToProps(state: Object) {
-    const { isOpen, isPollTabFocused, messages } = state['features/chat'];
+    const { isOpen, isPollsTabFocused, messages } = state['features/chat'];
     const _localParticipant = getLocalParticipant(state);
 
     return {
         _isModal: window.innerWidth <= SMALL_WIDTH_THRESHOLD,
         _isOpen: isOpen,
-        _isPollTabFocused: isPollTabFocused,
+        _isPollsTabFocused: isPollsTabFocused,
         _messages: messages,
         _showNamePrompt: !_localParticipant.name
     };

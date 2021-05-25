@@ -7,7 +7,7 @@ import { addMessage, MESSAGE_TYPE_LOCAL, MESSAGE_TYPE_REMOTE } from '../chat';
 import { showNotification } from '../notifications';
 
 import { RECEIVE_POLL, SHOW_POLL } from './actionTypes';
-import { showPoll } from './actions';
+import { showPoll } from './actions.native';
 import { PollAnswerDialog } from './components';
 
 
@@ -26,7 +26,7 @@ MiddlewareRegistry.register(({ dispatch, getState }) => next => action => {
         const localName = getParticipantDisplayName(state, localParticipant.id);
         const isLocal = poll.senderId === localParticipant.id;
         const isChatOpen: boolean = state['features/chat'].isOpen;
-        const isPollTabFocused: boolean = state['features/chat'].isPollTabFocused;
+        const isPollsTabFocused: boolean = state['features/chat'].isPollsTabFocused;
 
         dispatch(addMessage({
             displayName: senderName,
@@ -45,7 +45,7 @@ MiddlewareRegistry.register(({ dispatch, getState }) => next => action => {
         }
 
         // Finally, we notify user they received a new poll if their pane is not opened
-        if (!isChatOpen || !isPollTabFocused) {
+        if (!isChatOpen || !isPollsTabFocused) {
             dispatch(showNotification({
                 titleKey: 'polls.notification.title'
             }));

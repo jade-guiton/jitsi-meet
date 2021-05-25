@@ -100,14 +100,14 @@ export function setPrivateMessageRecipient(participant: Object) {
 }
 
 /**
- * Set the value of _isPollTabFocused.
+ * Set the value of _isPollsTabFocused.
  *
- * @param {boolean} isPollTabFocused - The new value for _isPollTabFocused.
+ * @param {boolean} isPollsTabFocused - The new value for _isPollsTabFocused.
  * @returns {Function}
  */
-export function setIsPollTabFocused(isPollTabFocused: boolean) {
+export function setisPollsTabFocused(isPollsTabFocused: boolean) {
     return {
-        isPollTabFocused,
+        isPollsTabFocused,
         type: SET_IS_POLL_TAB_FOCUSED
     };
 }

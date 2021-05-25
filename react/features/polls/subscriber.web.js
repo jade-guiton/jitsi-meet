@@ -3,7 +3,7 @@
 import { getCurrentConference } from '../base/conference';
 import { StateListenerRegistry } from '../base/redux';
 
-import { receiveAnswer, receivePoll } from './actions';
+import { receiveAnswer, receivePoll } from './actions.web';
 import { COMMAND_NEW_POLL, COMMAND_ANSWER_POLL, COMMAND_OLD_POLLS } from './constants';
 import type { Answer } from './types';
 
@@ -67,10 +67,7 @@ StateListenerRegistry.register(
                         })
                     };
 
-                    const dialogComponent = store.getState()['features/base/dialog'].component;
-                    const queue = dialogComponent !== undefined;
-
-                    store.dispatch(receivePoll(pollId, poll, queue));
+                    store.dispatch(receivePoll(pollId, poll, true));
 
                 } else if (data.type === COMMAND_ANSWER_POLL) {
                     const { pollId, answers, voterId, voterName } = data;

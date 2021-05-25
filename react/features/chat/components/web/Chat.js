@@ -113,7 +113,7 @@ class Chat extends AbstractChat<Props> {
      */
     _renderChat() {
 
-        if (this.props._isPollTabFocused) {
+        if (this.props._isPollsTabFocused) {
             return (
                 <>
                     { this._renderTabs()}
@@ -151,12 +151,12 @@ class Chat extends AbstractChat<Props> {
         return (
             <div className = { 'chat-tabs-container' } >
                 <div
-                    className = { `chat-tab ${this.props._isPollTabFocused ? '' : 'chat-tab-focus'}` }
+                    className = { `chat-tab ${this.props._isPollsTabFocused ? '' : 'chat-tab-focus'}` }
                     onClick = { this._onToggleChatTab } >
                     {this.props.t('chat.tabs.chat')}
                 </div>
                 <div
-                    className = { `chat-tab ${this.props._isPollTabFocused ? 'chat-tab-focus' : ''}` }
+                    className = { `chat-tab ${this.props._isPollsTabFocused ? 'chat-tab-focus' : ''}` }
                     onClick = { this._onTogglePollsTab } >
                     {this.props.t('chat.tabs.polls')}
                 </div>

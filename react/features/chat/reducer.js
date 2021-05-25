@@ -13,7 +13,7 @@ import {
 
 const DEFAULT_STATE = {
     isOpen: false,
-    isPollTabFocused: false,
+    isPollsTabFocused: false,
     lastReadMessage: undefined,
     messages: [],
     privateMessageRecipient: undefined
@@ -85,7 +85,7 @@ ReducerRegistry.register('features/chat', (state = DEFAULT_STATE, action) => {
     case SET_IS_POLL_TAB_FOCUSED:
         return {
             ...state,
-            isPollTabFocused: action.isPollTabFocused
+            isPollsTabFocused: action.isPollsTabFocused
         };
     }
 
