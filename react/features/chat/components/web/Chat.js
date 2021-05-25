@@ -4,6 +4,7 @@ import React from 'react';
 
 import { translate } from '../../../base/i18n';
 import { connect } from '../../../base/redux';
+import { PollsPane } from '../../../polls/components/web';
 import AbstractChat, {
     _mapStateToProps,
     type Props
@@ -17,6 +18,7 @@ import KeyboardAvoider from './KeyboardAvoider';
 import MessageContainer from './MessageContainer';
 import MessageRecipient from './MessageRecipient';
 import TouchmoveHack from './TouchmoveHack';
+
 
 /**
  * React Component for holding the chat feature in a side panel that slides in
@@ -110,8 +112,20 @@ class Chat extends AbstractChat<Props> {
      * @returns {ReactElement}
      */
     _renderChat() {
+
+        if (this.props._isPollTabFocused) {
+            return (
+                <>
+                    { this._renderTabs()}
+                    <PollsPane />
+                    <KeyboardAvoider />
+                </>
+            );
+        }
+
         return (
             <>
+                { this._renderTabs() }
                 <TouchmoveHack isModal = { this.props._isModal }>
                     <MessageContainer
                         messages = { this.props._messages }
@@ -127,6 +141,42 @@ class Chat extends AbstractChat<Props> {
     }
 
     /**
+     * Returns a React Element showing the Chat and Polls tab.
+     *
+     * @private
+     * @returns {ReactElement}
+     */
+    _renderTabs() {
+
+        return (
+            <div className = { 'chat-tabs-container' } >
+                <div
+                    className = { `chat-tab ${this.props._isPollTabFocused ? '' : 'chat-tab-focus'}` }
+                    onClick = { this._onToggleChatTab } >
+                    Chat
+                </div>
+                <div
+                    className = { `chat-tab ${this.props._isPollTabFocused ? 'chat-tab-focus' : ''}` }
+                    onClick = { this._onTogglePollsTab } >
+                    Polls
+                </div>
+            </div>
+        );
+    }
+
+    /**
+     * Returns a React Element for showing the polls-pane.
+     *
+     * @private
+     * @returns {ReactElement}
+     */
+    _renderPollsPane() {
+        return (
+            <PollsPane />
+        );
+    }
+
+    /**
      * Instantiates a React Element to display at the top of {@code Chat} to
      * close {@code Chat}.
      *
@@ -138,6 +188,39 @@ class Chat extends AbstractChat<Props> {
             <Header className = 'chat-header' />
         );
     }
+
+
+    /**
+     * Renders panel tabs and content.
+     *
+     * @private
+     * @returns {ReactElement}
+     */
+    _renderPanelTabsContent() {
+
+        let ComponentToRender = null;
+
+        if (this.props._isPollTabFocused) {
+            ComponentToRender = (
+                <>
+                    {this._renderPollsPane()}
+                </>
+            );
+        } else {
+            ComponentToRender = (
+                <>
+                    {this._renderChat()}
+                </>
+            );
+        }
+
+        return (
+            <div>
+                { ComponentToRender}
+            </div>
+        );
+    }
+
 
     _renderPanelContent: () => React$Node | null;
 
@@ -199,6 +282,9 @@ class Chat extends AbstractChat<Props> {
     }
 
     _onSendMessage: (string) => void;
+    _onTogglePollsTab: () => void;
+    _onToggleChatTab: () => void;
+
 }
 
 export default translate(connect(_mapStateToProps)(Chat));

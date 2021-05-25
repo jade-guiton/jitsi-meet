@@ -51,7 +51,7 @@
 }
 
 // Needeed to override atlaskit default blue color
-.poll-create-container .jsYMHu { 
+.poll-create-container .jsYMHu {
     background: #292929;
     border-color: #808090;
     color: white // #808090
@@ -178,8 +178,9 @@
     display: flex;
     flex-direction: column;
     font-weight: 600;
-    height: 100%;
-    width: 315px;
+    height: 83%;
+    width: 90%;
+    padding: 5%;
 
     & > *:first-child,
     & > *:last-child {

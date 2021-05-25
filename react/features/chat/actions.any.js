@@ -5,7 +5,8 @@ import {
     CLEAR_MESSAGES,
     CLOSE_CHAT,
     SEND_MESSAGE,
-    SET_PRIVATE_MESSAGE_RECIPIENT
+    SET_PRIVATE_MESSAGE_RECIPIENT,
+    SET_IS_POLL_TAB_FOCUSED
 } from './actionTypes';
 
 /**
@@ -95,5 +96,18 @@ export function setPrivateMessageRecipient(participant: Object) {
     return {
         participant,
         type: SET_PRIVATE_MESSAGE_RECIPIENT
+    };
+}
+
+/**
+ * Set the value of _isPollTabFocused.
+ *
+ * @param {boolean} isPollTabFocused - The new value for _isPollTabFocused.
+ * @returns {Function}
+ */
+export function setIsPollTabFocused(isPollTabFocused: boolean) {
+    return {
+        isPollTabFocused,
+        type: SET_IS_POLL_TAB_FOCUSED
     };
 }

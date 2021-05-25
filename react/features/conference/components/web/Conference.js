@@ -16,7 +16,6 @@ import { LargeVideo } from '../../../large-video';
 import { KnockingParticipantList, LobbyScreen } from '../../../lobby';
 import { ParticipantsPane } from '../../../participants-pane/components';
 import { getParticipantsPaneOpen } from '../../../participants-pane/functions';
-import { PollsPane } from '../../../polls/components';
 import { getPollsPaneOpen } from '../../../polls/functions';
 import { Prejoin, isPrejoinPageVisible } from '../../../prejoin';
 import { fullScreenChanged, showToolbox } from '../../../toolbox/actions.web';
@@ -226,7 +225,6 @@ class Conference extends AbstractConference<Props, *> {
 
                 </div>
                 <ParticipantsPane />
-                <PollsPane />
             </div>
         );
     }
