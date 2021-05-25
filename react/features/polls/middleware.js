@@ -56,7 +56,7 @@ MiddlewareRegistry.register(({ dispatch, getState }) => next => action => {
     case SHOW_POLL: {
         const { pollId } = action;
 
-        dispatch(openDialog(PollAnswerDialog, { pollId }));
+        // dispatch(openDialog(PollAnswerDialog, { pollId }));
         break;
     }
 
