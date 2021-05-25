@@ -2,6 +2,7 @@
 
 import { Checkbox } from '@atlaskit/checkbox';
 import React, { useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { getLocalParticipant, getParticipantById } from '../../../base/participants';
@@ -58,6 +59,8 @@ const PollAnswer = (props: Props) => {
         return false;
     }, [ pollId, localId, localName, checkBoxStates, conference ]);
 
+    const { t } = useTranslation();
+
     return (
         <div className = 'poll-answer'>
             <div className = 'poll-header'>
@@ -81,9 +84,9 @@ const PollAnswer = (props: Props) => {
                 }
             </ol>
             <PollSubmitAnswerButton
-                aria-label = { 'Submit' }
+                aria-label = { t('polls.answer.submit') }
                 onClick = { submitAnswer }>
-                <span>{ 'Submit' }</span>
+                <span>{t('polls.answer.submit') }</span>
             </PollSubmitAnswerButton>
         </div>
     );

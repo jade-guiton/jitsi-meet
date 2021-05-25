@@ -74,7 +74,11 @@
         },
         "privateNotice": "Message privé à {{recipient}}",
         "title": "Chat",
-        "you": "vous"
+        "you": "vous",
+        "tabs": {
+            "chat": "Chat",
+            "polls": "Sondages"
+        }
     },
     "chromeExtensionBanner": {
         "installExtensionText": "Installer l'extension pour l'intégration de Google Calendar et Office 365",
@@ -544,7 +548,12 @@
             "answerPlaceholder": "Option {{index}}",
             "addAnswer": "Ajouter une réponse",
             "removeAnswer": "Enlever cette réponse",
-            "send": "Envoyer"
+            "send": "Envoyer",
+            "button": "Créer un sondage",
+            "removeOption": "Retirer l'option",
+            "addOption": "Ajouter une option",
+            "cancel": "Annuler",
+            "sendPoll": "Envoyer"
         },
         "answer": {
             "title": "Sondage",

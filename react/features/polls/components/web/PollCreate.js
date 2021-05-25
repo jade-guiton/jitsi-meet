@@ -236,7 +236,7 @@ const PollCreate = (props: Props) => {
                                 className = 'poll-remove-option-button'
                                 onClick = { () => removeAnswer(i) }
                                 type = 'button'>
-                                Remove option
+                                { t('polls.create.removeOption') }
                             </button>
                         </Tooltip>
                     </li>)
@@ -246,20 +246,20 @@ const PollCreate = (props: Props) => {
                 <PollCreateAddOptionButton
                     aria-label = { 'Add option' }
                     onClick = { () => addAnswer() } >
-                    <span>{'Add option'}</span>
+                    <span>{t('polls.create.addOption')}</span>
                 </PollCreateAddOptionButton>
             </div>
         </Container>
         <Footer>
             <PollCancelCreateButton
-                aria-label = { 'Cancel' }
+                aria-label = { t('polls.create.cancel') }
                 onClick = { () => setCreateMode(false) } >
-                <span>{'Cancel'}</span>
+                <span>{t('polls.create.cancel')}</span>
             </PollCancelCreateButton>
             <PollSubmitCreateButton
-                aria-label = { 'Send Poll' }
+                aria-label = { t('polls.create.sendPoll') }
                 onClick = { onSubmit } >
-                <span>{'Send poll'}</span>
+                <span>{t('polls.create.sendPoll')}</span>
             </PollSubmitCreateButton>
         </Footer>
     </>);

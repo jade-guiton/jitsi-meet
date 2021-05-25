@@ -1,6 +1,7 @@
 // @flow
 
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import {
     Container,
@@ -19,6 +20,8 @@ const PollsPane = () => {
         setCreateMode(true);
     };
 
+    const { t } = useTranslation();
+
     return (
         <div className = 'polls_pane-content'>
             { createMode
@@ -29,10 +32,10 @@ const PollsPane = () => {
                     </Container>
                     <Footer>
                         <PollCreateButton
-                            aria-label = { 'Create a poll' }
+                            aria-label = { t('polls.create.button') }
                             // eslint-disable-next-line react/jsx-no-bind
                             onClick = { onCreate } >
-                            <span>{'Create a poll'}</span>
+                            <span>{t('polls.create.button')}</span>
                         </PollCreateButton>
                     </Footer>
                 </>}

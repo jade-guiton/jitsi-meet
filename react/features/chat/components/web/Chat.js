@@ -153,12 +153,12 @@ class Chat extends AbstractChat<Props> {
                 <div
                     className = { `chat-tab ${this.props._isPollTabFocused ? '' : 'chat-tab-focus'}` }
                     onClick = { this._onToggleChatTab } >
-                    Chat
+                    {this.props.t('chat.tabs.chat')}
                 </div>
                 <div
                     className = { `chat-tab ${this.props._isPollTabFocused ? 'chat-tab-focus' : ''}` }
                     onClick = { this._onTogglePollsTab } >
-                    Polls
+                    {this.props.t('chat.tabs.polls')}
                 </div>
             </div>
         );
