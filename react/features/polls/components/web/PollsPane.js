@@ -23,7 +23,7 @@ const PollsPane = () => {
     const { t } = useTranslation();
 
     return (
-        <div className = 'polls_pane-content'>
+        <div className = 'polls-pane-content'>
             { createMode
                 ? <PollCreate setCreateMode = { setCreateMode } />
                 : <>
