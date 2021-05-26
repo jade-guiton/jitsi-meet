@@ -65,6 +65,7 @@ const PollResults = (props: AbstractProps) => {
                     { t('polls.answer.notanswered') }
                 </div>
             }
+            <a className = { 'poll-detail-link' } >{t('polls.results.detailedResults')}</a>
         </div>
     );
 

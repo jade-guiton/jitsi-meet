@@ -577,6 +577,9 @@
             "answer": "Answer",
             "notice": "Poll",
             "details": "Details"
+        },
+        "results": {
+            "detailedResults": "See detailed results"
         }
     },
     "poweredby": "powered by",
