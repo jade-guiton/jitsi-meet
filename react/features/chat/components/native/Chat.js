@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import { Button } from 'react-native-paper';
 
 import { translate } from '../../../base/i18n';

@@ -36,6 +36,7 @@ const PollAnswer = (props: AbstractProps) => {
                     <View
                         key = { index }>
                         <Switch
+                            /* eslint-disable react/jsx-no-bind */
                             onValueChange = { state => setCheckbox(index, state) }
                             value = { checkBoxStates[index] } />
                         <Text>{answer.name}</Text>
@@ -49,34 +50,7 @@ const PollAnswer = (props: AbstractProps) => {
                 {t('polls.create.button')}
             </Button>
         </View>
-        // <div className = 'poll-answer'>
-        //     <div className = 'poll-header'>
-        //         <div className = 'poll-question'>
-        //             <strong>{ poll.question }</strong>
-        //         </div>
-        //     </div>
-        //     <ol className = 'poll-answer-list'>
-        //         {
-        //             poll.answers.map((answer, index) => (
-        //                 <li key = { index }>
-        //                     <Checkbox
-        //                         isChecked = { checkBoxStates[index] }
-        //                         key = { index }
-        //                         label = { <span>{ answer.name }</span> }
-        //                         // eslint-disable-next-line react/jsx-no-bind
-        //                         onChange = { ev => setCheckbox(index, ev.target.checked) }
-        //                         size = 'large' />
-        //                 </li>
-        //             ))
-        //         }
-        //     </ol>
-        //     <button
-        //         aria-label = { t('polls.answer.submit') }
-        //         className = { 'poll-primary-button' }
-        //         onClick = { submitAnswer }>
-        //         <span>{t('polls.answer.submit') }</span>
-        //     </button>
-        // </div>
+
     );
 };
 

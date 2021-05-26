@@ -34,6 +34,7 @@ const AbstractPollsPane = (Component: AbstractComponent<AbstractProps>) => () =>
 
     return (<Component
         createMode = { createMode }
+        /* eslint-disable react/jsx-no-bind */
         onCreate = { onCreate }
         setCreateMode = { setCreateMode }
         t = { t } />);

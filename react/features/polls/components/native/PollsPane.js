@@ -1,15 +1,14 @@
 // @flow
 
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import { Button } from 'react-native-paper';
 
 import AbstractPollsPane from '../AbstractPollsPane';
 import type { AbstractProps } from '../AbstractPollsPane';
 
+import PollCreate from './PollCreate';
 import PollsList from './PollsList';
-
-import { PollCreate } from '.';
 
 
 const PollsPane = (props: AbstractProps) => {
@@ -19,7 +18,7 @@ const PollsPane = (props: AbstractProps) => {
     return (
         <View>
             { createMode
-                ? <Text>Mode édition</Text>
+                ? <PollCreate setCreateMode = { setCreateMode } />
                 : <View>
                     <PollsList />
                     <Button
