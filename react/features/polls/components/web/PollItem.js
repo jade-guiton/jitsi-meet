@@ -16,15 +16,11 @@ type Props = {
 
 }
 
-export const PollItem = ({
-    pollId
-}: Props) => {
-
+export const PollItem = React.forwardRef<Props, HTMLElement>(({ pollId }, ref) => {
     const answered = useSelector(state => isPollAnswered(state, pollId));
 
     return (
-        <>
-
+        <div ref = { ref }>
             { answered
                 ? <PollResults
                     key = { pollId }
@@ -34,6 +30,6 @@ export const PollItem = ({
                     pollId = { pollId } />
             }
 
-        </>
+        </div>
     );
-};
+});
