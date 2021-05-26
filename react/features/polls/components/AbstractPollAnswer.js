@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { getLocalParticipant, getParticipantById } from '../../base/participants';
-import { setAnsweredStatus } from '../actions.web';
+import { setAnsweredStatus } from '../actions';
 import { COMMAND_ANSWER_POLL } from '../constants';
 import type { Poll } from '../types';
 

@@ -3,7 +3,7 @@
 import { getCurrentConference } from '../base/conference';
 import { StateListenerRegistry } from '../base/redux';
 
-import { receiveAnswer, receivePoll } from './actions.web';
+import { receiveAnswer, receivePoll } from './actions';
 import { COMMAND_NEW_POLL, COMMAND_ANSWER_POLL, COMMAND_OLD_POLLS } from './constants';
 import type { Answer } from './types';
 
