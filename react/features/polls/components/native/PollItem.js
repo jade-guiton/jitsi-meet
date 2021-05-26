@@ -6,6 +6,8 @@ import { useSelector } from 'react-redux';
 
 import { isPollAnswered } from '../../functions';
 
+import { chatStyles } from './styles';
+
 import { PollAnswer, PollResults } from '.';
 
 type Props = {
@@ -28,7 +30,8 @@ const PollItem = ({ pollId }: Props) => {
     });
 
     return (
-        <View>
+        <View
+            style = { chatStyles.pollItemContainer }>
             { answered
                 ? <PollResults
                     key = { pollId }

@@ -2,7 +2,7 @@
 
 import React, { useEffect } from 'react';
 import { Switch, Text, View } from 'react-native';
-import { Button } from 'react-native-paper';
+import { Button, Title } from 'react-native-paper';
 
 import AbstractPollAnswer from '../AbstractPollAnswer';
 import type { AbstractProps } from '../AbstractPollAnswer';
@@ -29,7 +29,7 @@ const PollAnswer = (props: AbstractProps) => {
     return (
         <View>
             <View>
-                <Text>{ poll.question }</Text>
+                <Title>{ poll.question }</Title>
             </View>
             <View>
                 {poll.answers.map((answer, index) => (
@@ -47,7 +47,7 @@ const PollAnswer = (props: AbstractProps) => {
                 color = '#17a0db'
                 mode = 'contained'
                 onPress = { submitAnswer } >
-                {t('polls.create.button')}
+                {t('polls.create.send')}
             </Button>
         </View>
 
