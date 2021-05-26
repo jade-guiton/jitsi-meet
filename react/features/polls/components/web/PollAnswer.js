@@ -1,64 +1,29 @@
 // @flow
 
 import { Checkbox } from '@atlaskit/checkbox';
-import React, { useCallback, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
 
-import { getLocalParticipant, getParticipantById } from '../../../base/participants';
-import { setAnsweredStatus } from '../../actions.web';
-import { COMMAND_ANSWER_POLL } from '../../constants';
-import type { Poll } from '../../types';
+import AbstractPollAnswer from '../AbstractPollAnswer';
+import type { AbstractProps } from '../AbstractPollAnswer';
 
 
-type Props = {
-    pollId: string
-}
+const PollAnswer = (props: AbstractProps) => {
 
-const PollAnswer = (props: Props) => {
-    const { pollId } = props;
-
-    const conference: Object = useSelector(state => state['features/base/conference'].conference);
-
-    const poll: Poll = useSelector(state => state['features/polls'].polls[pollId]);
-
-    const localId: string = useSelector(state => getLocalParticipant(state).id);
-
-    const [ checkBoxStates, setCheckBoxState ] = useState(new Array(poll.answers.length).fill(false));
-
-    const setCheckbox = useCallback((index, state) => {
-        const newCheckBoxStates = [ ...checkBoxStates ];
-
-        newCheckBoxStates[index] = state;
-        setCheckBoxState(newCheckBoxStates);
-    }, [ checkBoxStates ]);
+    const {
+        checkBoxStates,
+        poll,
+        pollId,
+        setCheckbox,
+        setCheckBoxState,
+        submitAnswer,
+        t
+    } = props;
 
     // Reset state if pollId changes
     // Useful in case of two successive answer dialogs
     useEffect(() => {
         setCheckBoxState(new Array(poll.answers.length).fill(false));
     }, [ pollId ]);
-
-    const dispatch = useDispatch();
-
-    const localParticipant = useSelector(state => getParticipantById(state, localId));
-    const localName: string = localParticipant.name ? localParticipant.name : 'Fellow Jitster';
-
-    const submitAnswer = useCallback(() => {
-        conference.sendMessage({
-            type: COMMAND_ANSWER_POLL,
-            pollId,
-            voterId: localId,
-            voterName: localName,
-            answers: checkBoxStates
-        });
-
-        dispatch(setAnsweredStatus(pollId, true));
-
-        return false;
-    }, [ pollId, localId, localName, checkBoxStates, conference ]);
-
-    const { t } = useTranslation();
 
     return (
         <div className = 'poll-answer'>
@@ -92,4 +57,9 @@ const PollAnswer = (props: Props) => {
     );
 };
 
-export default PollAnswer;
+/*
+ * We apply AbstractPollAnswer to fill in the AbstractProps common
+ * to both the web and native implementations.
+ */
+// eslint-disable-next-line new-cap
+export default AbstractPollAnswer(PollAnswer);
