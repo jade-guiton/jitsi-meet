@@ -69,7 +69,7 @@
             "title": "Enter a nickname to use chat"
         },
         "privateNotice": "Private message to {{recipient}}",
-        "title": "Chat",
+        "title": "Chat & Polls",
         "you": "you",
         "tabs": {
             "chat": "Chat",

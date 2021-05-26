@@ -73,7 +73,7 @@
             "title": "Entrez un pseudonyme pour utiliser le chat"
         },
         "privateNotice": "Message privé à {{recipient}}",
-        "title": "Chat",
+        "title": "Chat & Sondages",
         "you": "vous",
         "tabs": {
             "chat": "Chat",
