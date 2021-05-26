@@ -18,7 +18,8 @@ const PollResults = (props: AbstractProps) => {
         answers,
         showDetails,
         question,
-        t
+        t,
+        toggleIsDetailed
     } = props;
 
     const renderRow = useCallback((name, percentage, voterCount) =>
@@ -65,7 +66,11 @@ const PollResults = (props: AbstractProps) => {
                     { t('polls.answer.notanswered') }
                 </div>
             }
-            <a className = { 'poll-detail-link' } >{t('polls.results.detailedResults')}</a>
+            <a
+                className = { 'poll-detail-link' }
+                onClick = { toggleIsDetailed }>
+                {showDetails ? t('polls.results.hideDetailedResults') : t('polls.results.showDetailedResults')}
+            </a>
         </div>
     );
 

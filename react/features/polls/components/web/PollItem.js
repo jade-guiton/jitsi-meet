@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { PollAnswer, PollResults } from '..';
@@ -19,13 +19,21 @@ type Props = {
 const PollItem = React.forwardRef<Props, HTMLElement>(({ pollId }, ref) => {
     const answered = useSelector(state => isPollAnswered(state, pollId));
 
+    const [ isDetailed, setIsDetailed ] = useState(false);
+
+    const toggleIsDetailed = useCallback(() => {
+
+        setIsDetailed(!isDetailed);
+    });
+
     return (
         <div ref = { ref }>
             { answered
                 ? <PollResults
                     key = { pollId }
                     pollId = { pollId }
-                    showDetails = { false } />
+                    showDetails = { isDetailed }
+                    toggleIsDetailed = { toggleIsDetailed } />
                 : <PollAnswer
                     pollId = { pollId } />
             }

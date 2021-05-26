@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { View } from 'react-native';
 import { useSelector } from 'react-redux';
 
@@ -20,13 +20,21 @@ type Props = {
 const PollItem = ({ pollId }: Props) => {
     const answered = useSelector(state => isPollAnswered(state, pollId));
 
+    const [ isDetailed, setIsDetailed ] = useState(false);
+
+    const toggleIsDetailed = useCallback(() => {
+
+        setIsDetailed(!isDetailed);
+    });
+
     return (
         <View>
             { answered
                 ? <PollResults
                     key = { pollId }
                     pollId = { pollId }
-                    showDetails = { false } />
+                    showDetails = { isDetailed }
+                    toggleIsDetailed = { toggleIsDetailed } />
                 : <PollAnswer
                     pollId = { pollId } />
             }

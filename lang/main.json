@@ -579,7 +579,8 @@
             "details": "Details"
         },
         "results": {
-            "detailedResults": "See detailed results"
+            "showDetailedResults": "See detailed results",
+            "hideDetailedResults": "Hide detailed results"
         }
     },
     "poweredby": "powered by",

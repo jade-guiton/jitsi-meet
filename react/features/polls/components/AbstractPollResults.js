@@ -20,6 +20,8 @@ type InputProps = {
      * ID of the poll to display
      */
     pollId: string,
+
+    toggleIsDetailed: void => void,
 };
 
 export type AnswerInfo = {
@@ -37,7 +39,8 @@ export type AbstractProps = {
     answers: Array<AnswerInfo>,
     showDetails: boolean,
     question: string,
-    t: Function
+    t: Function,
+    toggleIsDetailed: Function,
 };
 
 /**
@@ -48,7 +51,7 @@ export type AbstractProps = {
  * @returns {React.AbstractComponent}
  */
 const AbstractPollResults = (Component: AbstractComponent<AbstractProps>) => (props: InputProps) => {
-    const { pollId, showDetails } = props;
+    const { pollId, showDetails, toggleIsDetailed } = props;
 
     const pollDetails = useSelector(state => state['features/polls'].polls[pollId]);
 
@@ -85,7 +88,7 @@ const AbstractPollResults = (Component: AbstractComponent<AbstractProps>) => (pr
                 voterCount: answer.voters.size
             };
         });
-    }, [ pollDetails.answers ]);
+    }, [ pollDetails.answers, showDetails ]);
 
     const { t } = useTranslation();
 
@@ -94,7 +97,8 @@ const AbstractPollResults = (Component: AbstractComponent<AbstractProps>) => (pr
         answers = { answers }
         question = { pollDetails.question }
         showDetails = { showDetails }
-        t = { t } />);
+        t = { t }
+        toggleIsDetailed = { toggleIsDetailed } />);
 };
 
 export default AbstractPollResults;
