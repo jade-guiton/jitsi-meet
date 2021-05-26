@@ -5,15 +5,12 @@ import { ReducerRegistry } from '../base/redux';
 import {
     RECEIVE_POLL,
     RECEIVE_ANSWER,
-    SET_ANSWERED_STATUS,
-    SHOW_POLL
+    SET_ANSWERED_STATUS
 } from './actionTypes';
 import type { Answer } from './types';
 
 const INITIAL_STATE = {
-    polls: {},
-    pollQueue: [],
-    isPaneOpen: false
+    polls: {}
 };
 
 ReducerRegistry.register('features/polls', (state = INITIAL_STATE, action) => {
@@ -31,31 +28,7 @@ ReducerRegistry.register('features/polls', (state = INITIAL_STATE, action) => {
             }
         };
 
-        if (action.queue) {
-            newState.pollQueue = [ ...newState.pollQueue, action.pollId ];
-        }
-
         return newState;
-    }
-
-    // Reducer triggered when a poll should be shown
-    case SHOW_POLL: {
-        // Remove poll from queue if present
-        const index = state.pollQueue.indexOf(action.pollId);
-
-        if (index !== -1) {
-            const newQueue = [ ...state.pollQueue ];
-
-            newQueue.splice(index, 1);
-
-            return {
-                ...state,
-                pollQueue: newQueue
-            };
-        }
-
-        return state;
-
     }
 
     // Reducer triggered when an answer is received
