@@ -27,6 +27,7 @@ export type AbstractProps = InputProps & {
     pollId: string,
     setCheckbox: Function,
     setCheckBoxState: Function,
+    skipAnswer: Function,
     submitAnswer: Function,
     t: Function,
 };
@@ -76,6 +77,11 @@ const AbstractPollAnswer = (Component: AbstractComponent<AbstractProps>) => (pro
         return false;
     }, [ pollId, localId, localName, checkBoxStates, conference ]);
 
+    const skipAnswer = useCallback(() => {
+        dispatch(setAnsweredStatus(pollId, true));
+
+    }, [ pollId ]);
+
     const { t } = useTranslation();
 
     return (<Component
@@ -84,6 +90,7 @@ const AbstractPollAnswer = (Component: AbstractComponent<AbstractProps>) => (pro
         pollId = { pollId }
         setCheckBoxState = { setCheckBoxState }
         setCheckbox = { setCheckbox }
+        skipAnswer = { skipAnswer }
         submitAnswer = { submitAnswer }
         t = { t } />);
 

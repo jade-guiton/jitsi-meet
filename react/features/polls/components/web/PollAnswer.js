@@ -15,6 +15,7 @@ const PollAnswer = (props: AbstractProps) => {
         pollId,
         setCheckbox,
         setCheckBoxState,
+        skipAnswer,
         submitAnswer,
         t
     } = props;
@@ -47,12 +48,21 @@ const PollAnswer = (props: AbstractProps) => {
                     ))
                 }
             </ol>
-            <button
-                aria-label = { t('polls.answer.submit') }
-                className = { 'poll-primary-button' }
-                onClick = { submitAnswer }>
-                <span>{t('polls.answer.submit') }</span>
-            </button>
+            <div className = { 'poll-footer' }>
+                <button
+                    aria-label = { t('polls.answer.skip') }
+                    className = { 'poll-small-secondary-button' }
+                    onClick = { skipAnswer } >
+                    <span>{t('polls.answer.skip')}</span>
+                </button>
+                <button
+                    aria-label = { t('polls.answer.submit') }
+                    className = { 'poll-small-primary-button' }
+                    onClick = { submitAnswer }>
+                    <span>{t('polls.answer.submit')}</span>
+                </button>
+            </div>
+
         </div>
     );
 };
