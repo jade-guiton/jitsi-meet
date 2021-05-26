@@ -1,20 +1,16 @@
 // @flow
 
-import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import React from 'react';
+
+import AbstractPollsPane from '../AbstractPollsPane';
+import type { AbstractProps } from '../AbstractPollsPane';
 
 import { PollCreate, PollsList } from '.';
 
 
-const PollsPane = () => {
+const PollsPane = (props: AbstractProps) => {
 
-    const [ createMode, setCreateMode ] = useState(false);
-
-    const onCreate = () => {
-        setCreateMode(true);
-    };
-
-    const { t } = useTranslation();
+    const { createMode, onCreate, setCreateMode, t } = props;
 
     return (
         <div className = 'polls-pane-content'>
@@ -38,4 +34,9 @@ const PollsPane = () => {
     );
 };
 
-export default PollsPane;
+/*
+ * We apply AbstractPollsPane to fill in the AbstractProps common
+ * to both the web and native implementations.
+ */
+// eslint-disable-next-line new-cap
+export default AbstractPollsPane(PollsPane);
