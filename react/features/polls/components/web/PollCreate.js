@@ -2,84 +2,28 @@
 
 import { FieldTextStateless } from '@atlaskit/field-text';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 
 import { Icon, IconMenu } from '../../../base/icons';
-import { getParticipantDisplayName } from '../../../base/participants';
 import { Tooltip } from '../../../base/tooltip';
-import { COMMAND_NEW_POLL } from '../../constants';
+import AbstractPollCreate from '../AbstractPollCreate';
+import type { AbstractProps } from '../AbstractPollCreate';
 
 
-type Props = {
-    setCreateMode: boolean => void
-};
+const PollCreate = (props: AbstractProps) => {
 
-const PollCreate = (props: Props) => {
 
-    const { setCreateMode } = props;
-
-    const [ question, setQuestion ] = useState('');
-
-    const [ answers, setAnswers ] = useState([ '' ]);
-
-    const setAnswer = useCallback((i, answer) => {
-        const newAnswers = [ ...answers ];
-
-        newAnswers[i] = answer;
-        setAnswers(newAnswers);
-    });
-
-    const addAnswer = useCallback(i => {
-        const newAnswers = [ ...answers ];
-
-        newAnswers.splice(i === undefined ? answers.length : i, 0, '');
-        setAnswers(newAnswers);
-    });
-
-    const moveAnswer = useCallback((i, j) => {
-        const newAnswers = [ ...answers ];
-
-        const answer = answers[i];
-
-        newAnswers.splice(i, 1);
-        newAnswers.splice(j, 0, answer);
-        setAnswers(newAnswers);
-    });
-
-    const removeAnswer = useCallback(i => {
-        if (answers.length === 1) {
-            return;
-        }
-        const newAnswers = [ ...answers ];
-
-        newAnswers.splice(i, 1);
-        setAnswers(newAnswers);
-    });
-
-    const conference = useSelector(state => state['features/base/conference'].conference);
-    const myId = conference.myUserId();
-    const myName = useSelector(state => getParticipantDisplayName(state, myId));
-
-    const onSubmit = useCallback(() => {
-        const filteredAnswers = answers.filter(answer => answer.trim().length > 0);
-
-        if (filteredAnswers.length === 0) {
-            return;
-        }
-
-        conference.sendMessage({
-            type: COMMAND_NEW_POLL,
-            pollId: Math.floor(Math.random() * Number.MAX_SAFE_INTEGER).toString(36),
-            senderId: myId,
-            senderName: myName,
-            question,
-            answers: filteredAnswers
-        });
-
-        setCreateMode(false);
-
-    }, [ conference, question, answers ]);
+    const {
+        addAnswer,
+        answers,
+        moveAnswer,
+        onSubmit,
+        question,
+        removeAnswer,
+        setAnswer,
+        setCreateMode,
+        setQuestion,
+        t
+    } = props;
 
     /*
      * This ref stores the Array of answer input fields, allowing us to focus on them.
@@ -174,8 +118,6 @@ const PollCreate = (props: Props) => {
         }
     });
 
-    const { t } = useTranslation();
-
     /* eslint-disable react/jsx-no-bind */
     return (<>
         <div className = 'poll-create-container poll-container'>
@@ -262,4 +204,9 @@ const PollCreate = (props: Props) => {
 
 };
 
-export default PollCreate;
+/*
+ * We apply AbstractPollCreate to fill in the AbstractProps common
+ * to both the web and native implementations.
+ */
+// eslint-disable-next-line new-cap
+export default AbstractPollCreate(PollCreate);

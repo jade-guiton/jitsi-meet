@@ -5,7 +5,7 @@ import type { AbstractComponent } from 'react';
 import { useTranslation } from 'react-i18next';
 
 /*
- * Props that will be passed by the AbstractPollAnswerDialog to its
+ * Props that will be passed by the AbstractPollsPane to its
  * concrete implementations (web/native).
  **/
 export type AbstractProps = {
