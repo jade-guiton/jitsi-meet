@@ -576,7 +576,8 @@
         "chat": {
             "answer": "Answer",
             "notice": "Poll",
-            "details": "Details"
+            "details": "Details",
+            "empty" : "The are no polls in the meeting yet. Start a poll here!"
         },
         "results": {
             "showDetailedResults": "See detailed results",

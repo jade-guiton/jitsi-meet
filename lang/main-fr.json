@@ -569,7 +569,8 @@
         "chat": {
             "answer": "Répondre",
             "notice": "Sondage",
-            "details": "Détails"
+            "details": "Détails",
+            "empty": "Il n'y a pas encore de sondages dans cette réunion. Démarrez un sondage ici !"
         }
     },
     "poweredby": "produit par",
