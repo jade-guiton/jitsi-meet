@@ -140,13 +140,15 @@ ol.poll-result-list {
 }
 
 .poll-bar-container {
-    background-color: #666;
+    background-color: #616161;
     min-width: 150px;
     margin-top: 3px;
+    margin-left: 8px;
+    margin-right: 8px;
 }
 
 .poll-bar {
-    background-color: #0056E0;
+    background-color: #246FE5;
 }
 
 .poll-message-footer {
@@ -169,6 +171,10 @@ ol.poll-result-list {
     &:hover {
         text-decoration: underline;
     }
+}
+
+a.poll-detail-link {
+    color: #246FE5;
 }
 
 .polls-pane-content {
