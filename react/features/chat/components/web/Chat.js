@@ -4,7 +4,7 @@ import React from 'react';
 
 import { translate } from '../../../base/i18n';
 import { connect } from '../../../base/redux';
-import { PollsPane } from '../../../polls/components/web';
+import { PollsPane } from '../../../polls/components';
 import AbstractChat, {
     _mapStateToProps,
     type Props

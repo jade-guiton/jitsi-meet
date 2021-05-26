@@ -1,11 +1,12 @@
 // @flow
 
 import React from 'react';
+import { View } from 'react-native';
 import { useSelector } from 'react-redux';
 
-import { PollAnswer, PollResults } from '..';
 import { isPollAnswered } from '../../functions';
 
+import { PollAnswer, PollResults } from '.';
 
 type Props = {
 
@@ -16,11 +17,11 @@ type Props = {
 
 }
 
-const PollItem = React.forwardRef<Props, HTMLElement>(({ pollId }, ref) => {
+const PollItem = ({ pollId }: Props) => {
     const answered = useSelector(state => isPollAnswered(state, pollId));
 
     return (
-        <div ref = { ref }>
+        <View>
             { answered
                 ? <PollResults
                     key = { pollId }
@@ -30,8 +31,8 @@ const PollItem = React.forwardRef<Props, HTMLElement>(({ pollId }, ref) => {
                     pollId = { pollId } />
             }
 
-        </div>
+        </View>
     );
-});
+};
 
 export default PollItem;

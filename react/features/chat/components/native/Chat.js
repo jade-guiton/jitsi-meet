@@ -7,6 +7,7 @@ import { Button } from 'react-native-paper';
 import { translate } from '../../../base/i18n';
 import { JitsiModal } from '../../../base/modal';
 import { connect } from '../../../base/redux';
+import { PollsPane } from '../../../polls/components';
 import { closeChat } from '../../actions.any';
 import { CHAT_VIEW_MODAL_ID } from '../../constants';
 import AbstractChat, {
@@ -68,9 +69,7 @@ class Chat extends AbstractChat<Props> {
                     </Button>
                 </View>
                 { this.props._isPollsTabFocused
-                    ? <View>
-                        <Text>Hello</Text>
-                    </View>
+                    ? <PollsPane />
                     : <>
                         <MessageContainer messages = { this.props._messages } />
                         <MessageRecipient />

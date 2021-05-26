@@ -3,7 +3,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 
-import { PollItem } from './PollItem';
+import { PollItem } from '.';
 
 const PollsList = () => {
 
@@ -24,15 +24,13 @@ const PollsList = () => {
 
     return (
     <>
-        <div>
-            {listPolls.map((id, index) => (
-                <PollItem
-                    key = { id }
-                    pollId = { id }
-                    ref = { listPolls.length - 1 === index ? pollListEndRef : null } />
-            )
-            )}
-        </div>
+        {listPolls.map((id, index) => (
+            <PollItem
+                key = { id }
+                pollId = { id }
+                ref = { listPolls.length - 1 === index ? pollListEndRef : null } />
+        )
+        )}
     </>
     );
 };

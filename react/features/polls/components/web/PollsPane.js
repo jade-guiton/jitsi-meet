@@ -5,8 +5,9 @@ import React from 'react';
 import AbstractPollsPane from '../AbstractPollsPane';
 import type { AbstractProps } from '../AbstractPollsPane';
 
-import { PollCreate, PollsList } from '.';
+import PollsList from './PollsList';
 
+import { PollCreate } from '.';
 
 const PollsPane = (props: AbstractProps) => {
 
