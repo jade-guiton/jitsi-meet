@@ -1,10 +1,12 @@
 // @flow
 
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import type { AbstractComponent } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { getLocalParticipant } from '../../base/participants/functions';
+import { removeAnswer } from '../actions';
 
 /**
  * The type of the React {@code Component} props of inheriting component.
@@ -37,6 +39,7 @@ export type AnswerInfo = {
 export type AbstractProps = {
     answered: boolean,
     answers: Array<AnswerInfo>,
+    changeVote: void => void,
     showDetails: boolean,
     question: string,
     t: Function,
@@ -52,6 +55,8 @@ export type AbstractProps = {
  */
 const AbstractPollResults = (Component: AbstractComponent<AbstractProps>) => (props: InputProps) => {
     const { pollId, showDetails, toggleIsDetailed } = props;
+
+    const localId = useSelector(state => getLocalParticipant(state).id);
 
     const pollDetails = useSelector(state => state['features/polls'].polls[pollId]);
 
@@ -90,11 +95,19 @@ const AbstractPollResults = (Component: AbstractComponent<AbstractProps>) => (pr
         });
     }, [ pollDetails.answers, showDetails ]);
 
+    const dispatch = useDispatch();
+
+    const changeVote = useCallback(() => {
+        dispatch(removeAnswer(pollId, localId));
+
+    }, [ pollId, localId ]);
+
     const { t } = useTranslation();
 
     return (<Component
         answered = { pollDetails.answered }
         answers = { answers }
+        changeVote = { changeVote }
         question = { pollDetails.question }
         showDetails = { showDetails }
         t = { t }

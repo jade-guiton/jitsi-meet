@@ -18,11 +18,23 @@ export const RECEIVE_POLL = 'RECEIVE_POLL';
  *
  * {
  *     type: RECEIVE_ANSWER,
- *     answer: Answer
+ *     answer: Answer,
  *     pollId: string,
  * }
  */
 export const RECEIVE_ANSWER = 'RECEIVE_ANSWER';
+
+/**
+ * The type of the action which signals the removal of the answer for the user.
+ *
+ * {
+ *     type: REMOVE_ANSWER,
+ *     pollId: string,
+ *     voterId: string,
+
+ * }
+ */
+export const REMOVE_ANSWER = 'REMOVE_ANSWER';
 
 /**
  * The type of the action which set the answered field of a poll.

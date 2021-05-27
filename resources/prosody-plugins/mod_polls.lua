@@ -15,7 +15,7 @@ local function get_poll_message(stanza)
 		return nil;
 	end
 	local data = json.decode(json_data);
-	if data.type ~= "new-poll" and data.type ~= "answer-poll" then
+	if data.type ~= "new-poll" and data.type ~= "answer-poll" and data.type ~= "remove-answer-poll" then
 		return nil;
 	end
 	return data;
@@ -76,6 +76,19 @@ module:hook("message/bare", function(event)
 			if value then
 				poll.answers[i].voters[data.voterId] = data.voterName;
 			end
+		end
+
+	elseif data.type == "remove-answer-poll" then
+		if check_polls(room) then return end
+
+		local poll = room.polls.by_id[data.pollId];
+		if poll == nil then
+			module:log("warn", "answering inexistent poll");
+			return;
+		end
+
+		for _, answer in ipairs(poll.answers) do
+			answer.voters[data.voterId] = nil
 		end
 	end
 end);

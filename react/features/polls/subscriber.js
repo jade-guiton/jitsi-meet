@@ -3,8 +3,8 @@
 import { getCurrentConference } from '../base/conference';
 import { StateListenerRegistry } from '../base/redux';
 
-import { receiveAnswer, receivePoll } from './actions';
-import { COMMAND_NEW_POLL, COMMAND_ANSWER_POLL, COMMAND_OLD_POLLS } from './constants';
+import { receiveAnswer, receivePoll, removeAnswer } from './actions';
+import { COMMAND_NEW_POLL, COMMAND_ANSWER_POLL, COMMAND_OLD_POLLS, COMMAND_REMOVE_ANSWER_POLL } from './constants';
 import type { Answer } from './types';
 
 
@@ -80,6 +80,11 @@ StateListenerRegistry.register(
                     };
 
                     store.dispatch(receiveAnswer(pollId, receivedAnswer));
+
+                } else if (data.type === COMMAND_REMOVE_ANSWER_POLL) {
+                    const { pollId, voterId } = data;
+
+                    store.dispatch(removeAnswer(pollId, voterId));
 
                 } else if (data.type === COMMAND_OLD_POLLS) {
                     const { polls } = data;

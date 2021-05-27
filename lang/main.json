@@ -581,7 +581,8 @@
         },
         "results": {
             "showDetailedResults": "Show details",
-            "hideDetailedResults": "Hide details"
+            "hideDetailedResults": "Hide details",
+            "changeVote": "Change vote"
         }
     },
     "poweredby": "powered by",
