@@ -1,8 +1,8 @@
 // @flow
 
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ScrollView } from 'react-native';
+import { FlatList } from 'react-native';
 import { Text } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 
@@ -17,20 +17,24 @@ const PollsList = () => {
     const { t } = useTranslation();
     const listPolls = Object.keys(polls);
 
+    const renderItem = useCallback(({ item }) => (
+        <PollItem
+            key = { item }
+            pollId = { item } />)
+    , []);
+
     return (
     <>
         {listPolls.length === 0
             ? <Text style = { chatStyles.noPollText } >
                 {t('polls.chat.empty')}
             </Text>
-            : <ScrollView>
-                {listPolls.map(id => (
-                    <PollItem
-                        key = { id }
-                        pollId = { id } />
-                )
-                )}
-            </ScrollView>
+            : <FlatList
+                data = { listPolls }
+                extraData = { listPolls }
+                // eslint-disable-next-line react/jsx-no-bind
+                keyExtractor = { (item, index) => index.toString() }
+                renderItem = { renderItem } />
         }
     </>
     );

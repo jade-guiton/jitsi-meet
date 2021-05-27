@@ -2,7 +2,7 @@
 // @flow
 
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import { Button } from 'react-native-paper';
 
 import AbstractPollsPane from '../AbstractPollsPane';
@@ -10,43 +10,24 @@ import type { AbstractProps } from '../AbstractPollsPane';
 
 import PollCreate from './PollCreate';
 import PollsList from './PollsList';
-
-const styles = StyleSheet.create({
-
-    // eslint-disable-next-line react-native/no-color-literals
-    createPollButton: {
-        padding: 8,
-        margin: 4
-    },
-
-    // eslint-disable-next-line react-native/no-color-literals
-    PollPane: {
-        flex: 1,
-        padding: 8
-    },
-
-    PollPaneContent: {
-        justifyContent: 'space-between',
-        flex: 1
-    }
-});
+import { chatStyles } from './styles';
 
 const PollsPane = (props: AbstractProps) => {
 
     const { createMode, onCreate, setCreateMode, t } = props;
 
     return (
-        <View style = { styles.PollPane }>
+        <View style = { chatStyles.PollPane }>
             { createMode
                 ? <PollCreate setCreateMode = { setCreateMode } />
-                : <View style = { styles.PollPaneContent }>
+                : <View style = { chatStyles.PollPaneContent }>
                     {/* <View /> */}
                     <PollsList />
                     <Button
                         color = '#17a0db'
                         mode = 'contained'
                         onPress = { onCreate }
-                        style = { styles.createPollButton } >
+                        style = { chatStyles.createPollButton } >
                         {t('polls.create.button')}
                     </Button>
                 </View>}

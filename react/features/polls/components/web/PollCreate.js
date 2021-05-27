@@ -181,7 +181,10 @@ const PollCreate = (props: AbstractProps) => {
                 <button
                     aria-label = { 'Add option' }
                     className = { 'poll-secondary-button' }
-                    onClick = { () => addAnswer() } >
+                    onClick = { () => {
+                        addAnswer();
+                        requestFocus(answers.length);
+                    } } >
                     <span>{t('polls.create.addOption')}</span>
                 </button>
             </div>

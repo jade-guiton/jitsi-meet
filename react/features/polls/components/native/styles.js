@@ -140,6 +140,10 @@ export const chatStyles = createStyleSheet({
         justifyContent: 'space-between'
     },
 
+    pollCreateSubContainer: {
+        flex: 1
+    },
+
     pollCreateButton: {
         flex: 1,
         marginHorizontal: 8
@@ -160,8 +164,22 @@ export const chatStyles = createStyleSheet({
 
     toogleText: {
         color: ColorPalette.blue
-    }
+    },
 
+    createPollButton: {
+        padding: 8,
+        margin: 4
+    },
+
+    PollPane: {
+        flex: 1,
+        padding: 8
+    },
+
+    PollPaneContent: {
+        justifyContent: 'space-between',
+        flex: 1
+    }
 });
 
 

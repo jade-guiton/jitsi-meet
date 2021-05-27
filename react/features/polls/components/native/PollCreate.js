@@ -20,6 +20,8 @@ const PollCreate = (props: AbstractProps) => {
         t, setCreateMode
     } = props;
 
+    const answerListRef = useRef(null);
+
     /*
      * This ref stores the Array of answer input fields, allowing us to focus on them.
      * This array is maintained by registerfieldRef and the useEffect below.
@@ -54,7 +56,8 @@ const PollCreate = (props: AbstractProps) => {
             return;
         }
         input.focus();
-    }, [ lastFocus ]);
+
+    }, [ answerInputs, lastFocus ]);
 
 
     const onQuestionKeyDown = useCallback(() => {
@@ -119,7 +122,7 @@ const PollCreate = (props: AbstractProps) => {
 
     return (
         <View style = { chatStyles.pollCreateContainer }>
-            <View>
+            <View style = { chatStyles.pollCreateSubContainer }>
                 <TextInput
                     autoFocus = { true }
                     blurOnSubmit = { false }
@@ -131,13 +134,19 @@ const PollCreate = (props: AbstractProps) => {
                 <FlatList
                     blurOnSubmit = { true }
                     data = { answers }
+                    extraData = { answers }
                     keyExtractor = { (item, index) => index.toString() }
+                    ref = { answerListRef }
                     renderItem = { renderListItem } />
 
                 <Button
                     color = '#3D3D3D'
                     mode = 'contained'
-                    onPress = { () => addAnswer(answers.length) }
+                    onPress = { () => {
+                        // adding and answer
+                        addAnswer();
+                        requestFocus(answers.length);
+                    } }
                     style = { chatStyles.pollCreateAddButton }>
                     {t('polls.create.addOption')}
                 </Button>
