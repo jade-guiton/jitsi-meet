@@ -5,7 +5,6 @@ import { ReducerRegistry } from '../base/redux';
 import {
     RECEIVE_POLL,
     RECEIVE_ANSWER,
-    REMOVE_ANSWER,
     SET_ANSWERED_STATUS
 } from './actionTypes';
 import type { Answer } from './types';
@@ -56,8 +55,11 @@ ReducerRegistry.register('features/polls', (state = INITIAL_STATE, action) => {
 
         for (let i = 0; i < newAnswers.length; i++) {
             // if the answer was chosen, we add the sender to the set of voters of this answer
-            if (answer.answers[i] === true) {
-                newAnswers[i].voters.set(answer.voterId, answer.voterName);
+            const voters = newAnswers[i].voters;
+            if (answer.answers[i]) {
+                voters.set(answer.voterId, answer.voterName);
+            } else {
+                voters.delete(answer.voterId);
             }
         }
 
@@ -72,44 +74,6 @@ ReducerRegistry.register('features/polls', (state = INITIAL_STATE, action) => {
                 }
             }
         };
-    }
-
-    // Reducer triggered when an answer is removed
-    // The answer is removed from an existing poll.
-    case REMOVE_ANSWER: {
-        const { pollId, voterId }: { pollId: string; voterId: string } = action;
-
-        // if the poll doesn't exist
-        if (!(pollId in state.polls)) {
-            console.warn('requested poll does not exist: pollId ', pollId);
-
-            return state;
-        }
-
-        // if the poll exists, we update it without the removed answer.
-        const newAnswers = state.polls[pollId].answers
-            .map(_answer => {
-                _answer.voters.delete(voterId);
-
-                return {
-                    name: _answer.name,
-                    voters: new Map(_answer.voters)
-                };
-            });
-
-        // finally we update the state by returning the updated poll
-        return {
-            ...state,
-            polls: {
-                ...state.polls,
-                [pollId]: {
-                    ...state.polls[pollId],
-                    answers: newAnswers,
-                    answered: false
-                }
-            }
-        };
-
     }
 
     // Reducer triggered to update the answered status of a poll

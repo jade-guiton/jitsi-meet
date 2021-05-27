@@ -3,7 +3,6 @@
 import {
     RECEIVE_ANSWER,
     RECEIVE_POLL,
-    REMOVE_ANSWER,
     SET_ANSWERED_STATUS
 } from './actionTypes';
 import type { Answer, Poll } from './types';
@@ -46,25 +45,6 @@ export const receiveAnswer = (pollId: string, answer: Answer) => {
         type: RECEIVE_ANSWER,
         answer,
         pollId
-    };
-};
-
-/**
- * Action to signal the removal of the answer for the user.
- *
- * @param {string} pollId - The id of the incoming poll.
- * @param {string} voterId - The id of the voter.
- * @returns {{
- *     type: RECEIVE_ANSWER,
- *     answer: Answer,
- *     pollId: string
- * }}
- */
-export const removeAnswer = (pollId: string, voterId: string) => {
-    return {
-        type: REMOVE_ANSWER,
-        pollId,
-        voterId
     };
 };
 
