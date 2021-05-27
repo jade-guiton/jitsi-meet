@@ -580,8 +580,8 @@
             "empty" : "The are no polls in the meeting yet. Start a poll here!"
         },
         "results": {
-            "showDetailedResults": "See detailed results",
-            "hideDetailedResults": "Hide detailed results"
+            "showDetailedResults": "Show details",
+            "hideDetailedResults": "Hide details"
         }
     },
     "poweredby": "powered by",
