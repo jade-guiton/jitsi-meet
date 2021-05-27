@@ -65,7 +65,7 @@ export const resultsStyles = createStyleSheet({
     barContainer: {
         backgroundColor: '#ccc',
         borderRadius: 3,
-        width: 200,
+        width: '100%',
         height: 6
     },
 
@@ -149,8 +149,17 @@ export const chatStyles = createStyleSheet({
         flexDirection: 'row'
     },
 
+    switchRow: {
+        alignItems: 'flex-start',
+        flexDirection: 'row'
+    },
+
     pollCreateAddButton: {
         margin: 8
+    },
+
+    toogleText: {
+        color: ColorPalette.blue
     }
 
 });

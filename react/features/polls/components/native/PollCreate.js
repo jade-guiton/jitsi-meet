@@ -1,10 +1,10 @@
 // @flow
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { View, TextInput, FlatList, TouchableOpacity, ScrollView } from 'react-native';
+import { View, TextInput, FlatList, TouchableOpacity } from 'react-native';
 import { Button } from 'react-native-paper';
 
-import { Icon, IconAdd, IconClose } from '../../../base/icons';
+import { Icon, IconClose } from '../../../base/icons';
 import AbstractPollCreate from '../AbstractPollCreate';
 import type { AbstractProps } from '../AbstractPollCreate';
 

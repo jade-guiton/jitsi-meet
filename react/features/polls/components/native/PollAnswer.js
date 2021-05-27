@@ -7,6 +7,8 @@ import { Button, Title } from 'react-native-paper';
 import AbstractPollAnswer from '../AbstractPollAnswer';
 import type { AbstractProps } from '../AbstractPollAnswer';
 
+import { chatStyles } from './styles';
+
 
 const PollAnswer = (props: AbstractProps) => {
 
@@ -34,7 +36,8 @@ const PollAnswer = (props: AbstractProps) => {
             <View>
                 {poll.answers.map((answer, index) => (
                     <View
-                        key = { index }>
+                        key = { index }
+                        style = { chatStyles.switchRow } >
                         <Switch
                             /* eslint-disable react/jsx-no-bind */
                             onValueChange = { state => setCheckbox(index, state) }
