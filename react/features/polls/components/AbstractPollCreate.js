@@ -84,7 +84,11 @@ const AbstractPollCreate = (Component: AbstractComponent<AbstractProps>) => (pro
     const myId = conference.myUserId();
     const myName = useSelector(state => getParticipantDisplayName(state, myId));
 
-    const onSubmit = useCallback(() => {
+    const onSubmit = useCallback(ev => {
+        if (ev) {
+            ev.preventDefault();
+        }
+        
         const filteredAnswers = answers.filter(answer => answer.trim().length > 0);
 
         if (filteredAnswers.length === 0) {

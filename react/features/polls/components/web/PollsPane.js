@@ -13,26 +13,22 @@ const PollsPane = (props: AbstractProps) => {
 
     const { createMode, onCreate, setCreateMode, t } = props;
 
-    return (
-        <div className = 'polls-pane-content'>
-            { createMode
-                ? <PollCreate setCreateMode = { setCreateMode } />
-                : <>
-                    <div className = { 'poll-container' } >
-                        <PollsList />
-                    </div>
-                    <div className = { 'poll-footer' }>
-                        <button
-                            aria-label = { t('polls.create.button') }
-                            className = { 'poll-primary-button ' }
-                            // eslint-disable-next-line react/jsx-no-bind
-                            onClick = { onCreate } >
-                            <span>{t('polls.create.button')}</span>
-                        </button>
-                    </div>
-                </>}
-        </div>
-    );
+    return createMode
+        ? <PollCreate setCreateMode = { setCreateMode } />
+        : <div className = 'polls-pane-content'>
+            <div className = { 'poll-container' } >
+                <PollsList />
+            </div>
+            <div className = { 'poll-footer' }>
+                <button
+                    aria-label = { t('polls.create.button') }
+                    className = { 'poll-primary-button ' }
+                    // eslint-disable-next-line react/jsx-no-bind
+                    onClick = { onCreate } >
+                    <span>{t('polls.create.button')}</span>
+                </button>
+            </div>
+        </div>;
 };
 
 /*
