@@ -56,8 +56,10 @@ ReducerRegistry.register('features/polls', (state = INITIAL_STATE, action) => {
         for (let i = 0; i < newAnswers.length; i++) {
             // if the answer was chosen, we add the sender to the set of voters of this answer
             const voters = newAnswers[i].voters;
+
             if (answer.answers[i]) {
                 voters.set(answer.voterId, answer.voterName);
+
             } else {
                 voters.delete(answer.voterId);
             }

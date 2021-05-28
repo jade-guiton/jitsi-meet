@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { getLocalParticipant, getParticipantById } from '../../base/participants/functions';
-
 import { setAnsweredStatus } from '../actions';
 import { COMMAND_ANSWER_POLL } from '../constants';
 
