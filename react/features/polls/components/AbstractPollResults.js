@@ -1,10 +1,13 @@
 // @flow
 
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import type { AbstractComponent } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { getLocalParticipant, getParticipantById } from '../../base/participants/functions';
+import { setAnsweredStatus } from '../actions';
+import { COMMAND_ANSWER_POLL } from '../constants';
 
 /**
  * The type of the React {@code Component} props of inheriting component.
@@ -37,6 +40,7 @@ export type AnswerInfo = {
 export type AbstractProps = {
     answered: boolean,
     answers: Array<AnswerInfo>,
+    changeVote: void => void,
     showDetails: boolean,
     question: string,
     t: Function,
@@ -90,11 +94,28 @@ const AbstractPollResults = (Component: AbstractComponent<AbstractProps>) => (pr
         });
     }, [ pollDetails.answers, showDetails ]);
 
+    const dispatch = useDispatch();
+
+    const conference: Object = useSelector(state => state['features/base/conference'].conference);
+    const localId = useSelector(state => getLocalParticipant(state).id);
+    const localName: string = useSelector(state => getParticipantById(state, localId).name || 'Fellow Jitster');
+    const changeVote = useCallback(() => {
+        conference.sendMessage({
+            type: COMMAND_ANSWER_POLL,
+            pollId,
+            voterId: localId,
+            voterName: localName,
+            answers: new Array(pollDetails.answers.length).fill(false)
+        });
+        dispatch(setAnsweredStatus(pollId, false));
+    }, [ pollId, localId, localName, pollDetails ]);
+
     const { t } = useTranslation();
 
     return (<Component
         answered = { pollDetails.answered }
         answers = { answers }
+        changeVote = { changeVote }
         question = { pollDetails.question }
         showDetails = { showDetails }
         t = { t }

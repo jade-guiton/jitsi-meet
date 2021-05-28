@@ -171,9 +171,15 @@ ol.poll-result-list {
     }
 }
 
-a.poll-detail-link {
+.poll-result-links {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+a.poll-detail-link, a.poll-change-vote-link {
     color: #246FE5;
-    cursor: 'pointer';
+    cursor: pointer;
 }
 
 .polls-pane-content {

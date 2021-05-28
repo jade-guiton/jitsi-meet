@@ -18,7 +18,7 @@ export const RECEIVE_POLL = 'RECEIVE_POLL';
  *
  * {
  *     type: RECEIVE_ANSWER,
- *     answer: Answer
+ *     answer: Answer,
  *     pollId: string,
  * }
  */
