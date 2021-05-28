@@ -58,8 +58,22 @@ const PollCreate = (props: AbstractProps) => {
         }
         input.focus();
     }, [ lastFocus ]);
+    
+    const checkModifiers = useCallback(ev => {
+        // Because this isn't done automatically on MacOS
+        if (ev.key === 'Enter' && ev.metaKey) {
+            ev.preventDefault();
+            onSubmit();
+            return;
+        }
+        if (ev.ctrlKey || ev.metaKey || ev.altKey || ev.shiftKey) {
+            return;
+        }
+    });
 
     const onQuestionKeyDown = useCallback(ev => {
+        if (checkModifiers(ev)) return;
+        
         if (ev.key === 'Enter') {
             requestFocus(0);
             ev.preventDefault();
@@ -68,9 +82,8 @@ const PollCreate = (props: AbstractProps) => {
 
     // Called on keypress in answer fields
     const onAnswerKeyDown = useCallback((i, ev) => {
-        if (ev.ctrlKey || ev.metaKey) {
-            return;
-        }
+        if (checkModifiers(ev)) return;
+        
         if (ev.key === 'Enter') {
             addAnswer(i + 1);
             requestFocus(i + 1);
@@ -79,13 +92,13 @@ const PollCreate = (props: AbstractProps) => {
             removeAnswer(i);
             requestFocus(i > 0 ? i - 1 : 0);
             ev.preventDefault();
-        } else if (ev.key === 'ArrowDown' || (ev.key === 'Tab' && !ev.shiftKey)) {
+        } else if (ev.key === 'ArrowDown') {
             if (i === answers.length - 1) {
                 addAnswer();
             }
             requestFocus(i + 1);
             ev.preventDefault();
-        } else if (ev.key === 'ArrowUp' || (ev.key === 'Tab' && ev.shiftKey)) {
+        } else if (ev.key === 'ArrowUp') {
             if (i === 0) {
                 addAnswer(0);
                 requestFocus(0);
@@ -119,7 +132,7 @@ const PollCreate = (props: AbstractProps) => {
     });
 
     /* eslint-disable react/jsx-no-bind */
-    return (<>
+    return <form onSubmit = { onSubmit } className = 'polls-pane-content'>
         <div className = 'poll-create-container poll-container'>
             <div className = 'poll-question-field'>
                 <span className = 'poll-create-label'>
@@ -184,26 +197,28 @@ const PollCreate = (props: AbstractProps) => {
                     onClick = { () => {
                         addAnswer();
                         requestFocus(answers.length);
-                    } } >
+                    } }
+                    type = 'button' >
                     <span>{t('polls.create.addOption')}</span>
                 </button>
             </div>
         </div>
-        <div className = { 'poll-footer' }>
+        <div className = 'poll-footer'>
             <button
                 aria-label = { t('polls.create.cancel') }
-                className = { 'poll-small-secondary-button' }
-                onClick = { () => setCreateMode(false) } >
+                className = 'poll-small-secondary-button'
+                onClick = { () => setCreateMode(false) }
+                type = 'button' >
                 <span>{t('polls.create.cancel')}</span>
             </button>
             <button
                 aria-label = { t('polls.create.sendPoll') }
-                className = { 'poll-small-primary-button' }
-                onClick = { onSubmit } >
+                className = 'poll-small-primary-button'
+                type = 'submit' >
                 <span>{t('polls.create.sendPoll')}</span>
             </button>
         </div>
-    </>);
+    </form>;
 
 };
 
