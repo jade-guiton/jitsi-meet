@@ -104,7 +104,6 @@ MiddlewareRegistry.register(store => next => action => {
     case CLOSE_CHAT: {
         const isPollTabOpen = getState()['features/chat'].isPollsTabFocused;
 
-        console.log('middleware close chat', isPollTabOpen);
         unreadCount = 0;
 
         if (typeof APP !== 'undefined') {
