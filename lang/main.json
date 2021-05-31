@@ -69,12 +69,12 @@
             "title": "Enter a nickname to use chat"
         },
         "privateNotice": "Private message to {{recipient}}",
-        "title": "Chat & Polls",
-        "you": "you",
         "tabs": {
             "chat": "Chat",
             "polls": "Polls"
-        }
+        },
+        "title": "Chat and Polls",
+        "you": "you"
     },
     "chromeExtensionBanner": {
         "installExtensionText": "Install the extension for Google Calendar and Office 365 integration",
@@ -548,41 +548,30 @@
             "title": "New poll"
         },
         "create": {
-            "dialogTitle": "Create a poll",
-            "questionPlaceholder": "Ask a question",
-            "pollQuestion" : "Poll Question",
-            "pollOption" : "Poll option {{index}}",
-            "answerPlaceholder": "Option {{index}}",
-            "addAnswer": "Add an answer",
-            "removeAnswer": "Remove this answer",
-            "send": "Send",
-            "button": "Create a poll",
-            "removeOption": "Remove option",
             "addOption": "Add option",
+            "answerPlaceholder": "Option {{index}}",
+            "button": "Create a poll",
             "cancel": "Cancel",
+            "pollOption" : "Poll option {{index}}",
+            "pollQuestion" : "Poll Question",
+            "questionPlaceholder": "Ask a question",
+            "removeAnswer": "Remove this answer",
+            "removeOption": "Remove option",
+            "send": "Send",
             "sendPoll": "Send poll"
         },
         "answer": {
-            "title": "Poll",
+            "notanswered": "You didn't answer the poll yet",
             "skip": "Skip",
             "submit": "Submit",
-            "results" : "Results",
-            "close": "Close",
-            "empty": "No answer for the moment",
             "vote" : "{{count}} vote",
-            "vote_plural" : "{{count}} votes",
-            "notanswered": "You didn't answer the poll yet"
-        },
-        "chat": {
-            "answer": "Answer",
-            "notice": "Poll",
-            "details": "Details",
-            "empty" : "The are no polls in the meeting yet. Start a poll here!"
+            "vote_plural" : "{{count}} votes"
         },
         "results": {
-            "showDetailedResults": "Show details",
+            "changeVote": "Change vote",
+            "empty": "The are no polls in the meeting yet. Start a poll here!",
             "hideDetailedResults": "Hide details",
-            "changeVote": "Change vote"
+            "showDetailedResults": "Show details"
         }
     },
     "poweredby": "powered by",
