@@ -53,10 +53,11 @@ const AbstractPollCreate = (Component: AbstractComponent<AbstractProps>) => (pro
         setAnswers(newAnswers);
     });
 
-    const addAnswer = useCallback((i: number) => {
+    const addAnswer = useCallback((i: ?number) => {
+
         const newAnswers = [ ...answers ];
 
-        newAnswers.splice(i === undefined ? answers.length : i, 0, '');
+        newAnswers.splice(typeof i === 'number' ? i : answers.length, 0, '');
         setAnswers(newAnswers);
     });
 
