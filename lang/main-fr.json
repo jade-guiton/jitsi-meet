@@ -73,12 +73,12 @@
             "title": "Entrez un pseudonyme pour utiliser le chat"
         },
         "privateNotice": "Message privé à {{recipient}}",
-        "title": "Chat & Sondages",
-        "you": "vous",
         "tabs": {
             "chat": "Chat",
             "polls": "Sondages"
-        }
+        },
+        "title": "Chat et Sondages",
+        "you": "vous"
     },
     "chromeExtensionBanner": {
         "installExtensionText": "Installer l'extension pour l'intégration de Google Calendar et Office 365",
@@ -541,36 +541,30 @@
             "title": "Nouveau sondage"
         },
         "create": {
-            "dialogTitle": "Créer un sondage",
-            "questionPlaceholder": "Poser une question",
-            "pollQuestion" : "Question du sondage",
-            "pollOption" : "Option {{index}}",
-            "answerPlaceholder": "Option {{index}}",
-            "addAnswer": "Ajouter une réponse",
-            "removeAnswer": "Enlever cette réponse",
-            "send": "Envoyer",
-            "button": "Créer un sondage",
-            "removeOption": "Retirer l'option",
             "addOption": "Ajouter une option",
+            "answerPlaceholder": "Option {{index}}",
+            "button": "Créer un sondage",
             "cancel": "Annuler",
+            "pollOption": "Option {{index}}",
+            "pollQuestion": "Question du sondage",
+            "questionPlaceholder": "Poser une question",
+            "removeAnswer": "Enlever cette réponse",
+            "removeOption": "Retirer l'option",
+            "send": "Envoyer",
             "sendPoll": "Envoyer"
         },
         "answer": {
-            "title": "Sondage",
+            "notanswered": "Vous n'avez pas encore répondu au sondage",
             "skip": "Passer",
             "submit": "Envoyer",
-            "results" : "Résultats",
-            "close": "Fermer",
-            "empty": "Pas de réponse pour le moment",
-            "vote" : "{{count}} vote",
-            "vote_plural" : "{{count}} votes",
-            "notanswered": "Vous n'avez pas encore répondu au sondage"
+            "vote": "{{count}} vote",
+            "vote_plural": "{{count}} votes"
         },
-        "chat": {
-            "answer": "Répondre",
-            "notice": "Sondage",
-            "details": "Détails",
-            "empty": "Il n'y a pas encore de sondages dans cette réunion. Démarrez un sondage ici !"
+        "results": {
+            "changeVote": "Changer le vote",
+            "empty": "Il n'y a pas encore de sondages dans cette réunion. Démarrez un sondage ici !",
+            "hideDetailedResults": "Montrer les détails",
+            "showDetailedResults": "Cacher les details"
         }
     },
     "poweredby": "produit par",
