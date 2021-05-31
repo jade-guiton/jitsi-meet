@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 
 import { connect } from '../../../base/redux';
+import { getUnreadPollCount } from '../../../polls/functions';
 import { getUnreadCount } from '../../functions';
 
 /**
@@ -64,7 +65,7 @@ function _mapStateToProps(state) {
     const { isOpen } = state['features/chat'];
 
     return {
-        _count: getUnreadCount(state),
+        _count: getUnreadCount(state) + getUnreadPollCount(state),
         _isOpen: isOpen
     };
 }
