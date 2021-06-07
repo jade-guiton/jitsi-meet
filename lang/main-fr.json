@@ -1048,6 +1048,7 @@
             "submit": "Envoyer"
         },
         "results": {
+            "vote": "Voter",
             "changeVote": "Changer le vote",
             "empty": "Il n'y a pas encore de sondages dans cette réunion. Démarrez un sondage ici !",
             "hideDetailedResults": "Cacher les détails",
