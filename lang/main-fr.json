@@ -1032,9 +1032,6 @@
     "passwordSetRemotely": "défini par un autre participant",
     "passwordDigitsOnly": "Jusqu'à {{number}} chiffres",
     "polls": {
-        "notification": {
-            "title": "Nouveau sondage"
-        },
         "create": {
             "addOption": "Ajouter une option",
             "answerPlaceholder": "Option {{index}}",
@@ -1043,23 +1040,18 @@
             "pollOption": "Option {{index}}",
             "pollQuestion": "Question du sondage",
             "questionPlaceholder": "Poser une question",
-            "removeAnswer": "Enlever cette réponse",
-            "removeOption": "Retirer l'option",
-            "send": "Envoyer",
-            "sendPoll": "Envoyer"
+            "removeOption": "Supprimer l'option",
+            "send": "Envoyer"
         },
         "answer": {
-            "notanswered": "Vous n'avez pas encore répondu au sondage",
             "skip": "Passer",
-            "submit": "Envoyer",
-            "vote": "{{count}} vote",
-            "vote_plural": "{{count}} votes"
+            "submit": "Envoyer"
         },
         "results": {
             "changeVote": "Changer le vote",
             "empty": "Il n'y a pas encore de sondages dans cette réunion. Démarrez un sondage ici !",
-            "hideDetailedResults": "Montrer les détails",
-            "showDetailedResults": "Cacher les details"
+            "hideDetailedResults": "Cacher les détails",
+            "showDetailedResults": "Montrer les détails"
         }
     },
     "poweredby": "produit par",
@@ -1280,8 +1272,6 @@
             "muteEveryonesVideo": "Couper la caméra de tout le monde",
             "muteEveryoneElsesVideo": "Couper la caméra de tout les autres",
             "pip": "Activer / Désactiver le mode Picture in Picture",
-            "poll": "Créer un sondage",
-            "polls": "Sondages",
             "privateMessage": "Envoyer un message privé",
             "profile": "Éditer votre profil",
             "raiseHand": "Lever la main",
@@ -1344,8 +1334,6 @@
         "noisyAudioInputDesc": "Il semble que votre microphone fasse du bruit, veuillez le couper ou changer de périphérique.",
         "openChat": "Ouvrir le chat",
         "pip": "Entrer en mode Picture-in-Picture",
-        "poll": "Créer un sondage",
-        "polls": "Sondages",
         "privateMessage": "Envoyer un message privé",
         "profile": "Éditer votre profil",
         "raiseHand": "Lever / Baisser la main",
