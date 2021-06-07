@@ -568,6 +568,7 @@
             "vote_plural" : "{{count}} votes"
         },
         "results": {
+            "vote": "Vote",
             "changeVote": "Change vote",
             "empty": "The are no polls in the meeting yet. Start a poll here!",
             "hideDetailedResults": "Hide details",

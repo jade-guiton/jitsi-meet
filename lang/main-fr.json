@@ -561,6 +561,7 @@
             "vote_plural": "{{count}} votes"
         },
         "results": {
+            "vote": "Voter",
             "changeVote": "Changer le vote",
             "empty": "Il n'y a pas encore de sondages dans cette réunion. Démarrez un sondage ici !",
             "hideDetailedResults": "Montrer les détails",
