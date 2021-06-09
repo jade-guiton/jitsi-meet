@@ -540,7 +540,7 @@
         "create": {
             "addOption": "Ajouter une option",
             "answerPlaceholder": "Option {{index}}",
-            "button": "Créer un sondage",
+            "create": "Créer un sondage",
             "cancel": "Annuler",
             "pollOption": "Option {{index}}",
             "pollQuestion": "Question du sondage",
