@@ -1,6 +1,5 @@
 // @flow
 
-import { FieldTextStateless } from '@atlaskit/field-text';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { Icon, IconMenu } from '../../../base/icons';
@@ -136,27 +135,35 @@ const PollCreate = (props: AbstractProps) => {
         }
     });
 
+    const autogrow = ev => {
+        const el = ev.target;
+
+        el.style.height = '1px';
+        el.style.height = `${el.scrollHeight + 2}px`;
+    };
+
     /* eslint-disable react/jsx-no-bind */
     return (<form
         className = 'polls-pane-content'
         onSubmit = { onSubmit }>
         <div className = 'poll-create-container poll-container'>
+            <div className = 'poll-create-header'>
+                { t('polls.create.create') }
+            </div>
             <div className = 'poll-question-field'>
                 <span className = 'poll-create-label'>
                     { t('polls.create.pollQuestion') }
                 </span>
-                <FieldTextStateless
+                <textarea
                     autoFocus = { true }
-                    compact = { true }
-                    isLabelHidden = { true }
+                    className = 'expandable-input'
                     onChange = { ev => setQuestion(ev.target.value) }
+                    onInput = { autogrow }
                     onKeyDown = { onQuestionKeyDown }
                     placeholder = { t('polls.create.questionPlaceholder') }
-                    shouldFitContainer = { true }
-                    type = 'text'
+                    row = '1'
                     value = { question } />
             </div>
-            <hr className = 'poll-answer-option-separator' />
             <ol className = 'poll-answer-field-list'>
                 {answers.map((answer, i) =>
                     (<li
@@ -167,15 +174,14 @@ const PollCreate = (props: AbstractProps) => {
                             { t('polls.create.pollOption', { index: i + 1 })}
                         </span>
                         <div className = 'poll-create-option-row'>
-                            <FieldTextStateless
-                                compact = { true }
-                                isLabelHidden = { true }
+                            <textarea
+                                className = 'expandable-input'
                                 onChange = { ev => setAnswer(i, ev.target.value) }
+                                onInput = { autogrow }
                                 onKeyDown = { ev => onAnswerKeyDown(i, ev) }
                                 placeholder = { t('polls.create.answerPlaceholder', { index: i + 1 }) }
                                 ref = { r => registerFieldRef(i, r) }
-                                shouldFitContainer = { true }
-                                type = 'text'
+                                row = { 1 }
                                 value = { answer } />
                             <button
                                 className = 'poll-drag-handle'
@@ -186,14 +192,15 @@ const PollCreate = (props: AbstractProps) => {
                             </button>
                         </div>
 
-                        <Tooltip content = { t('polls.create.removeOption') }>
+                        { answers.length > 2
+                        && <Tooltip content = { t('polls.create.removeOption') }>
                             <button
                                 className = 'poll-remove-option-button'
                                 onClick = { () => removeAnswer(i) }
                                 type = 'button'>
                                 { t('polls.create.removeOption') }
                             </button>
-                        </Tooltip>
+                        </Tooltip>}
                     </li>)
                 )}
             </ol>

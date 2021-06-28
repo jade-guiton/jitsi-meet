@@ -540,7 +540,7 @@
         "create": {
             "addOption": "Ajouter une option",
             "answerPlaceholder": "Option {{index}}",
-            "button": "Créer un sondage",
+            "create": "Créer un sondage",
             "cancel": "Annuler",
             "pollOption": "Option {{index}}",
             "pollQuestion": "Question du sondage",
@@ -558,6 +558,10 @@
             "empty": "Il n'y a pas encore de sondages dans cette réunion. Démarrez un sondage ici !",
             "hideDetailedResults": "Cacher les détails",
             "showDetailedResults": "Montrer les détails"
+        },
+        "notification": {
+            "title": "Un nouveau sondage a été ajouté à la réunion",
+            "description": "Ouvrez l'onget des sondages pour voter"
         }
     },
     "poweredby": "produit par",
