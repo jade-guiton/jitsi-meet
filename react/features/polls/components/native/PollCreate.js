@@ -16,6 +16,7 @@ const PollCreate = (props: AbstractProps) => {
     const {
         addAnswer,
         answers,
+        isSubmitDisabled,
         onSubmit,
         question,
         removeAnswer,
@@ -163,6 +164,7 @@ const PollCreate = (props: AbstractProps) => {
 
                 <Button
                     color = '#17a0db'
+                    disabled = { isSubmitDisabled }
                     mode = 'contained'
                     onPress = { onSubmit }
                     style = { chatStyles.pollCreateButton } >
