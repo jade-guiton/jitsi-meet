@@ -86,10 +86,10 @@ export const retractVote = (pollId: string) => {
 };
 
 /**
- * Action to signal the closing of the chat dialog.
+ * Action to signal the closing of the polls tab.
  *
  * @returns {{
- *     type: CLOSE_CHAT
+ *     type: POLL_TAB_CLOSED
  * }}
  */
 export function resetNbUnreadPollsMessages() {

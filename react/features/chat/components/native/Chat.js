@@ -9,7 +9,7 @@ import { JitsiModal } from '../../../base/modal';
 import { connect } from '../../../base/redux';
 import { PollsPane } from '../../../polls/components';
 import { closeChat } from '../../actions.any';
-import { CHAT_VIEW_MODAL_ID } from '../../constants';
+import { BUTTON_MODES, CHAT_VIEW_MODAL_ID } from '../../constants';
 import AbstractChat, {
     _mapStateToProps,
     type Props
@@ -53,7 +53,9 @@ class Chat extends AbstractChat<Props> {
                     <Button
                         color = '#17a0db'
                         mode = {
-                            this.props._isPollsTabFocused ? 'contained' : 'text'
+                            this.props._isPollsTabFocused
+                                ? BUTTON_MODES.CONTAINED
+                                : BUTTON_MODES.TEXT
                         }
                         onPress = { this._onToggleChatTab }
                         style = { styles.tabLeftButton }
@@ -68,7 +70,9 @@ class Chat extends AbstractChat<Props> {
                     <Button
                         color = '#17a0db'
                         mode = {
-                            this.props._isPollsTabFocused ? 'text' : 'contained'
+                            this.props._isPollsTabFocused
+                                ? BUTTON_MODES.TEXT
+                                : BUTTON_MODES.CONTAINED
                         }
                         onPress = { this._onTogglePollsTab }
                         style = { styles.tabRightButton }

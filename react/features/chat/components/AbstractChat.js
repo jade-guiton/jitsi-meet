@@ -4,7 +4,7 @@ import { Component } from 'react';
 import type { Dispatch } from 'redux';
 
 import { getLocalParticipant } from '../../base/participants';
-import { sendMessage, setisPollsTabFocused } from '../actions';
+import { sendMessage, setIsPollsTabFocused } from '../actions';
 import { SMALL_WIDTH_THRESHOLD } from '../constants';
 
 /**
@@ -127,7 +127,7 @@ export default class AbstractChat<P: Props> extends Component<P> {
      * @returns {void}
      */
     _onToggleChatTab() {
-        this.props.dispatch(setisPollsTabFocused(false));
+        this.props.dispatch(setIsPollsTabFocused(false));
     }
 
     _onTogglePollsTab: () => void;
@@ -139,7 +139,7 @@ export default class AbstractChat<P: Props> extends Component<P> {
      * @returns {void}
      */
     _onTogglePollsTab() {
-        this.props.dispatch(setisPollsTabFocused(true));
+        this.props.dispatch(setIsPollsTabFocused(true));
     }
 }
 
