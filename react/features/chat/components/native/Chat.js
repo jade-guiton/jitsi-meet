@@ -49,33 +49,47 @@ class Chat extends AbstractChat<Props> {
                 }}
                 modalId = { CHAT_VIEW_MODAL_ID }
                 onClose = { this._onClose }>
-
-                <View style = { styles.tabContainer } >
+                <View style = { styles.tabContainer }>
                     <Button
                         color = '#17a0db'
-                        mode = { this.props._isPollsTabFocused ? 'contained' : 'text' }
+                        mode = {
+                            this.props._isPollsTabFocused ? 'contained' : 'text'
+                        }
                         onPress = { this._onToggleChatTab }
                         style = { styles.tabLeftButton }
-                        uppercase = { false } >
-                        {this.props.t('chat.tabs.chat')}
+                        uppercase = { false }>
+                        {`${this.props.t('chat.tabs.chat')}${
+                            this.props._isPollsTabFocused
+                            && this.props._nbUnreadMessages > 0
+                                ? `(${this.props._nbUnreadMessages})`
+                                : ''
+                        }`}
                     </Button>
                     <Button
                         color = '#17a0db'
-                        mode = { this.props._isPollsTabFocused ? 'text' : 'contained' }
+                        mode = {
+                            this.props._isPollsTabFocused ? 'text' : 'contained'
+                        }
                         onPress = { this._onTogglePollsTab }
                         style = { styles.tabRightButton }
-                        uppercase = { false } >
-                        {this.props.t('chat.tabs.polls')}
+                        uppercase = { false }>
+                        {`${this.props.t('chat.tabs.polls')}${
+                            !this.props._isPollsTabFocused
+                            && this.props._nbUnreadPolls > 0
+                                ? `(${this.props._nbUnreadPolls})`
+                                : ''
+                        }`}
                     </Button>
                 </View>
-                { this.props._isPollsTabFocused
+                {this.props._isPollsTabFocused
                     ? <PollsPane />
-                    : <>
+                    : (
+                    <>
                         <MessageContainer messages = { this.props._messages } />
                         <MessageRecipient />
                         <ChatInputBar onSend = { this._onSendMessage } />
-                    </>}
-
+                    </>
+                    )}
             </JitsiModal>
         );
     }
